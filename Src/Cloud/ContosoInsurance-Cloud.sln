@@ -53,8 +53,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ContosoInsurance.Logic", "C
 		SlnRelativePath = "ContosoInsurance.Logic\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.Web", "ContosoInsurance.Web\ContosoInsurance.Web.csproj", "{6A1D9DC3-232B-420D-ABDB-492747C855FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.Common", "ContosoInsurance.Common\ContosoInsurance.Common.csproj", "{F2947B40-67FF-4874-A967-B959E16A83CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.API", "ContosoInsurance.API\ContosoInsurance.API.csproj", "{26C0E128-DA4A-46E2-B142-A8133C73E7E4}"
@@ -151,7 +149,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://canviz.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -160,9 +158,6 @@ Global
 		SccProjectName1 = ContosoInsurance.Function
 		SccLocalPath1 = ContosoInsurance.Function
 		SccProjectEnlistmentChoice1 = 2
-		SccProjectUniqueName2 = ContosoInsurance.Web\\ContosoInsurance.Web.csproj
-		SccProjectName2 = ContosoInsurance.Web
-		SccLocalPath2 = ContosoInsurance.Web
 		SccProjectUniqueName3 = ContosoInsurance.Common\\ContosoInsurance.Common.csproj
 		SccProjectName3 = ContosoInsurance.Common
 		SccLocalPath3 = ContosoInsurance.Common
