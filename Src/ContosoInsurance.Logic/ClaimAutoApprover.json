@@ -1,0 +1,295 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "actions": {
+    "AutoApproveClaim": {
+      "inputs": {
+        "body": {
+          "id": "@triggerBody()['id']"
+        },
+        "function": {
+          "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/AutoApproveClaim"
+        }
+      },
+      "runAfter": {
+        "TrackCustomEvent_-_Auto_Approval_Started": [
+          "Succeeded"
+        ]
+      },
+      "type": "Function"
+    },
+    "Is_Claim_Auto_Approved": {
+      "actions": {
+        "Send_Auto_Approved_Email": {
+          "inputs": {
+            "body": {
+              "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was automatically approved. You can proceed to schedule repairs. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>",
+              "Importance": "Normal",
+              "IsHtml": true,
+              "Subject": "Claim Automatically Approved",
+              "To": "@{triggerBody()['customerEmail']}"
+            },
+            "host": {
+              "api": {
+                "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+              },
+              "connection": {
+                "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+              }
+            },
+            "method": "post",
+            "path": "/Mail"
+          },
+          "runAfter": {
+            "TrackCustomEvent_-_Claim_Auto_Approved": [
+              "Succeeded"
+            ]
+          },
+          "type": "ApiConnection"
+        },
+        "TrackCustomEvent_-_Auto_Approval_Email_Sent": {
+          "inputs": {
+            "body": {
+              "EventName": "Logic App Status",
+              "Metrics": {
+                "Logic App": 0
+              },
+              "Properties": {
+                "CorrelationId": "@triggerBody()['correlationId']",
+                "Description": "Auto Approval Email Sent to @{triggerBody()['customerEmail']}",
+                "Host": "To be determined",
+                "LogType": "Status Log",
+                "RunName": "@workflow()['run']['name']",
+                "Status": "Success"
+              }
+            },
+            "function": {
+              "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+            }
+          },
+          "runAfter": {
+            "Send_Auto_Approved_Email": [
+              "Succeeded"
+            ]
+          },
+          "type": "Function"
+        },
+        "TrackCustomEvent_-_Claim_Auto_Approved": {
+          "inputs": {
+            "body": {
+              "EventName": "Logic App Status",
+              "Metrics": {
+                "Logic App": 0
+              },
+              "Properties": {
+                "CorrelationId": "@triggerBody()['correlationId']",
+                "Description": "Claim Auto Approved",
+                "Host": "To be determined",
+                "LogType": "Status Log",
+                "RunName": "@workflow()['run']['name']"
+              }
+            },
+            "function": {
+              "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+            }
+          },
+          "runAfter": { },
+          "type": "Function"
+        }
+      },
+      "else": {
+        "actions": {
+          "Send_Auto_Rejected_Email": {
+            "inputs": {
+              "body": {
+                "Body": "<p>Claim number @{triggerBody()['id']} was not auto approved. Please review the claim and approve or reject it.</p>\n<p><a href=\"@{triggerBody()['claimDetailsPageBaseUrl']}@{triggerBody()['id']}\">@{triggerBody()['claimDetailsPageBaseUrl']}@{triggerBody()['id']}</p>",
+                "Importance": "Normal",
+                "IsHtml": true,
+                "Subject": "Claim Pending Review",
+                "To": "@{triggerBody()['claimsAdjusterEmail']}"
+              },
+              "host": {
+                "api": {
+                  "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                },
+                "connection": {
+                  "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+                }
+              },
+              "method": "post",
+              "path": "/Mail"
+            },
+            "runAfter": {
+              "TrackCustomEvent_-_Claim_Auto_Rejected": [
+                "Succeeded"
+              ]
+            },
+            "type": "ApiConnection"
+          },
+          "TrackCustomEvent_-_Auto_Rejected_Email_Sent": {
+            "inputs": {
+              "body": {
+                "EventName": "Logic App Status",
+                "Metrics": {
+                  "Logic App": 0
+                },
+                "Properties": {
+                  "CorrelationId": "@triggerBody()['correlationId']",
+                  "Description": "Auto Rejected Email Sent to @{triggerBody()['claimsAdjusterEmail']}",
+                  "Host": "To be determined",
+                  "LogType": "Status Log",
+                  "RunName": "@workflow()['run']['name']",
+                  "Status": "Success"
+                }
+              },
+              "function": {
+                "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+              }
+            },
+            "runAfter": {
+              "Send_Auto_Rejected_Email": [
+                "Succeeded"
+              ]
+            },
+            "type": "Function"
+          },
+          "TrackCustomEvent_-_Claim_Auto_Rejected": {
+            "inputs": {
+              "body": {
+                "EventName": "Logic App Status",
+                "Metrics": {
+                  "Logic App": 0
+                },
+                "Properties": {
+                  "CorrelationId": "@triggerBody()['correlationId']",
+                  "Description": "Claim Auto Rejected",
+                  "Host": "To be determined",
+                  "LogType": "Status Log",
+                  "RunName": "@workflow()['run']['name']"
+                }
+              },
+              "function": {
+                "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+              }
+            },
+            "runAfter": { },
+            "type": "Function"
+          }
+        }
+      },
+      "expression": "@equals(body('AutoApproveClaim'), 'Approved')",
+      "runAfter": {
+        "TrackCustomEvent_-_Auto_Approval_Complete": [
+          "Succeeded"
+        ]
+      },
+      "type": "If"
+    },
+    "Response": {
+      "inputs": {
+        "body": "Done",
+        "statusCode": 200
+      },
+      "runAfter": {
+        "Is_Claim_Auto_Approved": [
+          "Succeeded"
+        ]
+      },
+      "type": "Response"
+    },
+    "TrackCustomEvent_-_Auto_Approval_Complete": {
+      "inputs": {
+        "body": {
+          "EventName": "Logic App Status",
+          "Metrics": {
+            "Logic App": 0
+          },
+          "Properties": {
+            "CorrelationId": "@triggerBody()['correlationId']",
+            "Description": "Auto Approval Complete",
+            "Host": "To be determined",
+            "LogType": "Status Log",
+            "RunName": "@workflow()['run']['name']"
+          }
+        },
+        "function": {
+          "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+        }
+      },
+      "runAfter": {
+        "AutoApproveClaim": [
+          "Succeeded"
+        ]
+      },
+      "type": "Function"
+    },
+    "TrackCustomEvent_-_Auto_Approval_Started": {
+      "inputs": {
+        "body": {
+          "EventName": "Logic App Status",
+          "Metrics": {
+            "Logic App": 0
+          },
+          "Properties": {
+            "CorrelationId": "@triggerBody()['correlationId']",
+            "Description": "Auto Approval Started",
+            "Host": "To be determined",
+            "LogType": "Status Log",
+            "RunName": "@workflow()['run']['name']"
+          }
+        },
+        "function": {
+          "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+        }
+      },
+      "runAfter": { },
+      "type": "Function"
+    }
+  },
+  "contentVersion": "1.0.0.0",
+  "outputs": { },
+  "parameters": {
+    "$connections": {
+      "defaultValue": { },
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "manual": {
+      "inputs": {
+        "schema": {
+          "properties": {
+            "claimDetailsPageBaseUrl": {
+              "type": "string"
+            },
+            "claimsAdjusterEmail": {
+              "type": "string"
+            },
+            "correlationId": {
+              "type": "string"
+            },
+            "customerEmail": {
+              "type": "string"
+            },
+            "customerName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "int"
+            }
+          },
+          "required": [
+            "id",
+            "correlationId",
+            "customerName",
+            "customerEmail",
+            "claimsAdjusterEmail",
+            "claimDetailsPageBaseUrl"
+          ],
+          "type": "object"
+        }
+      },
+      "kind": "Http",
+      "type": "Request"
+    }
+  }
+}

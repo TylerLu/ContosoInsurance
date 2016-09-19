@@ -1,0 +1,34 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyLicensePlateImageStream",
+      "path": "other-party-plate-images/other-party-plate-{correlationId}",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyInsuranceCardImageStream",
+      "path": "other-party-card-images/other-party-card-{correlationId}",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyDriverLicenseImageStream",
+      "path": "other-party-license-images/other-party-license-{correlationId}",
+      "direction": "in"
+    },
+    {
+      "name": "res",
+      "type": "http",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

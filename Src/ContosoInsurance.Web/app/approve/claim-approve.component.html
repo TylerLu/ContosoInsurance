@@ -1,0 +1,20 @@
+﻿<div class="claim-info">
+    <div class="status">
+        claim status:
+        <claim-status [disabled]="disabled" [selectedStatus]="selectedStatus"></claim-status>
+    </div>
+    <div class="id">
+        Claim ID:<input type="text" [(ngModel)]="claim.claimId" [disabled]="disabled"  />
+    </div>
+    <div class="date">
+        Claim Date:<input type="text" [disabled]="disabled"  value="{{claim.getDisplayClaimDate()}}"  />
+    </div>
+    <div class="btns">
+          <button class="approve">approve</button>
+          <button class="deny">deny</button>
+    </div>
+</div>
+<tabs>
+    <tab [tabTitle]="'PolicyHolder Details'">Tab 1 Content</tab>
+    <tab [tabTitle]="'2nd Party Details'">Tab 2 Content</tab>
+</tabs>

@@ -1,0 +1,13 @@
+{
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+        "EntityFramework": "6.1.3",
+        "Microsoft.ApplicationInsights": "2.1.0",
+        "Microsoft.ProjectOxford.Vision": "1.0.354",
+        "Microsoft.WindowsAzure.ConfigurationManager": "3.2.1",
+        "Newtonsoft.Json": "6.0.8"
+      }
+    }
+  }
+}

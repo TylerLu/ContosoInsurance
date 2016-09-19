@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">
+            <img src="/Content/images/logo.png" />
+            <label class="font-segeo-ui">Contoso Insurance</label>
+        </div>
+        <div class="user-info">
+            <div class="login-name roboto-regular">@HttpContext.Current.User.Identity.Name</div>
+            <div class="login-status">
+                <img src="/Content/images/user.png" />
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/moment")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

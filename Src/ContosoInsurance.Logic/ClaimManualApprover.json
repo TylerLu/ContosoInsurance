@@ -1,0 +1,183 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "actions": {
+    "HandleManualClaim": {
+      "inputs": {
+        "body": "@triggerBody()",
+        "function": {
+          "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/HandleManualClaim"
+        }
+      },
+      "runAfter": { },
+      "type": "Function"
+    },
+    "Is_Claim_Approved": {
+      "actions": {
+        "Send_Manual_Approved_Email": {
+          "inputs": {
+            "body": {
+              "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was manually approved. You can proceed to schedule repairs. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>\n\n\n",
+              "Importance": "Normal",
+              "IsHtml": true,
+              "Subject": "Claim Approved",
+              "To": "@{triggerBody()['customerEmail']}"
+            },
+            "host": {
+              "api": {
+                "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+              },
+              "connection": {
+                "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+              }
+            },
+            "method": "post",
+            "path": "/Mail"
+          },
+          "runAfter": { },
+          "type": "ApiConnection"
+        },
+        "TrackCustomEvent_-_Manual_Approved_Email_Sent": {
+          "inputs": {
+            "body": {
+              "EventName": "Logic App Status",
+              "Metrics": {
+                "Logic App": 0
+              },
+              "Properties": {
+                "CorrelationId": "@triggerBody()['correlationId']",
+                "Description": "Manual Approval Email Sent to @{triggerBody()['customerEmail']}",
+                "Host": "To be determined",
+                "LogType": "Status Log",
+                "RunName": "@workflow()['run']['name']",
+                "Status": "Success"
+              }
+            },
+            "function": {
+              "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+            }
+          },
+          "runAfter": {
+            "Send_Manual_Approved_Email": [
+              "Succeeded"
+            ]
+          },
+          "type": "Function"
+        }
+      },
+      "else": {
+        "actions": {
+          "Send_Manual_Rejected_Email": {
+            "inputs": {
+              "body": {
+                "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was not approved by the claims adjuster. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>\n",
+                "Importance": "Normal",
+                "IsHtml": true,
+                "Subject": "Claim Rejected",
+                "To": "@{triggerBody()['customerEmail']}"
+              },
+              "host": {
+                "api": {
+                  "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                },
+                "connection": {
+                  "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+                }
+              },
+              "method": "post",
+              "path": "/Mail"
+            },
+            "runAfter": { },
+            "type": "ApiConnection"
+          },
+          "TrackCustomEvent_-_Manual_Rejected_Email_Sent": {
+            "inputs": {
+              "body": {
+                "EventName": "Logic App Status",
+                "Metrics": {
+                  "Logic App": 0
+                },
+                "Properties": {
+                  "CorrelationId": "@triggerBody()['correlationId']",
+                  "Description": "Manual Rejected Email Sent to @{triggerBody()['customerEmail']}",
+                  "Host": "To be determined",
+                  "LogType": "Status Log",
+                  "RunName": "@workflow()['run']['name']",
+                  "Status": "Success"
+                }
+              },
+              "function": {
+                "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/TrackCustomEvent"
+              }
+            },
+            "runAfter": {
+              "Send_Manual_Rejected_Email": [
+                "Succeeded"
+              ]
+            },
+            "type": "Function"
+          }
+        }
+      },
+      "expression": "@bool(triggerBody()['approved'])",
+      "runAfter": {
+        "HandleManualClaim": [
+          "Succeeded"
+        ]
+      },
+      "type": "If"
+    },
+    "Response": {
+      "inputs": {
+        "statusCode": 200
+      },
+      "runAfter": {
+        "Is_Claim_Approved": [
+          "Succeeded"
+        ]
+      },
+      "type": "Response"
+    }
+  },
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "$connections": {
+      "defaultValue": { },
+      "type": "Object"
+    }
+  },
+  "triggers": {
+    "manual": {
+      "inputs": {
+        "schema": {
+          "properties": {
+            "approved": {
+              "type": "bool"
+            },
+            "customerEmail": {
+              "type": "string"
+            },
+            "customerName": {
+              "type": "string"
+            },
+            "damageAssessment": {
+              "type": "string"
+            },
+            "id": {
+              "type": "int"
+            }
+          },
+          "required": [
+            "id",
+            "damageAssessment",
+            "approved",
+            "customerEmail",
+            "customerName"
+          ],
+          "type": "object"
+        }
+      },
+      "kind": "Http",
+      "type": "Request"
+    }
+  }
+}

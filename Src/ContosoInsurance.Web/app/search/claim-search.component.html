@@ -1,0 +1,28 @@
+﻿<div class="search-main">
+    <div class="content">
+        <span class="title font-segeo-ui">{{title}}</span>
+        <div class="search-form">
+            <ul>
+                <li> 
+                    <span class="font-segeo-ui">First Name </span>
+                    <input [(ngModel)]="searchClaim.firstName" placeholder="Enter policyHolder first name" />
+                </li>
+                <li>
+                    <span class="font-segeo-ui">Last Name </span>
+                    <input [(ngModel)]="searchClaim.lastName" placeholder="Enter policyHolder last name" />
+                </li>
+                <li>
+                    <span class="font-segeo-ui">PlolicyHolder ID </span>
+                    <input [(ngModel)]="searchClaim.plolicyHolderId" placeholder="Enter policyHolder ID" />
+                </li>
+                <li>
+                    <span class="font-segeo-ui">Claim ID </span>
+                    <input [(ngModel)]="searchClaim.policyHolderId" placeholder="Enter claim ID" /></li>
+            </ul>
+        </div>
+        <div class="btn-section">
+            <a class="font-segeo-ui" (click)="search(searchClaim)">Search</a>
+        </div>
+        <claim-grid [afterQuery]="afterQuery" [claims]="searchedClaimArray"></claim-grid>
+    </div>
+</div>

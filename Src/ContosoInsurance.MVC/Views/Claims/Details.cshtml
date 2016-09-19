@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.Title = "Claim Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    @Styles.Render("~/Content/detail")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/detail");
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+}
+<div class="claim-info" data-bind="with:detail">
+    <input type="hidden" id="claimData" value='@ViewData["claimData"]' />
+    <div class="basic upper" data-bind="with:ViewModel">
+        <div class="status">
+            <span>claim status: </span>
+            <input type="text" data-bind="textInput:status,disable:$parent.disabled" />
+        </div>
+        <div class="id">
+            <span>Claim ID: </span><input type="text" data-bind="textInput:claimId,disable:$parent.disabled" />
+        </div>
+        <div class="date">
+            <span>Claim Date: </span><input type="text" data-bind="textInput:dueDate,disable:$parent.disabled" />
+        </div>
+        <div class="btns">
+            <button class="approve upper" data-bind="click:$parent.approve">approve</button>
+            <button class="reject upper" data-bind="click:$parent.reject">reject</button>
+        </div>
+    </div>
+    <div class="detail">
+        <div class="left">
+            <div class="ui-tab">
+                <ul>
+                    <li class="active">PolicyHolder</li>
+                </ul>
+            </div>
+            <div class="ui-tab-Panel">
+                <div class="customer left-pnl">
+                    <div class="info" data-bind="with: ViewModel.customer">
+                        <ul>
+                            <li>
+                                <span>Name: </span>
+                                <input data-bind="textInput:name,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Street: </span>
+                                <input data-bind="textInput:street,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>City: </span>
+                                <input data-bind="textInput:city,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>State: </span>
+                                <input data-bind="textInput:state,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Zip Code: </span>
+                                <input data-bind="textInput:zip,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Date of birth: </span>
+                                <input data-bind="textInput:dob,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Phone: </span>
+                                <input data-bind="textInput:phone,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Policy Start Date: </span>
+                                <input data-bind="textInput:policyStart,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Policy Id: </span>
+                                <input data-bind="textInput:policyId,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>VIN: </span>
+                                <input data-bind="textInput:$root.detail.ViewModel.vehicle.vehicleNumber,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>License Plate: </span>
+                                <input data-bind="textInput:$root.detail.ViewModel.vehicle.licensePlate,disable:$root.detail.disabled" />
+                            </li>
+                            <li>
+                                <span>Driver License#: </span>
+                                <input data-bind="textInput:driversLicenseNumber,disable:$root.detail.disabled" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="history" data-bind="with:ViewModel">
+                        <hr/>
+                        <span>Claims History</span>
+                        <div class="history-grid">
+                            <table cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>damage Assessment</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach:claimHisotry">
+                                    <tr>
+                                        <td class="claim-id" data-bind="click:$root.detail.showDetail,text:claimId"></td>
+                                        <td data-bind="text:claimType"></td>
+                                        <td data-bind="text:dueDate"></td>
+                                        <td data-bind="text:claimStatus"></td>
+                                        <td data-bind="text:damageAssessment"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="right">
+            <div class="ui-tab">
+                <ul>
+                    <li class="active" data-bind="click: function(data, event) {$root.tab.selectTab('extend-info','right-pnl',data,event) }">
+                        Details
+                    </li>
+                    <li data-bind="click: function(data, event) {$root.tab.selectTab('second-party','right-pnl',data,event) }">
+                        2nd PARTY 
+                    </li>
+                    <li>Documents</li>
+                    <li>Log</li>
+                    <li>Analysis Tools</li>
+                </ul>
+            </div>
+            <div class="ui-tab-Panel right-pnl">
+                <div class="extend-info" data-bind="with:ViewModel">
+                    <div class="time-location">
+                        <div class="fields">
+                            <div class="row time">
+                                <span>Time: </span>
+                                <input class="clock" data-bind="textInput:timeLocation.hour,disable:$root.detail.disabled" /> :
+                                <input class="clock" data-bind="textInput:timeLocation.min,disable:$root.detail.disabled" /> :
+                                <input class="clock" data-bind="textInput:timeLocation.apm,disable:$root.detail.disabled" />
+                            </div>
+                            <div class="row date">
+                                <span>Date: </span>
+                                <input class="month" data-bind="textInput:timeLocation.month,disable:$root.detail.disabled" />
+                                <input class="day" data-bind="textInput:timeLocation.day,disable:$root.detail.disabled" />
+                                <input class="year" data-bind="textInput:timeLocation.year,disable:$root.detail.disabled" />
+                            </div>
+                            <div class="row">
+                                <span>Location: </span>
+                                <input id="detail-location" data-bind="textInput:timeLocation.location,disable:$root.detail.disabled" />
+                                <div id="detail-map"></div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="description">
+                        <div class="fields">
+                            <div class="row">
+                                <span>Damage Assessment: </span>
+                                <select data-bind="options:$parent.damageAssessmentArray,value: selectedAssessment"></select>
+                            </div>
+                            <div class="row">
+                                <span>Description: </span>
+                                <textarea data-bind="text:description,disable:$root.detail.disabled"></textarea>
+                            </div>
+                        </div> 
+                    </div>
+                    <hr/>
+                    <div class="upload-images">
+                        <span>Upload Images:</span>
+                        <ul data-bind="foreach:images">
+                            <li>
+                                <img data-bind="attr:{src: $data}"  />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="second-party" data-bind="with: ViewModel.otherParty">
+                    <ul>
+                        <li>
+                            <span>Name: </span>
+                            <input data-bind="textInput:name,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>Zip Code: </span>
+                            <input data-bind="textInput:zip,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>Street: </span>
+                            <input data-bind="textInput:street,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>Date of birth: </span>
+                            <input data-bind="textInput:dob,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>City: </span>
+                            <input data-bind="textInput:city,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>Phone: </span>
+                            <input data-bind="textInput:phone,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>State: </span>
+                            <input data-bind="textInput:state,disable:$root.detail.disabled" />
+                        </li>
+                        <li>
+                            <span>Email: </span>
+                            <input data-bind="textInput:email,disable:$root.detail.disabled" />
+                        </li>
+                    </ul>
+                    <hr/>
+                    <div class="insurance">
+                        <div class="fields">
+                            <div class="row">
+                                <span>Policy ID: </span>
+                                <input data-bind="textInput:policyId,disable:$root.detail.disabled" />
+                            </div>
+                            <div class="row">
+                                <span>VIN: </span>
+                                <input data-bind="textInput:vehicleNumber,disable:$root.detail.disabled" />
+                            </div>
+                        </div>
+                        <img data-bind="attr:{src: insuranceCardImageURL}" />
+                    </div>
+                    <hr />
+                    <div class="license-plate">
+                        <div class="fields">
+                            <div class="row">
+                                <span>License Plate: </span>
+                                <input data-bind="textInput:licensePlate,disable:$root.detail.disabled" />
+                            </div>
+                        </div>
+                        <img data-bind="attr:{src: licensePlateImageURL}" />
+                    </div>
+                    <hr />
+                    <div class="drivers-license">
+                        <div class="fields">
+                            <div class="row">
+                                <span>License Plate: </span>
+                                <input data-bind="textInput:driversLicenseNumber,disable:$root.detail.disabled" />
+                            </div>
+                        </div>
+                        <img data-bind="attr:{src: driversLicenseImageURL}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

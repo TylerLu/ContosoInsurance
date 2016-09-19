@@ -1,0 +1,40 @@
+﻿/*search*/
+.search-main{background:url('images/bg-search.png') no-repeat right;min-height:890px;background-color:#FCFDFF;}
+.search-main .content{margin:0 auto;width:680px;}
+.search-main .content .title{text-transform:uppercase;font-size: 48px;color:#3A4750;margin: 0 auto;
+    width: 350px;display: block;padding-top: 34px;padding-bottom: 0px;font-family:robotolight;}
+.search-main .content .search-form ul {list-style-type:none;padding-left: 0;margin-bottom: 0;}
+.search-main .content .search-form ul li{padding-bottom: 25px;}
+.search-main .content .search-form ul li:last-child{padding-bottom: 20px;}
+.search-main .content .search-form ul li span {text-transform: uppercase;color: #3B4753;font-size: 18px;display: inline-block;
+    font-family: robotomedium;max-width: 176px;min-width: 173px;}
+.search-main .content .search-form ul li input {border: 1px solid #969696;width:484px;height:34px;padding-left: 15px;}
+.search-main .content .btn-section{text-align:center;padding-top: 31px;}
+.search-main .content .btn-section > a{text-align: center;background-color: #059444;cursor: pointer;width: 100%;height: 45px;display: inline-block;color: #fff;font-size: 24px;padding-top: 10px;text-transform: uppercase;font-family: robotomedium;}
+
+/*grid*/
+.claim-grid {padding-top:80px;}
+.claim-grid table{width:100%;border:1px solid #7B88AA;font-size:12px;}
+.claim-grid th{background-color:#7B88AA;color:#fff;text-transform:uppercase;font-size: 14px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
+.claim-grid th:nth-child(1){width:68px;padding-left:15px;}
+.claim-grid tr>td:nth-child(1){width:68px;padding-left:15px;}
+
+.claim-grid th:nth-child(2){width:172px;padding-left:5px;}
+.claim-grid tr>td:nth-child(2){width:175px;padding-left:7px;}
+
+.claim-grid th:nth-child(3){width:88px;padding-left:5px;}
+.claim-grid tr>td:nth-child(3){width:88px;padding-left:7px;}
+
+.claim-grid th:nth-child(4){width:95px;padding-left:5px;}
+.claim-grid tr>td:nth-child(4){width:107px;padding-left:5px;}
+
+.claim-grid th:nth-child(5){width:100px;padding-left:5px;}
+.claim-grid tr>td:nth-child(5){width:95px;padding-left:5px;}
+
+.claim-grid th:nth-child(6){width:182px;border-right:0;padding-left:5px;}
+.claim-grid tr>td:nth-child(6){width:182px;border-right:0;padding-left:5px;}
+
+.claim-grid tr:first-child{height:25px;}
+.claim-grid tr{height:30px;}
+.claim-grid td.claim-id{color:#7C89A9; cursor:pointer;}
+.claim-grid td{color:#000;font-size:12px;font-family: robotoregular;}

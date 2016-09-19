@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJOc5uWDdB0yJC+teXIw53AAAAAACAAAAAAAQZgAAAAEAACAAAABsHBaC64Tvhq5YZG/EPSiwrHpbenv2cim4VULOd7Pw/AAAAAAOgAAAAAIAACAAAAD9KBZhNPpb65VDEucCfsX6iQtnMDogK7qHOcfmm5YQ74AAAADJCebOjBmL4uzNe80Bta7Sp2RKaHXSgCVDmq0CNOdY9ebqQ1WYKkPXyyUyODM414sM5Q6NgUBKu8t/FpD+uetQG8Bl3sC2RjrRBsDrK3l0QxzdRWAWiPJ3w8g88X8KJRvSqgfT6oWTv8nMPYeKbvbLc+lVg0OlX4iPiHzt/bo1CUAAAADf6ba0tsqIjEBGfrKTeoMHHBGA7kGdSNlVsCww1Zp1Q8mjQKHAmmKFSz9h4M9+xtUpAZ0Yj7EmpVhncWI6Of6+</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <AzureDBConnectionStrings Include="Server=tcp:contosoinsurance.database.windows.net,1433;Initial Catalog=CRMClaims;Persist Security Info=False;User ID=contosoinsurance;Password=Ebs5XmYM5NGaFWT;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30" />
+    <AzureDBConnectionStrings Include="Server=tcp:contosoinsurance.database.windows.net,1433;Initial Catalog=MobileClaims;Persist Security Info=False;User ID=contosoinsurance;Password=Ebs5XmYM5NGaFWT;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30" />
+  </ItemGroup>
+</Project>

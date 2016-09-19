@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Search Claims";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    @Styles.Render("~/Content/search")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/search")
+}
+
+<div class="search-main">
+    <div class="content">
+        <span class="title">Claim Search</span>
+        <div class="search-form">
+            <ul>
+                <li>
+                    <span>First Name </span>
+                    <input data-bind="textInput:searchForm.formData.firstName" />
+                </li>
+                <li>
+                    <span>Last Name </span>
+                    <input data-bind="textInput:searchForm.formData.lastName"  />
+                </li>
+                <li>
+                    <span>PlolicyHolder ID </span>
+                    <input data-bind="textInput:searchForm.formData.policyHolderId"  />
+                </li>
+                <li>
+                    <span>Claim ID </span>
+                    <input data-bind="textInput:searchForm.formData.claimId" />
+                </li>
+            </ul>
+        </div>
+        <div class="btn-section">
+            <a data-bind="click:searchForm.doSearch">Search</a>
+        </div>
+        <div style="display:none;" data-bind="visible:claimGrid.afterQuery">
+            <div class="claim-grid">
+                <table cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>damage Assessment</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:claimGrid.claims">
+                        <tr>
+                            <td class="claim-id" data-bind="click:$root.claimGrid.showDetail,text:claimId"></td>
+                            <td data-bind="text:fullName"></td>
+                            <td data-bind="text:claimType"></td>
+                            <td data-bind="text:dueDate"></td>
+                            <td data-bind="text:claimStatus"></td>
+                            <td data-bind="text:damageAssessment"></td>
+                        </tr> 
+                    </tbody> 
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

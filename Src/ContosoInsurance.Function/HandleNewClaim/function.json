@@ -1,0 +1,11 @@
+{
+  "disabled": false,
+  "bindings": [
+    {
+      "type": "queueTrigger",
+      "name": "newClaim",
+      "direction": "in",
+      "queueName": "new-claims"
+    }
+  ]
+}

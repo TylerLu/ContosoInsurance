@@ -1,0 +1,65 @@
+{
+  "disabled": false,
+  "bindings": [
+    {
+      "type": "queueTrigger",
+      "name": "claim",
+      "direction": "in",
+      "queueName": "mobile-claims"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyCardImage",
+      "path": "other-party-card-images/other-party-card-{Id}",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyLicenseImage",
+      "path": "other-party-license-images/other-party-license-{Id}",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "otherPartyPlateImages",
+      "path": "other-party-plate-images/other-party-plate-{Id}",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "claimImage01",
+      "path": "claim-images/claim-{Id}-01",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "claimImage02",
+      "path": "claim-images/claim-{Id}-02",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "claimImage03",
+      "path": "claim-images/claim-{Id}-03",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "claimImage04",
+      "path": "claim-images/claim-{Id}-04",
+      "direction": "inOut"
+    },
+    {
+      "type": "blob",
+      "name": "claimImage05",
+      "path": "claim-images/claim-{Id}-05",
+      "direction": "inOut"
+    },
+    {
+      "type": "queue",
+      "name": "newClaims",
+      "direction": "out",
+      "queueName": "new-claims"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+﻿ul.nav-tabs {list-style:none;list-style-type:none;}
+ul.nav-tabs >li {display:inline;}
+ul.nav-tabs >li.active{background-color:gray;}

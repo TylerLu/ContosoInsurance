@@ -1,0 +1,181 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ContosoInsurance.Function", "ContosoInsurance.Function", "{CAEF7976-6362-43BB-88EA-117BFBD95A71}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_15344"
+		Debug.AspNetCompiler.PhysicalPath = "ContosoInsurance.Function\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15344\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_15344"
+		Release.AspNetCompiler.PhysicalPath = "ContosoInsurance.Function\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15344\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "15344"
+		SlnRelativePath = "ContosoInsurance.Function\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ContosoInsurance.Logic", "ContosoInsurance.Logic", "{C30DB751-AC49-482C-A99C-1BA18366F6F0}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_15346"
+		Debug.AspNetCompiler.PhysicalPath = "ContosoInsurance.Logic\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15346\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_15346"
+		Release.AspNetCompiler.PhysicalPath = "ContosoInsurance.Logic\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_15346\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "15345"
+		SlnRelativePath = "ContosoInsurance.Logic\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.Web", "ContosoInsurance.Web\ContosoInsurance.Web.csproj", "{6A1D9DC3-232B-420D-ABDB-492747C855FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.Common", "ContosoInsurance.Common\ContosoInsurance.Common.csproj", "{F2947B40-67FF-4874-A967-B959E16A83CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.API", "ContosoInsurance.API\ContosoInsurance.API.csproj", "{26C0E128-DA4A-46E2-B142-A8133C73E7E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoInsurance.MVC", "ContosoInsurance.MVC\ContosoInsurance.MVC.csproj", "{422B9356-57B1-415D-9010-DB41E379BD15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo Data", "Demo Data", "{58426FEF-184B-49DB-847C-0A4260B9CF30}"
+	ProjectSection(SolutionItems) = preProject
+		Demo Data\CRMClaims.sql = Demo Data\CRMClaims.sql
+		Demo Data\MobileClaims.sql = Demo Data\MobileClaims.sql
+		Demo Data\UploadVehicleImages.ps1 = Demo Data\UploadVehicleImages.ps1
+		Demo Data\vehicle-032c600e-bea9-46e3-ab4a-ec399a3ff0b1 = Demo Data\vehicle-032c600e-bea9-46e3-ab4a-ec399a3ff0b1
+		Demo Data\vehicle-983cbb99-44c7-4ddd-800c-aa3360f217d4 = Demo Data\vehicle-983cbb99-44c7-4ddd-800c-aa3360f217d4
+		Demo Data\vehicle-db11eaa3-58a2-453d-ac9b-aea8fefbcffa = Demo Data\vehicle-db11eaa3-58a2-453d-ac9b-aea8fefbcffa
+		Demo Data\vehicle-dc716f63-f99b-45f4-87e3-4296e812845c = Demo Data\vehicle-dc716f63-f99b-45f4-87e3-4296e812845c
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99E86728-AFD4-43F3-BAF6-698EDE843672}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Android|Any CPU = Android|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		iOS|Any CPU = iOS|Any CPU
+		Release|Any CPU = Release|Any CPU
+		VSTS Build|Any CPU = VSTS Build|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Android|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Android|Any CPU.Build.0 = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.iOS|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.iOS|Any CPU.Build.0 = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.VSTS Build|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEF7976-6362-43BB-88EA-117BFBD95A71}.VSTS Build|Any CPU.Build.0 = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Android|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Android|Any CPU.Build.0 = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.iOS|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.iOS|Any CPU.Build.0 = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.VSTS Build|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.VSTS Build|Any CPU.Build.0 = Debug|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Android|Any CPU.ActiveCfg = Android|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Android|Any CPU.Build.0 = Android|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.iOS|Any CPU.ActiveCfg = iOS|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.iOS|Any CPU.Build.0 = iOS|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.VSTS Build|Any CPU.ActiveCfg = VSTS Build|Any CPU
+		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.VSTS Build|Any CPU.Build.0 = VSTS Build|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Android|Any CPU.Build.0 = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.iOS|Any CPU.ActiveCfg = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.iOS|Any CPU.Build.0 = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.VSTS Build|Any CPU.ActiveCfg = Release|Any CPU
+		{F2947B40-67FF-4874-A967-B959E16A83CB}.VSTS Build|Any CPU.Build.0 = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Android|Any CPU.Build.0 = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.iOS|Any CPU.ActiveCfg = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.iOS|Any CPU.Build.0 = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.VSTS Build|Any CPU.ActiveCfg = Release|Any CPU
+		{26C0E128-DA4A-46E2-B142-A8133C73E7E4}.VSTS Build|Any CPU.Build.0 = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Android|Any CPU.Build.0 = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.iOS|Any CPU.ActiveCfg = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.iOS|Any CPU.Build.0 = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.VSTS Build|Any CPU.ActiveCfg = Release|Any CPU
+		{422B9356-57B1-415D-9010-DB41E379BD15}.VSTS Build|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://canviz.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccWebProject1 = true
+		SccProjectUniqueName1 = ContosoInsurance.Function
+		SccProjectName1 = ContosoInsurance.Function
+		SccLocalPath1 = ContosoInsurance.Function
+		SccProjectEnlistmentChoice1 = 2
+		SccProjectUniqueName2 = ContosoInsurance.Web\\ContosoInsurance.Web.csproj
+		SccProjectName2 = ContosoInsurance.Web
+		SccLocalPath2 = ContosoInsurance.Web
+		SccProjectUniqueName3 = ContosoInsurance.Common\\ContosoInsurance.Common.csproj
+		SccProjectName3 = ContosoInsurance.Common
+		SccLocalPath3 = ContosoInsurance.Common
+		SccProjectUniqueName4 = ContosoInsurance.API\\ContosoInsurance.API.csproj
+		SccProjectName4 = ContosoInsurance.API
+		SccLocalPath4 = ContosoInsurance.API
+		SccProjectUniqueName5 = ContosoInsurance.MVC\\ContosoInsurance.MVC.csproj
+		SccProjectName5 = ContosoInsurance.MVC
+		SccLocalPath5 = ContosoInsurance.MVC
+		SccWebProject6 = true
+		SccProjectUniqueName6 = ContosoInsurance.Logic
+		SccProjectName6 = ContosoInsurance.Logic
+		SccLocalPath6 = ContosoInsurance.Logic
+		SccProjectEnlistmentChoice6 = 2
+	EndGlobalSection
+EndGlobal
