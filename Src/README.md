@@ -60,11 +60,12 @@ Download and install the following tools to build and/or develop this applicatio
 1. Check to ensure that the bulid is passing  VSTS Build
 1. Fork this repository to your GitHub account
 1. Click on the Deploy to Azure Button
+
     [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fContosoInsurance%2fmaster%2fSrc%2fazuredeploy.json)
 1. Fill out the values in the deployment page
 1. If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
 1. When the deployment steps complete, it will provide a link to the Web App
-1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App ( << siteName >>-function )
+1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App ( `<<siteName>>`-function )
 	1. Get the ClaimAutoApproverUrl:
 		![Get the ClaimAutoApproverUrl](Images/Deployment/01-get-claim-auto-approver-url.png)
 	1. Update appsettings of the Function App:
@@ -76,7 +77,9 @@ Download and install the following tools to build and/or develop this applicatio
 	1. Get the name and key of the storage account.
 		![Get the name and key of the storage account](Images/Deployment/03-get-name-and-key-of-the-storage-account.png)
 	1. Execute /Cloud/InitStorage.ps1:
+		```powershell
 		./InitStorage.ps1 << StorageAccountName >> << StorageAccountKey >>
+		```
 1. Populate demo data
 	1. Execute /Could/Demo Data/MobileClaims.sql again the MobileClaims database. 
 	1. Execute /Could/Demo Data/CRMClaims.sql again the CRMClaims database. 
