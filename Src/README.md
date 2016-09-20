@@ -69,7 +69,7 @@ Download and install the following tools to build and/or develop this applicatio
 
 1. When the deployment steps complete, it will provide a link to the Web App
 
-1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App
+1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App (( << siteName >>-function ))
 
 	1. Get the ClaimAutoApproverUrl:
 
@@ -93,7 +93,35 @@ Download and install the following tools to build and/or develop this applicatio
 
 	1. Execute /Cloud/InitStorage.ps1:
 
-		./InitStorage.ps1 <<StorageAccountName>> <<StorageAccountKey>>
+		./InitStorage.ps1 << StorageAccountName >> << StorageAccountKey >>
+
+1. Populate demo data
+
+	1. Execute /Could/Demo Data/MobileClaims.sql again the MobileClaims database. 
+
+	1. Execute /Could/Demo Data/CRMClaims.sql again the CRMClaims database. 
+
+	1. Upload vehicle images:
+		
+		./UploadVehicleImages.ps1 << StorageAccountName >> << StorageAccountKey >>
+
+1. Configute the API App ( << siteName >>-api ) to use Microsoft Authentication.
+
+	[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
+
+	>**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)
+
+
+1. Configute the Web App ( << siteName >> ) to user AAD Authentication.
+
+	[How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
+
+	>**Note:** Ensure that the Action to take when request is not authenticated is set to Log in with Azure Active Directory
+
+1. Authenticate the Office365 API Connection
+		
+	![Authenticate the Office365 API Connection](Images/Deployment/04-authenticate-office365-api-connection.png)
+	
 
 ## How To: Customize the service ##
 

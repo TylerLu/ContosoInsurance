@@ -155,6 +155,21 @@
           ]
         },
         {
+          "type": "firewallRules",
+          "kind": "v12.0",
+          "name": "AllowAllWindowsAzureIps",
+          "apiVersion": "2014-04-01-preview",
+          "location": "West US",
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          },
+          "resources": [ ],
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ]
+        },
+        {
           "type": "databases",
           "kind": "v12.0,user",
           "name": "MobileClaims",
