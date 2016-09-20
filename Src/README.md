@@ -61,13 +61,24 @@ Download and install the following tools to build and/or develop this applicatio
 1. Fork this repository to your GitHub account
 1. Click on the Deploy to Azure Button
 
-	Deploy to Azure
+    [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FTylerLu%2FContosoInsurance%2Fmaster%2Fsrc%2Fazuredeploy.json)
 
 1. Fill out the values in the deployment page
 
 1. If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
 
 1. When the deployment steps complete, it will provide a link to the Web App
+
+1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App
+
+	1. Get the ClaimAutoApproverUrl:
+
+	![Get the ClaimAutoApproverUrl](/images/deployment/01-get-claim-auto-approver-url.png?raw=true)
+
+	1. Update appsettings of the Function App:
+	
+	![Get the ClaimAutoApproverUrl](/images/deployment/02-update-appsettings-of-the-function-app.png?raw=true)
+
 
 ## How To: Customize the service ##
 
