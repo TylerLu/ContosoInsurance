@@ -85,6 +85,7 @@ Download and install the following tools to build and/or develop this applicatio
 	1. Execute /Could/Demo Data/MobileClaims.sql again the MobileClaims database. 
 	1. Execute /Could/Demo Data/CRMClaims.sql again the CRMClaims database. 
 	1. Upload vehicle images:
+
 		```
 		./UploadVehicleImages.ps1 <<StorageAccountName>> <<StorageAccountKey>>
 		```
