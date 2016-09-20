@@ -7,7 +7,6 @@
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div class="nav">
@@ -16,7 +15,7 @@
             <label class="font-segeo-ui">Contoso Insurance</label>
         </div>
         <div class="user-info">
-            <div class="login-name roboto-regular">@HttpContext.Current.User.Identity.Name</div>
+            <div class="login-name roboto-regular">@ContosoInsurance.MVC.Helper.AuthenticationHelper.GetUserName()</div>
             <div class="login-status">
                 <img src="/Content/images/user.png" />
             </div>

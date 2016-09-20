@@ -45,7 +45,7 @@ namespace ContosoInsurance.MVC.Controllers
                         dueDate = i.DateTime,
                         claimStatus = i.Status.ToString(),
                         damageAssessment = i.DamageAssessment.ToString()
-                    });
+                    }).OrderBy(i => i.claimId);
             var result = await queryable.ToArrayAsync();
             return ToJson(result);
         }

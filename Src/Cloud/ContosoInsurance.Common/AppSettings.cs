@@ -12,6 +12,7 @@ namespace ContosoInsurance.Common
 
         public const int BlobReadExpireMinitues = 5;
 
+        public const string AADClaimNameType = "name";
         public static class Queues
         {
             public static string MobileClaims = "mobile-claims";
