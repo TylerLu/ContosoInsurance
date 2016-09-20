@@ -90,11 +90,17 @@ Download and install the following tools to build and/or develop this applicatio
 		./UploadVehicleImages.ps1 <<StorageAccountName>> <<StorageAccountKey>>
 		```
 1. Configute the API App (`<<siteName>>-api`) to use Microsoft Authentication.
+
 	[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
+	
 	>**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)
+
 1. Configute the Web App (`<<siteName>>`) to user AAD Authentication.
+	
 	[How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
+	
 	>**Note:** Ensure that the Action to take when request is not authenticated is set to Log in with Azure Active Directory
+
 1. Authenticate the Office365 API Connection
 	![Authenticate the Office365 API Connection](Images/Deployment/04-authenticate-office365-api-connection.png)
 
