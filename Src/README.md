@@ -79,6 +79,21 @@ Download and install the following tools to build and/or develop this applicatio
 	
 		![Update appsettings of the Function App](Images/Deployment/02-update-appsettings-of-the-function-app.png)
 
+1. Init Databases
+
+	1. Execute /Could/InitMobileClaims.sql again the MobileClaims database. 
+
+	1. Execute /Could/InitCRMClaims.sql again the CRMClaims database. 
+
+1. Init the storage account
+
+	1. Get the name and key of the storage account.
+
+		![Get the name and key of the storage account](Images/Deployment/03-get-name-and-key-of-the-storage-account.png)
+
+	1. Execute /Cloud/InitStorage.ps1:
+
+		./InitStorage.ps1 <<StorageAccountName>> <<StorageAccountKey>>
 
 ## How To: Customize the service ##
 
