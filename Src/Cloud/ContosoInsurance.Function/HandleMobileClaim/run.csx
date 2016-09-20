@@ -8,6 +8,7 @@
 
 #load "MobileClaim.csx"
 #load "NewClaim.csx"
+#load "OCR.csx"
 
 using Microsoft.ApplicationInsights;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -43,13 +44,14 @@ private static async Task HandleMobileClaim(MobileClaim claim,
     ICloudBlob otherPartyCardImage, ICloudBlob otherPartyLicenseImage, ICloudBlob otherPartyPlateImages,
     ICloudBlob claimImage01, ICloudBlob claimImage02, ICloudBlob claimImage03, ICloudBlob claimImage04, ICloudBlob claimImage05,
     IAsyncCollector<NewClaim> newClaims, TelemetryClient telemetryClient)
-{    
+{
     var mobileClaim = await GetMobileClaimAsync(claim.Id);
     telemetryClient.TraceStatus(FunctionName, claim.Id, "Data queried from Mobile Claims SQL database", OperationStatus.Success);
 
     var CRMClaim = await GetCRMClaimAsync(mobileClaim,
         otherPartyCardImage, otherPartyLicenseImage, otherPartyPlateImages,
-        new[] { claimImage01, claimImage02, claimImage03, claimImage04, claimImage05 });
+        new[] { claimImage01, claimImage02, claimImage03, claimImage04, claimImage05 },
+        telemetryClient);
 
     // Write to CRM Claims Database 
     await AddCRMClaimAsync(CRMClaim);
@@ -62,14 +64,6 @@ private static async Task HandleMobileClaim(MobileClaim claim,
         CorrelationId = claim.Id
     });
     telemetryClient.TraceStatus(FunctionName, claim.Id, "Data pushed into new-claims queue", OperationStatus.Success);
-
-    // Invoke PreProcessorClaim Function
-    await Utils.PostTo(Settings.PreProcessorClaimUrl, new
-    {
-        id = CRMClaim.Id,
-        correlationId = claim.Id
-    });
-    telemetryClient.TraceStatus(FunctionName, claim.Id, "Invoked PreProcessorClaimUrl Azure Function", OperationStatus.Success);
 }
 
 private static async Task<Mobile.Claim> GetMobileClaimAsync(string id)
@@ -84,15 +78,35 @@ private static async Task<Mobile.Claim> GetMobileClaimAsync(string id)
 
 private static async Task<CRM.Claim> GetCRMClaimAsync(Mobile.Claim mobileClaim,
     ICloudBlob otherPartyCardImage, ICloudBlob otherPartyLicenseImage, ICloudBlob otherPartyPlateImages,
-    IEnumerable<ICloudBlob> claimImages)
+    IEnumerable<ICloudBlob> claimImages, TelemetryClient telemetryClient)
 {
     var otherParty = new CRM.OtherParty
     {
         MobilePhone = mobileClaim.OtherPartyMobilePhone,
         InsuranceCardImageUrl = await Utils.GetBlobUriAsync(otherPartyCardImage),
-        LicensePlateImageUrl = await Utils.GetBlobUriAsync(otherPartyPlateImages),
-        DriversLicenseImageUrl = await Utils.GetBlobUriAsync(otherPartyLicenseImage)
+        DriversLicenseImageUrl = await Utils.GetBlobUriAsync(otherPartyLicenseImage),
+        LicensePlateImageUrl = await Utils.GetBlobUriAsync(otherPartyPlateImages)
     };
+    if (otherPartyCardImage != null)
+    {
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Started");
+        await OCR.UpdateAsync(otherParty, CRM.ImageKind.InsuranceCard, await otherPartyCardImage.OpenReadAsync());
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Complete");
+    }
+    if (otherPartyLicenseImage != null)
+    {
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Started");
+        await OCR.UpdateAsync(otherParty, CRM.ImageKind.DriverLicense, await otherPartyLicenseImage.OpenReadAsync());
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Complete");
+    }
+    if (otherPartyPlateImages != null)
+    {
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Started");
+        await OCR.UpdateAsync(otherParty, CRM.ImageKind.LicensePlate, await otherPartyPlateImages.OpenReadAsync());
+        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Complete");
+    }    
+    if (!string.IsNullOrEmpty(otherParty.DriversLicenseNumber))
+        otherParty.DriversLicenseNumber = otherParty.DriversLicenseNumber.Replace(" ", "");
 
     var CRMClaim = new CRM.Claim
     {
@@ -106,7 +120,6 @@ private static async Task<CRM.Claim> GetCRMClaimAsync(Mobile.Claim mobileClaim,
         CorrelationId = Guid.Parse(mobileClaim.Id),
         Description = mobileClaim.Description,
     };
-
     foreach (var claimImage in claimImages)
     {
         if (!await claimImage.ExistsAsync()) continue;
@@ -117,6 +130,7 @@ private static async Task<CRM.Claim> GetCRMClaimAsync(Mobile.Claim mobileClaim,
             ImageUrl = claimImage.Uri.AbsoluteUri
         });
     }
+
     return CRMClaim;
 }
 

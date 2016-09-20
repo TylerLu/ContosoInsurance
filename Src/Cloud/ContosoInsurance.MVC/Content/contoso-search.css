@@ -13,28 +13,30 @@
 .search-main .content .btn-section > a{text-align: center;background-color: #059444;cursor: pointer;width: 100%;height: 45px;display: inline-block;color: #fff;font-size: 24px;padding-top: 10px;text-transform: uppercase;font-family: robotomedium;}
 
 /*grid*/
+.grid-content{margin: 0 auto;width: 1200px;}
 .claim-grid {padding-top:80px;}
 .claim-grid table{width:100%;border:1px solid #7B88AA;font-size:12px;}
-.claim-grid th{background-color:#7B88AA;color:#fff;text-transform:uppercase;font-size: 14px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
-.claim-grid th:nth-child(1){width:68px;padding-left:15px;}
-.claim-grid tr>td:nth-child(1){width:68px;padding-left:15px;}
+.claim-grid table thead,.claim-grid table tbody{float:none;}
+.claim-grid tr:nth-child(2n+1){background-color:#F4F4F4;}
+.claim-grid th{background-color:#7B88AA;color:#fff;text-transform:uppercase;font-size: 24px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
+.claim-grid th:nth-child(1){width:8%;padding-left:20px;}
+.claim-grid tr>td:nth-child(1){width:8%;padding-left:20px;}
 
-.claim-grid th:nth-child(2){width:172px;padding-left:5px;}
-.claim-grid tr>td:nth-child(2){width:175px;padding-left:7px;}
+.claim-grid th:nth-child(2){width:25%;padding-left:20px;}
+.claim-grid tr>td:nth-child(2){width:25%;padding-left:20px;}
 
-.claim-grid th:nth-child(3){width:88px;padding-left:5px;}
-.claim-grid tr>td:nth-child(3){width:88px;padding-left:7px;}
+.claim-grid th:nth-child(3){width:14%;padding-left:20px;}
+.claim-grid tr>td:nth-child(3){width:14%;padding-left:20px;}
 
-.claim-grid th:nth-child(4){width:95px;padding-left:5px;}
-.claim-grid tr>td:nth-child(4){width:107px;padding-left:5px;}
+.claim-grid th:nth-child(4){width:14%;padding-left:20px;}
+.claim-grid tr>td:nth-child(4){width:14%;padding-left:20px;}
 
-.claim-grid th:nth-child(5){width:100px;padding-left:5px;}
-.claim-grid tr>td:nth-child(5){width:95px;padding-left:5px;}
+.claim-grid th:nth-child(5){width:14%;padding-left:20px;}
+.claim-grid tr>td:nth-child(5){width:14%;padding-left:20px;}
 
-.claim-grid th:nth-child(6){width:182px;border-right:0;padding-left:5px;}
-.claim-grid tr>td:nth-child(6){width:182px;border-right:0;padding-left:5px;}
+.claim-grid th:nth-child(6){width:25%;border-right:0;padding-left:20px;}
+.claim-grid tr>td:nth-child(6){width:25%;border-right:0;padding-left:20px;}
 
-.claim-grid tr:first-child{height:25px;}
-.claim-grid tr{height:30px;}
+.claim-grid tr{height:40px;}
 .claim-grid td.claim-id{color:#7C89A9; cursor:pointer;}
-.claim-grid td{color:#000;font-size:12px;font-family: robotoregular;}
+.claim-grid td{color:#000;font-size:22px;font-family: robotoregular;}

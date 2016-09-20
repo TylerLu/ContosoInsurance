@@ -1,12 +1,16 @@
 ﻿using ContosoInsurance.API.Helpers;
+using ContosoInsurance.Common.Data.Migrations;
 using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Authentication;
 using Microsoft.Azure.Mobile.Server.Config;
 using Microsoft.Azure.Mobile.Server.Tables.Config;
 using Owin;
 using System.Configuration;
+using System.Data.Entity;
 using System.Web.Http;
 using System.Web.Http.Validation;
+using CRM = ContosoInsurance.Common.Data.CRM;
+using Mobile = ContosoInsurance.Common.Data.Mobile;
 
 namespace ContosoInsurance.API
 {
@@ -29,6 +33,9 @@ namespace ContosoInsurance.API
                 //.AddPushNotifications()
                 //.MapLegacyCrossDomainController()
                 .ApplyTo(config);
+
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CRM.ClaimsDbContext, CRMClaimsConfiguration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Mobile.ClaimsDbContext, MobileClaimsConfiguration>());
 
             MobileAppSettingsDictionary settings = config.GetMobileAppSettingsProvider().GetMobileAppSettings();
 

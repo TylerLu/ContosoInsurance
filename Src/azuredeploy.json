@@ -1,0 +1,914 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "type": "string",
+      "defaultValue": "ContosoInsurance",
+      "metadata": {
+        "description": "The name of the web client app that you wish to create."
+      }
+    },
+    "sqlAdministratorLoginUsername": {
+      "type": "string",
+      "defaultValue": "ContosoInsurance",
+      "metadata": {
+        "description": "The database admin username that you wish to create."
+      }
+    },
+    "sqlAdministratorLoginPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for database admin user that you wish to use."
+      }
+    },
+    "hostingPlanName": {
+      "type": "string",
+      "defaultValue": "ContosoInsurance",
+      "metadata": {
+        "description": "The hosting service plan name that you wish to create."
+      }
+    },
+    "sourceCodeRepositoryURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/azure-appservice-samples/ContosoInsurance",
+      "metadata": {
+        "description": "Source code repository URL"
+      }
+    },
+    "sourceCodeBranch": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "Sourcecode Repo branch"
+      }
+    },
+    "sourceCodeManualIntegration": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Use 'true' if you are deploying from the base repo, 'false' if you are deploying from your own fork. If you're using 'false', make sure you have admin permissions to the repo. If you get an error, you should add GitHub integration to another web app manually, so that you get a GitHub access token associated with your Azure Subscription."
+      }
+    },
+    "claimsAdjusterEmail": {
+      "type": "string",
+      "defaultValue": "katiej@cand3.onmicrosoft.com"
+    },
+    "visionServiceSubscriptionKey": {
+      "type": "string",
+      "defaultValue": "16fee8b5b10e440cb3c05f5dbeced6e7",
+      "metadata": {
+        "description": "https://www.microsoft.com/cognitive-services/en-us/computer-vision-api"
+      }
+    }
+  },
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "lowerSiteName": "[toLower(parameters('siteName'))]",
+    "nameSuffix": "[substring(uniqueString(resourceGroup().id), 0, 6)]",
+    "office365ConnectionName": "[concat(variables('lowerSiteName'), '-office365')]",
+    "storageAccountName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
+    "sqlServerName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-dbserver')]",
+    "applicationInsightsName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
+    "functionAppName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-function')]",
+    "claimAutoApproverName": "[concat(parameters('siteName'), 'ClaimAutoApprover')]",
+    "claimManualApproverName": "[concat(parameters('siteName'), 'ClaimManualApprover')]",
+    "webSiteName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
+    "apiSiteName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-api')]",
+    "claimDetailsPageBaseUrl": "[concat('https://', variables('webSiteName'), '.azurewebsites.net/claims/details/')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "location": "[variables('location')]",
+      "name": "[variables('office365ConnectionName')]",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id,'/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
+        },
+        "displayName": "[variables('office365ConnectionName')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "name": "[parameters('hostingPlanName')]",
+      "apiVersion": "2015-08-01",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic",
+        "size": "B1",
+        "family": "B",
+        "capacity": 1
+      },
+      "properties": {
+        "name": "[parameters('hostingPlanName')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "kind": "web",
+      "name": "[variables('applicationInsightsName')]",
+      "apiVersion": "2014-04-01",
+      "location": "Central US",
+      "properties": {
+        "ApplicationId": "[variables('applicationInsightsName')]"
+      }
+    },
+    {
+      "apiVersion": "2016-01-01",
+      "location": "[variables('location')]",
+      "name": "[variables('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "sku": {
+        "name": "Standard_RAGRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage"
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "kind": "v12.0",
+      "name": "[variables('sqlServerName')]",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[variables('location')]",
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdministratorLoginUsername')]",
+        "administratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
+        "version": "12.0"
+      },
+      "resources": [
+        {
+          "type": "databases",
+          "kind": "v12.0,user",
+          "name": "CRMClaims",
+          "apiVersion": "2014-04-01-preview",
+          "location": "[variables('location')]",
+          "properties": {
+            "edition": "Basic",
+            "maxSizeBytes": "2147483648"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ]
+        },
+        {
+          "type": "databases",
+          "kind": "v12.0,user",
+          "name": "MobileClaims",
+          "apiVersion": "2014-04-01-preview",
+          "location": "[variables('location')]",
+          "properties": {
+            "edition": "Basic",
+            "maxSizeBytes": "2147483648"
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "kind": "functionapp",
+      "name": "[variables('functionAppName')]",
+      "apiVersion": "2015-08-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "name": "[variables('functionAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "siteConfig": {
+          "AlwaysOn": true
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "appsettings",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('functionAppName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]"
+          ],
+          "properties": {
+            "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "MS_AzureStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "Contoso_ClaimAutoApproverUrl": "",
+            "Contoso_ClaimsAdjusterEmail": "[parameters('claimsAdjusterEmail')]",
+            "Contoso_ClaimDetailsPageBaseUrl": "[variables('claimDetailsPageBaseUrl')]",
+            "MS_VisionServiceSubscriptionKey": "[parameters('visionServiceSubscriptionKey')]",
+            "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "FUNCTIONS_EXTENSION_VERSION": "latest",
+            "command": "src\\Cloud\\ContosoInsurance.Function\\deploy.cmd"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "connectionstrings",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', variables('functionAppName'))]",
+            "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+          ],
+          "properties": {
+            "MobileClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=MobileClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            },
+            "CRMClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=CRMClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            }
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('functionAppName'))]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('functionAppName'), 'appsettings')]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('functionAppName'), 'connectionstrings')]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "branch": "[parameters('sourceCodeBranch')]",
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+          }
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]",
+        "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
+        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "name": "[variables('claimAutoApproverName')]",
+      "apiVersion": "2016-06-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": { },
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "claimDetailsPageBaseUrl": {
+                      "type": "string"
+                    },
+                    "claimsAdjusterEmail": {
+                      "type": "string"
+                    },
+                    "correlationId": {
+                      "type": "string"
+                    },
+                    "customerEmail": {
+                      "type": "string"
+                    },
+                    "customerName": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "int"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "correlationId",
+                    "customerName",
+                    "customerEmail",
+                    "claimsAdjusterEmail",
+                    "claimDetailsPageBaseUrl"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "actions": {
+            "AutoApproveClaim": {
+              "runAfter": {
+                "TrackCustomEvent_-_Auto_Approval_Started": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "id": "@triggerBody()['id']"
+                },
+                "function": {
+                  "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/AutoApproveClaim')]"
+                }
+              }
+            },
+            "Is_Claim_Auto_Approved": {
+              "actions": {
+                "Send_Auto_Approved_Email": {
+                  "runAfter": {
+                    "TrackCustomEvent_-_Claim_Auto_Approved": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was automatically approved. You can proceed to schedule repairs. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>",
+                      "Importance": "Normal",
+                      "IsHtml": true,
+                      "Subject": "Claim Automatically Approved",
+                      "To": "@{triggerBody()['customerEmail']}"
+                    },
+                    "host": {
+                      "api": {
+                        "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                      },
+                      "connection": {
+                        "name": "@parameters('$connections')['office365']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "path": "/Mail"
+                  }
+                },
+                "TrackCustomEvent_-_Auto_Approval_Email_Sent": {
+                  "runAfter": {
+                    "Send_Auto_Approved_Email": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "Function",
+                  "inputs": {
+                    "body": {
+                      "EventName": "Logic App Status",
+                      "Metrics": {
+                        "Logic App": 0
+                      },
+                      "Properties": {
+                        "CorrelationId": "@triggerBody()['correlationId']",
+                        "Description": "Auto Approval Email Sent to @{triggerBody()['customerEmail']}",
+                        "Host": "To be determined",
+                        "LogType": "Sta tus Log",
+                        "RunName": "@workflow()['run']['name']",
+                        "Status": "Success"
+                      }
+                    },
+                    "function": {
+                      "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                    }
+                  }
+                },
+                "TrackCustomEvent_-_Claim_Auto_Approved": {
+                  "runAfter": { },
+                  "type": "Function",
+                  "inputs": {
+                    "body": {
+                      "EventName": "Logic App Status",
+                      "Metrics": {
+                        "Logic App": 0
+                      },
+                      "Properties": {
+                        "CorrelationId": "@triggerBody()['correlationId']",
+                        "Description": "Claim Auto Approved",
+                        "Host": "To be determined",
+                        "LogType": "Status Log",
+                        "RunName": "@workflow()['run']['name']"
+                      }
+                    },
+                    "function": {
+                      "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "TrackCustomEvent_-_Auto_Approval_Complete": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Send_Auto_Rejected_Email": {
+                    "runAfter": {
+                      "TrackCustomEvent_-_Claim_Auto_Rejected": [
+                        "Succeeded"
+                      ]
+                    },
+                    "type": "ApiConnection",
+                    "inputs": {
+                      "body": {
+                        "Body": "<p>Claim number @{triggerBody()['id']} was not auto approved. Please review the claim and approve or reject it.</p>\n<p><a href=\"@{triggerBody()['claimDetailsPageBaseUrl']}@{triggerBody()['id']}\">@{triggerBody()['claimDetailsPageBaseUrl']}@{triggerBody()['id']}</p>",
+                        "Importance": "Normal",
+                        "IsHtml": true,
+                        "Subject": "Claim Pending Review",
+                        "To": "@{triggerBody()['claimsAdjusterEmail']}"
+                      },
+                      "host": {
+                        "api": {
+                          "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                        },
+                        "connection": {
+                          "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                      },
+                      "method": "post",
+                      "path": "/Mail"
+                    }
+                  },
+                  "TrackCustomEvent_-_Auto_Rejected_Email_Sent": {
+                    "runAfter": {
+                      "Send_Auto_Rejected_Email": [
+                        "Succeeded"
+                      ]
+                    },
+                    "type": "Function",
+                    "inputs": {
+                      "body": {
+                        "EventName": "Logic App Status",
+                        "Metrics": {
+                          "Logic App": 0
+                        },
+                        "Properties": {
+                          "CorrelationId": "@triggerBody()['correlationId']",
+                          "Description": "Auto Rejected Email Sent to @{triggerBody()['claimsAdjusterEmail']}",
+                          "Host": "To be determined",
+                          "LogType": "Status Log",
+                          "RunName": "@workflow()['run']['name']",
+                          "Status": "Success"
+                        }
+                      },
+                      "function": {
+                        "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                      }
+                    }
+                  },
+                  "TrackCustomEvent_-_Claim_Auto_Rejected": {
+                    "runAfter": { },
+                    "type": "Function",
+                    "inputs": {
+                      "body": {
+                        "EventName": "Logic App Status",
+                        "Metrics": {
+                          "Logic App": 0
+                        },
+                        "Properties": {
+                          "CorrelationId": "@triggerBody()['correlationId']",
+                          "Description": "Claim Auto Rejected",
+                          "Host": "To be determined",
+                          "LogType": "Status Log",
+                          "RunName": "@workflow()['run']['name']"
+                        }
+                      },
+                      "function": {
+                        "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                      }
+                    }
+                  }
+                }
+              },
+              "expression": "@equals(body('AutoApproveClaim'), 'Approved')",
+              "type": "If"
+            },
+            "Response": {
+              "runAfter": {
+                "Is_Claim_Auto_Approved": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Response",
+              "inputs": {
+                "body": "Done",
+                "statusCode": 200
+              }
+            },
+            "TrackCustomEvent_-_Auto_Approval_Complete": {
+              "runAfter": {
+                "AutoApproveClaim": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "EventName": "Logic App Status",
+                  "Metrics": {
+                    "Logic App": 0
+                  },
+                  "Properties": {
+                    "CorrelationId": "@triggerBody()['correlationId']",
+                    "Description": "Auto Approval Complete",
+                    "Host": "To be determined",
+                    "LogType": "Status Log",
+                    "RunName": "@workflow()['run']['name']"
+                  }
+                },
+                "function": {
+                  "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                }
+              }
+            },
+            "TrackCustomEvent_-_Auto_Approval_Started": {
+              "runAfter": { },
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "EventName": "Logic App Status",
+                  "Metrics": {
+                    "Logic App": 0
+                  },
+                  "Properties": {
+                    "CorrelationId": "@triggerBody()['correlationId']",
+                    "Description": "Auto Approval Started",
+                    "Host": "To be determined",
+                    "LogType": "Status Log",
+                    "RunName": "@workflow()['run']['name']"
+                  }
+                },
+                "function": {
+                  "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                }
+              }
+            }
+          },
+          "outputs": { }
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "office365": {
+                "id": "[concat(subscription().id,'/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', variables('office365ConnectionName'))]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', variables('office365ConnectionName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
+        "[resourceId('Microsoft.Web/Sites/sourcecontrols', variables('functionAppName'), 'web')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "name": "[variables('claimManualApproverName')]",
+      "apiVersion": "2016-06-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": { },
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "approved": {
+                      "type": "bool"
+                    },
+                    "customerEmail": {
+                      "type": "string"
+                    },
+                    "customerName": {
+                      "type": "string"
+                    },
+                    "damageAssessment": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "int"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "damageAssessment",
+                    "approved",
+                    "customerEmail",
+                    "customerName"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "actions": {
+            "HandleManualClaim": {
+              "runAfter": { },
+              "type": "Function",
+              "inputs": {
+                "body": "@triggerBody()",
+                "function": {
+                  "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/HandleManualClaim')]"
+                }
+              }
+            },
+            "Is_Claim_Approved": {
+              "actions": {
+                "Send_Manual_Approved_Email": {
+                  "runAfter": { },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was manually approved. You can proceed to schedule repairs. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>\n\n\n",
+                      "Importance": "Normal",
+                      "IsHtml": true,
+                      "Subject": "Claim Approved",
+                      "To": "@{triggerBody()['customerEmail']}"
+                    },
+                    "host": {
+                      "api": {
+                        "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                      },
+                      "connection": {
+                        "name": "@parameters('$connections')['office365']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "path": "/Mail"
+                  }
+                },
+                "TrackCustomEvent_-_Manual_Approved_Email_Sent": {
+                  "runAfter": {
+                    "Send_Manual_Approved_Email": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "Function",
+                  "inputs": {
+                    "body": {
+                      "EventName": "Logic App Status",
+                      "Metrics": {
+                        "Logic App": 0
+                      },
+                      "Properties": {
+                        "CorrelationId": "@triggerBody()['correlationId']",
+                        "Description": "Manual Approval Email Sent to @{triggerBody()['customerEmail']}",
+                        "Host": "To be determined",
+                        "LogType": "Status Log",
+                        "RunName": "@workflow()['run']['name']",
+                        "Status": "Success"
+                      }
+                    },
+                    "function": {
+                      "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "HandleManualClaim": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Send_Manual_Rejected_Email": {
+                    "runAfter": { },
+                    "type": "ApiConnection",
+                    "inputs": {
+                      "body": {
+                        "Body": "<p>Hello @{triggerBody()['customerName']},</p>\n<p>The claim you recently submitted was not approved by the claims adjuster. If you have any questions, please contact your agent.</p>\n<p>Claim number: @{triggerBody()['id']}</p>\n",
+                        "Importance": "Normal",
+                        "IsHtml": true,
+                        "Subject": "Claim Rejected",
+                        "To": "@{triggerBody()['customerEmail']}"
+                      },
+                      "host": {
+                        "api": {
+                          "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
+                        },
+                        "connection": {
+                          "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                      },
+                      "method": "post",
+                      "path": "/Mail"
+                    }
+                  },
+                  "TrackCustomEvent_-_Manual_Rejected_Email_Sent": {
+                    "runAfter": {
+                      "Send_Manual_Rejected_Email": [
+                        "Succeeded"
+                      ]
+                    },
+                    "type": "Function",
+                    "inputs": {
+                      "body": {
+                        "EventName": "Logic App Status",
+                        "Metrics": {
+                          "Logic App": 0
+                        },
+                        "Properties": {
+                          "CorrelationId": "@triggerBody()['correlationId']",
+                          "Description": "Manual Rejected Email Sent to @{triggerBody()['customerEmail']}",
+                          "Host": "To be determined",
+                          "LogType": "Status Log",
+                          "RunName": "@workflow()['run']['name']",
+                          "Status": "Success"
+                        }
+                      },
+                      "function": {
+                        "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/TrackCustomEvent')]"
+                      }
+                    }
+                  }
+                }
+              },
+              "expression": "@bool(triggerBody()['approved'])",
+              "type": "If"
+            },
+            "Response": {
+              "runAfter": {
+                "Is_Claim_Approved": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Response",
+              "inputs": {
+                "statusCode": 200
+              }
+            }
+          }
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "office365": {
+                "id": "[concat(subscription().id,'/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', variables('office365ConnectionName'))]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', variables('office365ConnectionName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]",
+        "[resourceId('Microsoft.Web/Sites/sourcecontrols', variables('functionAppName'), 'web')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('apiSiteName')]",
+      "apiVersion": "2015-08-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "name": "[variables('apiSiteName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "appsettings",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('apiSiteName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]"
+          ],
+          "properties": {
+            "MS_AzureStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "command": "src\\Cloud\\ContosoInsurance.API\\deploy.cmd"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "connectionstrings",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('apiSiteName'))]",
+            "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+          ],
+          "properties": {
+            "MobileClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=MobileClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            },
+            "CRMClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=CRMClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            }
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('apiSiteName'))]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('apiSiteName'), 'appsettings')]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('apiSiteName'), 'connectionstrings')]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "branch": "[parameters('sourceCodeBranch')]",
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+          }
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('webSiteName')]",
+      "apiVersion": "2015-08-01",
+      "location": "[variables('location')]",
+      "properties": {
+        "name": "[variables('webSiteName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "appsettings",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('webSiteName'))]",
+            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+            "[resourceId('Microsoft.Logic/workflows/', variables('claimManualApproverName'))]"
+          ],
+          "properties": {
+            "MS_AzureStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "Contoso_ClaimManualApproverUrl": "[listCallbackURL(concat(resourceId('Microsoft.Logic/workflows/', variables('claimManualApproverName')), '/triggers/manual'), '2016-06-01').value]",
+            "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "command": "src\\Cloud\\ContosoInsurance.MVC\\deploy.cmd"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "connectionstrings",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', variables('webSiteName'))]",
+            "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+          ],
+          "properties": {
+            "MobileClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=MobileClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            },
+            "CRMClaims": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=CRMClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+              "type": "SQLAzure"
+            }
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('webSiteName'))]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('webSiteName'), 'appsettings')]",
+            "[resourceId('Microsoft.Web/Sites/config', variables('webSiteName'), 'connectionstrings')]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "branch": "[parameters('sourceCodeBranch')]",
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+          }
+        }
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
+        "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Logic/workflows/', variables('claimManualApproverName'))]"
+      ]
+    }
+  ]
+}

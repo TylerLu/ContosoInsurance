@@ -36,31 +36,31 @@
         <div class="btn-section">
             <a data-bind="click:searchForm.doSearch">Search</a>
         </div>
-        <div style="display:none;" data-bind="visible:claimGrid.afterQuery">
-            <div class="claim-grid">
-                <table cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>damage Assessment</th>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach:claimGrid.claims">
-                        <tr>
-                            <td class="claim-id" data-bind="click:$root.claimGrid.showDetail,text:claimId"></td>
-                            <td data-bind="text:fullName"></td>
-                            <td data-bind="text:claimType"></td>
-                            <td data-bind="text:dueDate"></td>
-                            <td data-bind="text:claimStatus"></td>
-                            <td data-bind="text:damageAssessment"></td>
-                        </tr> 
-                    </tbody> 
-                </table>
-            </div>
+    </div>
+    <div class="grid-content" style="display:none;" data-bind="visible:claimGrid.afterQuery">
+        <div class="claim-grid">
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>damage Assessment</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:claimGrid.claims">
+                    <tr>
+                        <td class="claim-id" data-bind="click:$root.claimGrid.showDetail,text:claimId"></td>
+                        <td data-bind="text:fullName"></td>
+                        <td data-bind="text:claimType"></td>
+                        <td data-bind="text:dueDate"></td>
+                        <td data-bind="text:claimStatus"></td>
+                        <td data-bind="text:damageAssessment"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

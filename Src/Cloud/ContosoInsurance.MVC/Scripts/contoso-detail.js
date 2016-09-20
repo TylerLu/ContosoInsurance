@@ -51,6 +51,8 @@ var claimDetailFn = function () {
                 var viewModel = $.parseJSON(detail.$data);
                 viewModel.dueDate = moment(viewModel.dueDate).format("MM-DD-YY");
                 viewModel.dateTime = moment(viewModel.dateTime).format("MM-DD-YY");
+                viewModel.customer.dob = moment(viewModel.customer.dob).format("MM-DD-YYYY");
+                viewModel.customer.policyStart = moment(viewModel.customer.policyStart).format("MM-DD-YYYY");
                 viewModel.timeLocation = {
                     hour:moment(viewModel.dateTime).format("h"),
                     min : moment(viewModel.dateTime).format("mm"),

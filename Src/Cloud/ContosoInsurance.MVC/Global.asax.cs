@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using ContosoInsurance.Common.Data.CRM;
+using ContosoInsurance.Common.Data.Migrations;
+using System.Data.Entity;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -12,6 +15,7 @@ namespace ContosoInsurance.MVC
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ClaimsDbContext, CRMClaimsConfiguration>());
         }
     }
 }

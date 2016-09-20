@@ -72,6 +72,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo Data", "Demo Data", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99E86728-AFD4-43F3-BAF6-698EDE843672}"
 	ProjectSection(SolutionItems) = preProject
+		Init CRMClaims.sql = Init CRMClaims.sql
+		Init MobileClaims.sql = Init MobileClaims.sql
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -104,16 +106,6 @@ Global
 		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.VSTS Build|Any CPU.ActiveCfg = Debug|Any CPU
 		{C30DB751-AC49-482C-A99C-1BA18366F6F0}.VSTS Build|Any CPU.Build.0 = Debug|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Android|Any CPU.ActiveCfg = Android|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Android|Any CPU.Build.0 = Android|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.iOS|Any CPU.ActiveCfg = iOS|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.iOS|Any CPU.Build.0 = iOS|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.VSTS Build|Any CPU.ActiveCfg = VSTS Build|Any CPU
-		{6A1D9DC3-232B-420D-ABDB-492747C855FD}.VSTS Build|Any CPU.Build.0 = VSTS Build|Any CPU
 		{F2947B40-67FF-4874-A967-B959E16A83CB}.Android|Any CPU.ActiveCfg = Release|Any CPU
 		{F2947B40-67FF-4874-A967-B959E16A83CB}.Android|Any CPU.Build.0 = Release|Any CPU
 		{F2947B40-67FF-4874-A967-B959E16A83CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -158,19 +150,19 @@ Global
 		SccProjectName1 = ContosoInsurance.Function
 		SccLocalPath1 = ContosoInsurance.Function
 		SccProjectEnlistmentChoice1 = 2
-		SccProjectUniqueName3 = ContosoInsurance.Common\\ContosoInsurance.Common.csproj
-		SccProjectName3 = ContosoInsurance.Common
-		SccLocalPath3 = ContosoInsurance.Common
-		SccProjectUniqueName4 = ContosoInsurance.API\\ContosoInsurance.API.csproj
-		SccProjectName4 = ContosoInsurance.API
-		SccLocalPath4 = ContosoInsurance.API
-		SccProjectUniqueName5 = ContosoInsurance.MVC\\ContosoInsurance.MVC.csproj
-		SccProjectName5 = ContosoInsurance.MVC
-		SccLocalPath5 = ContosoInsurance.MVC
-		SccWebProject6 = true
-		SccProjectUniqueName6 = ContosoInsurance.Logic
-		SccProjectName6 = ContosoInsurance.Logic
-		SccLocalPath6 = ContosoInsurance.Logic
-		SccProjectEnlistmentChoice6 = 2
+		SccProjectUniqueName2 = ContosoInsurance.Common\\ContosoInsurance.Common.csproj
+		SccProjectName2 = ContosoInsurance.Common
+		SccLocalPath2 = ContosoInsurance.Common
+		SccProjectUniqueName3 = ContosoInsurance.API\\ContosoInsurance.API.csproj
+		SccProjectName3 = ContosoInsurance.API
+		SccLocalPath3 = ContosoInsurance.API
+		SccProjectUniqueName4 = ContosoInsurance.MVC\\ContosoInsurance.MVC.csproj
+		SccProjectName4 = ContosoInsurance.MVC
+		SccLocalPath4 = ContosoInsurance.MVC
+		SccWebProject5 = true
+		SccProjectUniqueName5 = ContosoInsurance.Logic
+		SccProjectName5 = ContosoInsurance.Logic
+		SccLocalPath5 = ContosoInsurance.Logic
+		SccProjectEnlistmentChoice5 = 2
 	EndGlobalSection
 EndGlobal

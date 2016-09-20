@@ -3,7 +3,7 @@ namespace ContosoInsurance.Common.Data.Migrations
     using Microsoft.Azure.Mobile.Server.Tables;
     using System.Data.Entity.Migrations;
 
-    internal sealed class CRMClaimsConfiguration : DbMigrationsConfiguration<CRM.ClaimsDbContext>
+    public sealed class CRMClaimsConfiguration : DbMigrationsConfiguration<CRM.ClaimsDbContext>
     {
         public CRMClaimsConfiguration()
         {
