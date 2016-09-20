@@ -73,14 +73,11 @@ Download and install the following tools to build and/or develop this applicatio
 
 	1. Get the ClaimAutoApproverUrl:
 
-	![Contoso Moments Icon](appicon-small.png)
-
-	![Contoso Moments Icon](Images/Deployment/01-get-claim-auto-approver-url.png)
-
+		![Get the ClaimAutoApproverUrl](Images/Deployment/01-get-claim-auto-approver-url.png)
 
 	1. Update appsettings of the Function App:
 	
-	![Get the ClaimAutoApproverUrl](Images/Deployment/02-update-appsettings-of-the-function-app.png)
+		![Update appsettings of the Function App](Images/Deployment/02-update-appsettings-of-the-function-app.png)
 
 
 ## How To: Customize the service ##
