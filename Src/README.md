@@ -61,7 +61,7 @@ Download and install the following tools to build and/or develop this applicatio
 1. Fork this repository to your GitHub account
 1. Click on the Deploy to Azure Button
 
-    [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FTylerLu%2FContosoInsurance%2Fmaster%2Fsrc%2Fazuredeploy.json)
+    [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fContosoInsurance%2fmaster%2fSrc%2fazuredeploy.json)
 
 1. Fill out the values in the deployment page
 
