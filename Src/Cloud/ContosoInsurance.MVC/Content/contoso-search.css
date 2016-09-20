@@ -1,7 +1,7 @@
 ﻿/*search*/
 .search-main{background:url('images/bg-search.png') no-repeat right;min-height:890px;background-color:#FCFDFF;}
 .search-main .content{margin:0 auto;width:680px;}
-.search-main .content .title{text-transform:uppercase;font-size: 48px;color:#3A4750;margin: 0 auto;
+.search-main .content .title{text-transform:uppercase;font-size: 48px;color:#000000;margin: 0 auto;
     width: 350px;display: block;padding-top: 34px;padding-bottom: 0px;font-family:robotolight;}
 .search-main .content .search-form ul {list-style-type:none;padding-left: 0;margin-bottom: 0;}
 .search-main .content .search-form ul li{padding-bottom: 25px;}
@@ -18,6 +18,7 @@
 .claim-grid table{width:100%;border:1px solid #7B88AA;font-size:12px;}
 .claim-grid table thead,.claim-grid table tbody{float:none;}
 .claim-grid tr:nth-child(2n+1){background-color:#F4F4F4;}
+.claim-grid tr:nth-child(2n){background-color:#FFFFFF;}
 .claim-grid th{background-color:#7B88AA;color:#fff;text-transform:uppercase;font-size: 24px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
 .claim-grid th:nth-child(1){width:8%;padding-left:20px;}
 .claim-grid tr>td:nth-child(1){width:8%;padding-left:20px;}

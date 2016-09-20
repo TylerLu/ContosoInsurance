@@ -72,8 +72,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo Data", "Demo Data", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99E86728-AFD4-43F3-BAF6-698EDE843672}"
 	ProjectSection(SolutionItems) = preProject
-		Init CRMClaims.sql = Init CRMClaims.sql
-		Init MobileClaims.sql = Init MobileClaims.sql
+		InitCRMClaims.sql = InitCRMClaims.sql
+		InitMobileClaims.sql = InitMobileClaims.sql
+		InitStorage.ps1 = InitStorage.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
