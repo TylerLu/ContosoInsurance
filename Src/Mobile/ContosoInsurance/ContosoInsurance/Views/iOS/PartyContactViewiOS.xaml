@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:CustomerView="clr-namespace:ContosoInsurance.Views"
+             x:Class="ContosoInsurance.Views.PartyContactViewiOS">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Icon="navmenu.png" Name="settings" Order="Primary" Priority="0" Clicked="MenuClicked" />
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content >
+    <RelativeLayout>
+      <Grid VerticalOptions="FillAndExpand" RowSpacing="0"  ColumnSpacing="0" BackgroundColor="White" 
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="15"/>
+          <RowDefinition Height="30"/>
+          <RowDefinition Height="45"/>
+          <RowDefinition Height="32"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"/>
+        <Grid Grid.Row="1" Padding="15,0">
+          <Image Source="segement2.png" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+         <Label Text="PHONE NUMBER" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HeightRequest="45">
+               </Label>
+        </Grid>
+        <Grid Grid.Row="3" Padding="15,0">
+          <Entry x:Name="partyPhoneNumber" Keyboard="Telephone" Placeholder="xxx-xxx-xxxx"
+                                    HeightRequest="30" FontSize="Medium"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555"/>
+        </Grid>
+        <Grid Grid.Row="5" BackgroundColor="#adadad">
+          <Grid RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="1" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <CustomerView:CustomToolBariOS  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid x:Name="menuList" RowSpacing="1"  ColumnSpacing="0" BackgroundColor="#c3c3c3" IsVisible="False"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0, Constant=61}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="1*"/>
+          <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Padding="15,0" BackgroundColor="#256bf9">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Image Source="dropArrow.png" Aspect="AspectFit"  Grid.Column="0" VerticalOptions="Start"/>
+          <Label Text="Logout" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" Grid.Column="1" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+          <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="LogoutBtn_Tapped" />
+          </Grid.GestureRecognizers>
+        </Grid>
+        <Grid Grid.Row="1" Padding="15,0" BackgroundColor="#256bf9">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Text="Settings" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" Grid.Column="1" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+          <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="SettingsBtn_Tapped" />
+          </Grid.GestureRecognizers>
+        </Grid>
+      </Grid> 
+    </RelativeLayout>
+  </ContentPage.Content >
+</ContentPage>

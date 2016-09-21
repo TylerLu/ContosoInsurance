@@ -57,62 +57,110 @@ Download and install the following tools to build and/or develop this applicatio
 
 ## How To: Deploy the Demo ##
 
-1. Check to ensure that the bulid is passing  VSTS Build
-1. Fork this repository to your GitHub account
-1. Click on the Deploy to Azure Button
+**Create an Computer Vision Account**
 
-    [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fContosoInsurance%2fmaster%2fSrc%2fazuredeploy.json)
-1. Fill out the values in the deployment page
-1. If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
-1. When the deployment steps complete, it will provide a link to the Web App
-1. Update Contoso_ClaimAutoApproverUrl in appsettings of the Function App (`<<siteName>>-function`)
-	1. Get the ClaimAutoApproverUrl:
-		![Get the ClaimAutoApproverUrl](Images/Deployment/01-get-claim-auto-approver-url.png)
-	1. Update appsettings of the Function App:
-		![Update appsettings of the Function App](Images/Deployment/02-update-appsettings-of-the-function-app.png)
-1. Init databases
-	1. Execute /Could/InitMobileClaims.sql again the MobileClaims database. 
-	1. Execute /Could/InitCRMClaims.sql again the CRMClaims database. 
-1. Init the storage account
-	1. Get the name and key of the storage account.
-		![Get the name and key of the storage account](Images/Deployment/03-get-name-and-key-of-the-storage-account.png)
-	1. Execute /Cloud/InitStorage.ps1:
+1. Open https://www.microsoft.com/cognitive-services/en-us/sign-up in your web browser.
+1. Click Let's Go
+1. Sign in
+1. Select the **Computer Vision - Preview** check box
+1. Select the **I agree to the Microsoft Cognitive Services Terms and Microsoft Privacy Statement** check box
+1. Click **Subscribe**
+1. Copy the Computer Vision Services keys and save them in a text file.  You will need one of them in a subsequent step.
 
-		```
-		./InitStorage.ps1 <<StorageAccountName>> <<StorageAccountKey>>
-		```
-1. Populate demo data
-	1. Execute /Could/Demo Data/MobileClaims.sql again the MobileClaims database. 
-	1. Execute /Could/Demo Data/CRMClaims.sql again the CRMClaims database. 
-	1. Upload vehicle images:
+**Deploy the Azure Components**
 
-		```
-		./UploadVehicleImages.ps1 <<StorageAccountName>> <<StorageAccountKey>>
-		```
-1. Configute the API App (`<<siteName>>-api`) to use Microsoft Authentication.
+1. Check to ensure that the build is passing VSTS Build
+2. Fork this repository to your GitHub account
+3. Click the Deploy to Azure Button
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fContosoInsurance%2fmaster%2fSrc%2fazuredeploy.json)
+4. Fill in the values in the deployment page.
+![](Images/Deployment/Define-Deployment-Parameters.png)
+5. If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
+>**IMPORTANT Note:**: If you set this value to false then follow the steps in the GitHub Authorization section in this document befoe you clikc the Create button to deploy the Azure components.
 
-	[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
+6. When the deployment steps complete, it will provide a link to the Web App.
+
+>**Notes:** 
+>- The deployment creates a Basic (B1) hosting plan in Azure where all of the components are deployed.
+>- The deployment process takes about 8 minutes.
+
+**Update the Contoso_ClaimAutoApproverUrl App Setting in the Function App (`<<Your Site Name>>-function`)**
 	
-	>**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)
+1. Get the Url for the ContosoInsuranceClaimAutoApprover Logic App:	
 
-1. Configute the Web App (`<<siteName>>`) to user AAD Authentication.
+	![Get the ClaimAutoApproverUrl](Images/Deployment/01-get-claim-auto-approver-url.png)
+
+1. Update the **Contoso_ClaimAutoApproverUrl** App Setting for the Function App:	
 	
-	[How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
-	
-	>**Note:** Ensure that the Action to take when request is not authenticated is set to Log in with Azure Active Directory
+	![Update appsettings of the Function App](Images/Deployment/02-update-appsettings-of-the-function-app.png)
 
-1. Authenticate the Office365 API Connection
-	![Authenticate the Office365 API Connection](Images/Deployment/04-authenticate-office365-api-connection.png)
+**Initialize databases with sample data**
 
-## How To: Customize the service ##
+1. Execute the **/Cloud/InitMobileClaims.sql** SQL script against the MobileClaims database. 
+2. Execute the **/Cloud/InitCRMClaims.sql** SQL script against the CRMClaims database. 
 
-**Authentication**
+**Initialize the Storage Account with sample images**
 
-The web and mobile client supports Microsoft Account Authentication. Follow this tutorial:
+1. Get the name and key of the Storage Account.
+		
+	![Get the name and key of the storage account](Images/Deployment/03-get-name-and-key-of-the-storage-account.png)
+
+1. Execute the **/Cloud/InitStorage.ps1** PowerShell script. 
+
+>**Note:** Use the Storage Account Name and Storage Account Keys associated with your Storage Account.
+
+```
+./InitStorage.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
+```
+
+**Populate demo data**
+
+1. Execute the **/Cloud/Demo Data/MobileClaims.sql** SQL Script against the MobileClaims database. 
+1. Update the Storage Account Name in the **/Src/Cloud/Demo Data/CRMClaims.sql** SQL script.
+
+~~~
+DECLARE @imageUrlBase nvarchar(255) = 'https://<Your Storage Account Name>.blob.core.windows.net/vehicle-images/vehicle-';
+~~~	
+
+For example:
+
+If your storage account name is contosoinsurancestorage then the updated value will look like this:
+
+~~~	
+DECLARE @imageUrlBase nvarchar(255) = 'https://contosoinsurancestorage.blob.core.windows.net/vehicle-images/vehicle-';
+~~~
+
+1. Execute the **/Cloud/Demo Data/CRMClaims.sql** SQL script against the CRMClaims database. 
+
+**Upload vehicle images:**
+
+1. Execute the **/Cloud/UploadVehicleImages.ps1** PowerShell script. 
+
+>**Note:** Use the Storage Account Name and Storage Account Keys associated with your Storage Account.
+
+~~~
+./UploadVehicleImages.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
+~~~
+
+**Configure the API App (`<<your site name>>-api`) to use Microsoft Authentication.**
 
 [How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
 
->**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)
+>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Allow request (no action)**
+
+**Configure the Web App (`<<your site name>>`) to use AAD Authentication.**
+	
+[How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
+	
+Follow the steps in the **Manually configure Azure Active Directory with advanced settings** section.
+
+>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Log in with Azure Active Directory**
+
+**Authenticate the Office365 API Connection**
+
+1. **Tyler**, please document how this is done.
+
+	![Authenticate the Office365 API Connection](Images/Deployment/04-authenticate-office365-api-connection.png)
 
 ## How To: Run the mobile client app for local execution and debugging on the iOS simulator##
 
@@ -148,9 +196,13 @@ To view the custom events and metrics in Application Insights follow these steps
 1.  Click the Application Insights link in the left menu.
 1.	Click contosoinsurance.
 1.	Click Search.
+
 	![](images/App-Insights-Search.png)
+
 1.	Observe all of the Custom Events.
+
 	![](images/App-Insights-Search-Results.png)
+
 1.	Click a Custom Event in the list to see the metrics logged for the event.
 	
 	>**Note:**  You can refer to the Application Insights Logging Matrix in the [Azure Components document](/Azure Components.docx) to see all of the Custom Metrics logged for each Custom Event.  In the example below you can see this custom event was written by the HandleNewClaim Azure Function when it invoked the ClaimAutoApprover Azure Function.
@@ -163,9 +215,40 @@ Each claim has a CorrelationId associated with it.  You can see this in the scre
 
 1.  Copy the CorrelationId from a Custom Event.
 2.  Click **Search**.
+
 	![](images/App-Insights-Search.png)
+
 2.	Paste the CorrelationId into the **Search textbox** and observe all the Custom Events associated with the CorrelationId.
 
 	>**Note:**  This is an excellent way to debug errors in the system and is also especially helpful to determine how long a given step takes to execute.  This sample typically processes claims from the point where they are submitted in the mobile app to the point where they are ready for manual approval in 15 seconds when running the sample on the most basic App Services service level!
 	
-	![](images/App-Insights-Search-Results-CorrelationId.png)   
+	![](images/App-Insights-Search-Results-CorrelationId.png) 
+
+## How To: Customize the service ##
+
+**Authentication**
+
+The web and mobile client supports Microsoft Account Authentication. Follow this tutorial:
+
+[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
+
+>**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)  
+
+## GitHub Authorization ##
+
+**Generate Token**
+
+1. Open https://github.com/settings/tokens in your web browser.
+2. Sign into your GitHub account where you forked this repository.
+3. Click **Generate Token**
+4. Enter **ContosoInsurance** in the Token description text box
+5. Select all the **check boxes**
+6. Click **Generate token**
+7. Copy the token
+
+**Add Token To Azure**
+
+1. Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
+1. Paste the token into the **token parameter**.
+	![](Images/Deployment/Authorize-GitHub.png)
+1. Click **PUT**

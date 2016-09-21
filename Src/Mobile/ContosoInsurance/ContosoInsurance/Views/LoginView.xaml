@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:CustomerView="clr-namespace:ContosoInsurance.Views"
+             x:Class="ContosoInsurance.Views.LoginView">
+  <ContentPage.Content >
+    <ScrollView>
+      <RelativeLayout Padding="0" >
+        <Image Aspect="AspectFill"
+            Source="loginbackground.png"
+            RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+            RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+        </Image>
+
+        <Grid  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" 
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" RowSpacing="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="312*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="86*"/>
+            <RowDefinition Height="53*"/>
+            <RowDefinition Height="379*"/>
+          </Grid.RowDefinitions>
+          
+          <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="71*"/>
+              <ColumnDefinition Width="19*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="Settings.png" Grid.Column="1" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
+              <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SettingsBtn_Tapped" />
+              </Image.GestureRecognizers>
+            </Image>
+          </Grid>
+          <Image Source="loginLogo.png" Grid.Row="3" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+          <Label Grid.Row="5" Text="CONTOSO INSURANCE" TextColor="#fffeff" FontSize="Large" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  />
+
+
+          <Grid Grid.Row="7">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="35*"/>
+              <ColumnDefinition Width="30*"/>
+              <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="loginButton" Grid.Column="1" Text="LOGIN"  FontSize="Medium" BackgroundColor="#4f87f8" TextColor="#e9e8ed" 
+                     HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" BorderRadius="8" />
+          </Grid>
+        </Grid>
+        <Grid x:Name="activityIndicatorPanel" IsVisible="False"
+              RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
+              RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+          <ActivityIndicator x:Name="activityIndicator" Grid.Row="0"
+               IsVisible="False" IsRunning="False" Color="Black"
+               HeightRequest="50"
+               WidthRequest="50"
+               BackgroundColor="Transparent"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"/>
+        </Grid>
+      </RelativeLayout>
+    </ScrollView>
+  </ContentPage.Content >
+
+</ContentPage>

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="SharedProjectFile_SccProperties">
+    <SharedProjectFile_ProjectGuid>{e4b909bf-7989-4adc-9538-1f4f6d81e210}</SharedProjectFile_ProjectGuid>
+    <SharedProjectFile_SccProjectName>SAK</SharedProjectFile_SccProjectName>
+    <SharedProjectFile_SccAuxPath>SAK</SharedProjectFile_SccAuxPath>
+    <SharedProjectFile_SccLocalPath>SAK</SharedProjectFile_SccLocalPath>
+    <SharedProjectFile_SccProvider>SAK</SharedProjectFile_SccProvider>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>9adecde0-0a6d-41c3-b0c8-df786035a62b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>ContosoInsurance</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\CustomConvert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AuthHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileSyncHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileSyncTriggerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IPlatform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LoggingHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\MobileServiceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Claim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vehicle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\INetworkConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ClaimViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\FileViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VehiclesListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomIncidentIcon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomVehicleFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\CustomToolBariOS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDescriptioniOS.xaml.cs">
+      <DependentUpon>IncidentDescriptioniOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDetailViewiOS.xaml.cs">
+      <DependentUpon>IncidentDetailViewiOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\PartyContactViewiOS.xaml.cs">
+      <DependentUpon>PartyContactViewiOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\PartyInfoViewiOS.xaml.cs">
+      <DependentUpon>PartyInfoViewiOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\SettingsViewiOS.xaml.cs">
+      <DependentUpon>SettingsViewiOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\VehiclesListViewiOS.xaml.cs">
+      <DependentUpon>VehiclesListViewiOS.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\VehiclesListViewiOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\PartyInfoViewiOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\PartyContactViewiOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDetailViewiOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\SettingsViewiOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDescriptioniOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

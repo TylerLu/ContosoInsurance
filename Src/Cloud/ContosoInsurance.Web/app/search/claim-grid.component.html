@@ -1,0 +1,22 @@
+﻿<div *ngIf="afterQuery">
+    <div class="claim-grid">
+        <table cellspacing="0">
+            <tr>
+                <th class="font-segeo-ui">Id</th>
+                <th class="font-segeo-ui">Name</th>
+                <th class="font-segeo-ui">Type</th>
+                <th class="font-segeo-ui">Date</th>
+                <th class="font-segeo-ui">Status</th>
+                <th class="font-segeo-ui">Damange Assessment</th>
+            </tr>
+            <tr *ngFor="let claim of claims"  [class.selected]="claim === selectedClaim">
+                <td class="font-segeo-ui claim-id" (click)="onSelect(claim)">{{claim.claimId}}</td>
+                <td class="font-segeo-ui">{{claim.lastName}},{{claim.firstName}}</td>
+                <td class="font-segeo-ui">{{claim.claimType}}</td>
+                <td class="font-segeo-ui">{{convertDate(claim.dueDate)}}</td>
+                <td class="font-segeo-ui">{{claim.claimStatus}}</td>
+                <td class="font-segeo-ui">{{claim.damangeAssessment}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

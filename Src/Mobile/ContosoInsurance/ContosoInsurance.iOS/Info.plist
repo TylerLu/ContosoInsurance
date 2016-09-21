@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>MinimumOSVersion</key>
+	<string></string>
+	<key>CFBundleDisplayName</key>
+	<string>Contoso Insurance</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.contoso.ContosoInsurance</string>
+	<key>CFBundleVersion</key>
+	<string>1.1</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon-72@2x.png</string>
+		<string>Icon-72.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon.png</string>
+		<string>Icon-60@2x.png</string>
+		<string>Icon-76.png</string>
+		<string>Icon-76@2x.png</string>
+		<string>Default.png</string>
+		<string>Default@2x.png</string>
+		<string>Default-568h@2x.png</string>
+		<string>Default-Landscape.png</string>
+		<string>Default-Landscape@2x.png</string>
+		<string>Default-Portrait.png</string>
+		<string>Default-Portrait@2x.png</string>
+		<string>Icon-Small-50@2x.png</string>
+		<string>Icon-Small-50.png</string>
+		<string>Icon-Small-40.png</string>
+		<string>Icon-Small-40@2x.png</string>
+		<string>Icon-Small.png</string>
+		<string>Icon-Small@2x.png</string>
+	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIStatusBarHidden~ipad</key>
+	<true/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>UIPrerenderedIcon</key>
+	<false/>
+	<key>UILaunchImages</key>
+	<array>
+		<dict>
+			<key>UILaunchImageMinimumOSVersion</key>
+			<string>8.0</string>
+			<key>UILaunchImageName</key>
+			<string>Default-667h</string>
+			<key>UILaunchImageOrientation</key>
+			<string>Portrait</string>
+			<key>UILaunchImageSize</key>
+			<string>{375, 667}</string>
+		</dict>
+		<dict>
+			<key>UILaunchImageMinimumOSVersion</key>
+			<string>8.0</string>
+			<key>UILaunchImageName</key>
+			<string>Default-736h</string>
+			<key>UILaunchImageOrientation</key>
+			<string>Portrait</string>
+			<key>UILaunchImageSize</key>
+			<string>{414, 736}</string>
+		</dict>
+		<dict>
+			<key>UILaunchImageMinimumOSVersion</key>
+			<string>7.0</string>
+			<key>UILaunchImageName</key>
+			<string>Default-568h</string>
+			<key>UILaunchImageOrientation</key>
+			<string>Portrait</string>
+			<key>UILaunchImageSize</key>
+			<string>{320, 568}</string>
+		</dict>
+		<dict>
+			<key>UILaunchImageMinimumOSVersion</key>
+			<string>6.0</string>
+			<key>UILaunchImageName</key>
+			<string>Default</string>
+			<key>UILaunchImageOrientation</key>
+			<string>Portrait</string>
+			<key>UILaunchImageSize</key>
+			<string>{320, 480}</string>
+		</dict>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>location</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
+	<string>YES</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This application requires location services to work</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This application requires location services to work</string>
+</dict>
+</plist>
