@@ -103,7 +103,7 @@ Download and install the following tools to build and/or develop this applicatio
 
 1. Get the name and key of the Storage Account.
 		
-	![Get the name and key of the storage account](Images/Deployment/03-get-name-and-key-of-the-storage-account.png)
+	![Get the name and key of the storage account](Images/Deployment/get-name-and-key-of-the-storage-account.png)
 
 1. Execute the **/Cloud/InitStorage.ps1** PowerShell script. 
 
