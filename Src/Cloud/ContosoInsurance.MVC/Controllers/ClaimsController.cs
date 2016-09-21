@@ -150,6 +150,7 @@ namespace ContosoInsurance.MVC.Controllers
             var url = Common.AppSettings.ClaimManualApproverUrl;
             var response = await PostTo(url, new {
                     id = id,
+                    correlationId = claim.CorrelationId,
                     damageAssessment = damageAssessment,
                     approved = approved,
                     customerName = customer.FirstName + " " + customer.LastName,

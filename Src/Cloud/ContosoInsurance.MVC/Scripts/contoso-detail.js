@@ -53,6 +53,7 @@ var claimDetailFn = function () {
                 viewModel.dateTime = moment(viewModel.dateTime).format("MM-DD-YY");
                 viewModel.customer.dob = moment(viewModel.customer.dob).format("MM-DD-YYYY");
                 viewModel.customer.policyStart = moment(viewModel.customer.policyStart).format("MM-DD-YYYY");
+                viewModel.otherParty.dob = moment(viewModel.dateTime).format("MM-DD-YY");
                 viewModel.timeLocation = {
                     hour:moment(viewModel.dateTime).format("h"),
                     min : moment(viewModel.dateTime).format("mm"),

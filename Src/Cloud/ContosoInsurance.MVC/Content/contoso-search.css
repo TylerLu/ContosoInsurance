@@ -39,5 +39,5 @@
 .claim-grid tr>td:nth-child(6){width:25%;border-right:0;padding-left:20px;}
 
 .claim-grid tr{height:40px;}
-.claim-grid td.claim-id{color:#7C89A9; cursor:pointer;}
-.claim-grid td{color:#000;font-size:22px;font-family: robotoregular;}
+.claim-grid td.claim-id{color:#7C88A9; cursor:pointer;}
+.claim-grid td{color:#000000;font-size:22px;font-family: "Arial Regular",Arial, "Helvetica Neue", Helvetica, sans-serif;}
