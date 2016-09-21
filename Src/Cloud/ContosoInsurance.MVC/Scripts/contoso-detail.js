@@ -50,10 +50,10 @@ var claimDetailFn = function () {
             detail.ViewModel = (function getViewModel() {
                 var viewModel = $.parseJSON(detail.$data);
                 viewModel.dueDate = moment(viewModel.dueDate).format("MM-DD-YY");
-                viewModel.dateTime = moment(viewModel.dateTime).format("MM-DD-YY");
+                viewModel.dateTime = moment(viewModel.dateTime).format("MM-DD-YYYY");
                 viewModel.customer.dob = moment(viewModel.customer.dob).format("MM-DD-YYYY");
                 viewModel.customer.policyStart = moment(viewModel.customer.policyStart).format("MM-DD-YYYY");
-                viewModel.otherParty.dob = moment(viewModel.dateTime).format("MM-DD-YY");
+                viewModel.otherParty.dob = moment(viewModel.dateTime).format("MM-DD-YYYY");
                 viewModel.timeLocation = {
                     hour:moment(viewModel.dateTime).format("h"),
                     min : moment(viewModel.dateTime).format("mm"),
@@ -68,7 +68,7 @@ var claimDetailFn = function () {
                 viewModel.apm = moment(viewModel.dateTime).format("A");
                 viewModel.claimHisotry = detail.parseData(viewModel.claimHisotry);
                 viewModel.selectedAssessment = ko.observable(viewModel.damageAssessment);
-                //GeoHelper.BingMap.displayPin(viewModel.location.latitude, viewModel.location.longitude);                
+                viewModel.isShowBtn = ko.observable(viewModel.status == "AutoRejected");
                 return viewModel;
             })();
         };
@@ -106,7 +106,9 @@ var claimDetailFn = function () {
                 })(),
             };
             self.Request('approve', 'post', requestData, function (data) {
-                console.log(data);  
+                var msg = 'The Claim is ' + (approved?'approved':'rejected') + '.';
+                alert(msg);
+                location.href = location.href + "?t=" + new Date().getTime();
             });
         };
         detail.showDetail = function (item) {

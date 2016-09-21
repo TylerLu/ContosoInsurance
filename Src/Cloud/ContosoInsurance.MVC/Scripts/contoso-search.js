@@ -83,7 +83,7 @@ var claimSearchFn = function () {
             return result;
         };
         claimGrid.showDetail = function (item) {
-            location.href = self.relativeUrl('details') + '/' + item.claimId;
+            location.href = self.relativeUrl('details') + '/' + item.claimId + "?t="+new Date().getTime();
         };
         claimGrid.init = function () {
 

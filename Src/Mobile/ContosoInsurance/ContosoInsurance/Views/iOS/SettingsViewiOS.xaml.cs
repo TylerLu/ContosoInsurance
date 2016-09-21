@@ -25,13 +25,13 @@ namespace ContosoInsurance.Views
             if (Settings.Current.MobileAppUrl == settingsURL.Text || Settings.Current.MobileAppUrl == newUri)
             {
                 Settings.Current.MobileAppUrl = newUri;
-                await Navigation.PopAsync(true);
+                await Navigation.PopAsync(false);
             }
             else
             {
                 Settings.Current.MobileAppUrl = newUri;
                 await MobileServiceHelper.msInstance.DoLogOutAsync();
-                await Navigation.PopToRootAsync(true);
+                await Navigation.PopToRootAsync(false);
             }
         }
 

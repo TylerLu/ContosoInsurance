@@ -40,7 +40,7 @@ namespace ContosoInsurance.Views
         {
             var settingsView = new SettingsViewiOS();
             NavigationPage.SetHasBackButton(settingsView, false);
-            await Navigation.PushAsync(settingsView, true);
+            await Navigation.PushAsync(settingsView, false);
         }
     }
 }

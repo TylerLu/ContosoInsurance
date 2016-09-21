@@ -125,7 +125,7 @@ namespace ContosoInsurance.Views
             this.menuList.IsVisible = false;
             var settingsView = new SettingsViewiOS();
             NavigationPage.SetHasBackButton(settingsView, false);
-            await Navigation.PushAsync(settingsView, true);
+            await Navigation.PushAsync(settingsView, false);
         }
 
         #endregion

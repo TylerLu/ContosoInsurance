@@ -23,7 +23,7 @@
         <div class="date">
             <span>Claim Date: </span><input type="text" data-bind="textInput:dateTime,disable:$parent.disabled" />
         </div>
-        <div class="btns">
+        <div class="btns" style="display:none;" data-bind="visible:isShowBtn">
             <button class="approve upper" data-bind="click:$parent.approve">approve</button>
             <button class="reject upper" data-bind="click:$parent.reject">reject</button>
         </div>

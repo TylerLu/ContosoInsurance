@@ -9,7 +9,7 @@
 
   <ContentPage.Content >
     <RelativeLayout>
-      <Grid VerticalOptions="FillAndExpand" RowSpacing="0"  ColumnSpacing="0" BackgroundColor="White" 
+      <Grid VerticalOptions="FillAndExpand" RowSpacing="0"  ColumnSpacing="0" BackgroundColor="White"
             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
             RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
         <Grid.RowDefinitions>
@@ -22,10 +22,10 @@
         <Grid Grid.Row="1" Padding="15,0">
           <Image Source="segement1.png" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
         </Grid>
-      
+
         <Grid Grid.Row="2" BackgroundColor="White" Padding="15,0">
           <ScrollView>
-            <StackLayout Padding="0,0" >            
+            <StackLayout Padding="0,0" >
               <Grid RowSpacing="0" ColumnSpacing="0">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="45" />
@@ -56,7 +56,7 @@
             </Grid.RowDefinitions>
             <CustomerView:CustomToolBariOS  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
           </Grid>
-        
+
         </Grid>
       </Grid>
       <Grid x:Name="menuList" RowSpacing="1"  ColumnSpacing="0" BackgroundColor="#c3c3c3" IsVisible="False"

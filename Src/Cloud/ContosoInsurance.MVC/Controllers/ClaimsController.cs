@@ -141,7 +141,7 @@ namespace ContosoInsurance.MVC.Controllers
 
         [ApplicationInsights("Invoked ContosoClaimManualApprover Azure Function", IdParamName = "cid")]
         [HttpPost, Route("approve")]
-        public async Task<HttpResponseMessage> Approve(int id,bool approved, string damageAssessment,string cid)
+        public async Task<ActionResult> Approve(int id,bool approved, string damageAssessment,string cid)
         {
             var queryable = dbContext.Claims.Include(i => i.Vehicle.Customer)
                                          .Where(i => i.Id == id);
@@ -156,7 +156,7 @@ namespace ContosoInsurance.MVC.Controllers
                     customerName = customer.FirstName + " " + customer.LastName,
                     customerEmail = customer.Email
             });
-            return response;
+            return Json(response);
         }
 
         private static async Task<HttpResponseMessage> PostTo(string url, string content, string mediaType = "text/plain")
