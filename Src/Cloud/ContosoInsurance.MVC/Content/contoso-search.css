@@ -15,11 +15,11 @@
 /*grid*/
 .grid-content{margin: 0 auto;width: 1200px;}
 .claim-grid {padding-top:80px;}
-.claim-grid table{width:100%;border:1px solid #7B88AA;font-size:12px;}
+.claim-grid table{width:100%;border:1px solid #7C88A9;font-size:12px;}
 .claim-grid table thead,.claim-grid table tbody{float:none;}
 .claim-grid tr:nth-child(2n+1){background-color:#F4F4F4;}
 .claim-grid tr:nth-child(2n){background-color:#FFFFFF;}
-.claim-grid th{background-color:#7B88AA;color:#fff;text-transform:uppercase;font-size: 24px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
+.claim-grid th{background-color:#7C88A9;color:#fff;text-transform:uppercase;font-size: 24px;border-right: 1px solid #fff;text-align: left;font-family: robotoregular;font-weight:normal;}
 .claim-grid th:nth-child(1){width:8%;padding-left:20px;}
 .claim-grid tr>td:nth-child(1){width:8%;padding-left:20px;}
 

@@ -224,6 +224,7 @@
     <Content Include="Content\images\user.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Helvetica-Neue-LT-Std.svg" />
     <Content Include="fonts\Roboto-Bold-webfont.svg" />
     <Content Include="fonts\Roboto-Light-webfont.svg" />
     <Content Include="fonts\Roboto-Medium-webfont.svg" />
@@ -245,6 +246,9 @@
     <Content Include="fonts\Roboto-Bold-webfont.ttf" />
     <Content Include="fonts\Roboto-Bold-webfont.woff" />
     <Content Include="deploy.cmd" />
+    <Content Include="fonts\Helvetica-Neue-LT-Std.eot" />
+    <Content Include="fonts\Helvetica-Neue-LT-Std.ttf" />
+    <Content Include="fonts\Helvetica-Neue-LT-Std.woff" />
     <None Include="Properties\PublishProfiles\contosoinsurance - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\contoso-detail.js" />

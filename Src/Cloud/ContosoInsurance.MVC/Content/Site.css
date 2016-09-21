@@ -42,6 +42,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Helvetica Neue LT Std Regular';
+    src: url('../fonts/Helvetica-Neue-LT-Std.eot');
+    src: url('../fonts/Helvetica-Neue-LT-Std?#iefix') format('embedded-opentype'),
+         url('../fonts/Helvetica-Neue-LT-Std.woff') format('woff'),
+         url('../fonts/Helvetica-Neue-LT-Std.ttf') format('truetype'),
+         url('../fonts/Helvetica-Neue-LT-Std.svg#HelveticaNeueLTStdBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body{margin:0;font-family: "Segoe UI","Segoe WP","Helvetica Neue",Tahoma,"Lucida Grande",Helvetica,sans-serif;overflow-x:hidden;}
 
 .roboto-regular{font-family:robotoregular;}
@@ -56,7 +67,7 @@ ul.nav-tabs >li.active{background-color:gray;}
 .nav{background: url('images/bg-tab.png') repeat; height:72px;}
 .nav .logo{display: inline-block;width: 80%;height:72px;}
 .nav .logo>img{padding-left:40px;display: inline-block;padding-top: 12px;}
-.nav .logo>label{display: inline-block;margin-left: 17px;vertical-align: top;margin-top: 10px;text-transform: uppercase;color: #fff;font-weight: lighter;font-size: 38px;}
+.nav .logo>label{display: inline-block;margin-left: 17px;vertical-align: top;margin-top: 15px;text-transform: uppercase;color: #fff;font-weight: lighter;font-size: 38px;font-family:Helvetica Neue LT Std Regular;}
 .nav .user-info{display: inline-block;width: 15%;text-align: right;vertical-align: middle;float:right;clear:both;margin-top: 25px;margin-right: 23px;}
 .nav .user-info>div{display: inline-block;vertical-align: top;}
 .nav .user-info .login-name{color:#fff;font-size: 16px;padding-right: 3px;}
