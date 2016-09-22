@@ -106,7 +106,7 @@ div.history > span {text-transform: uppercase;color: #000;font-size: 17px;font-w
 
 .claim-info .detail .extend-info .description .fields .row{padding-left:5px;}
 .claim-info .detail .extend-info .description .fields .row span{display: inline-block;width: 190px;}
-.claim-info .detail .extend-info .description .fields .row textarea{width:100%;height:346px;background-color:#fff;    margin-top: 16px;}
+.claim-info .detail .extend-info .description .fields .row textarea{width:100%;height:346px;background-color:#fff;    margin-top: 16px;border: 1px solid #969696}
 .claim-info .detail .extend-info .upload-images span{text-transform: uppercase;color: #000;font-size: 17px;font-weight: 500;display: inline-block;margin-top: 5px;margin-bottom: 17px;}
 .claim-info .detail .extend-info .upload-images ul li{display:inline;}
 .claim-info .detail .extend-info .upload-images ul li img{width:180px;margin-right: 15px;box-shadow: 0 0 10px rgba(0,0,0,0.6);-moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);-o-box-shadow: 0 0 10px rgba(0,0,0,0.6);}
