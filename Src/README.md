@@ -326,6 +326,22 @@ Each claim has a CorrelationId associated with it.  You can see this in the scre
 	
 	![](Images/Deployment/App-Insights-Search-Results-CorrelationId.png) 
 
+**Track an individual claim with Application Insights Analytics**
+
+In addition to viewing all the Custom Events associated with a CorrelationId in the Application Insights Search interface, you can use Application Insights Analytics to track an individual claim.
+
+Here is the query to run in Application Insights Analytics to track an individual claim's CorrelationId.
+
+```
+customEvents
+    | where customDimensions.CorrelationId =~ "<YOUR CORRELATION ID>"
+    | project timestamp, customDimensions.LogType, name, customMeasurements, customMeasurements.Host, customDimensions.Description, customDimensions.FunctionName, customDimensions.Status, customDimensions.Version
+| order by timestamp asc
+```
+As you can see below, this claim took 22 seconds to process.
+
+![](Images/Deployment/Application-Insights-Analytics.png)
+
 ## GitHub Authorization ##
 
 **Generate Token**
