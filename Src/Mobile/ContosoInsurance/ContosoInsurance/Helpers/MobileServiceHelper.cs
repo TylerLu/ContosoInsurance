@@ -37,11 +37,11 @@ namespace ContosoInsurance.Helpers
             authHandler.Client = Client;
         }
 
-        internal async Task InitLocalStoreAsync()
+        internal async Task InitLocalStoreAsync(string userId)
         {
             if (!Client.SyncContext.IsInitialized)
             {
-                var store = new MobileServiceSQLiteStore(LocalDbFilename);
+                var store = new MobileServiceSQLiteStore(LocalDbFilename + userId);
                 store.DefineTable<Models.Vehicle>();
                 store.DefineTable<Models.Claim>();
 
@@ -111,7 +111,7 @@ namespace ContosoInsurance.Helpers
             msInstance.AuthenticatedUser = user;
             Debug.WriteLine("Authenticated with user: " + user.UserId);
             Trace.WriteLine("Authenticated with user: " + user.UserId);
-            await InitLocalStoreAsync();
+            await InitLocalStoreAsync(user.UserId);
         }
 
         internal async Task DoLogOutAsync()

@@ -81,7 +81,7 @@ namespace ContosoInsurance
 
             var response = await base.SendAsync(request, cancellationToken);
 
-            Debug.WriteLine("Response: {0}", response.StatusCode);
+            Debug.WriteLine("Response: "+ response.StatusCode);
 
             if (logRequestResponseBody) {
                 var responseContent = await response.Content.ReadAsStringAsync();

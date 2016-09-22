@@ -22,6 +22,7 @@ namespace ContosoInsurance.MVC
         private static void RegisterFilters()
         {
             GlobalFilters.Filters.Add(new ApplicationInsightsLogErrorAttribute());
+            GlobalFilters.Filters.Add(new JsonHandlerAttribute());
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }

@@ -207,6 +207,8 @@
     <Compile Include="Helper\ApplicationInsightsAttribute.cs" />
     <Compile Include="Helper\ApplicationInsightsLogErrorAttribute.cs" />
     <Compile Include="Helper\AuthenticationHelper.cs" />
+    <Compile Include="Helper\JsonHandlerAttribute.cs" />
+    <Compile Include="Helper\JsonNetResult.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
