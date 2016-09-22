@@ -244,7 +244,7 @@ User account creation is not completely automated yet in this sample.  Therefore
 1. Login to the Contoso Moments Azure Web App with the Microsoft Account.
 1. Open the database associated with the Contoso Moments Web App and copy the **Id** from the **Users** table.
 
-	![](images/Deployment/Get-UserId.png)
+	![](Images/Deployment/Get-UserId.png)
 
 1. Connect to the **CRMClaims** database and open the **Customers** table.
 
