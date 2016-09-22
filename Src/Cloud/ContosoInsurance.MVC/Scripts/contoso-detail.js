@@ -49,20 +49,20 @@ var claimDetailFn = function () {
         detail.init = function () {
             detail.ViewModel = (function getViewModel() {
                 var viewModel = $.parseJSON(detail.$data);
+                viewModel.timeLocation = {
+                    hour: moment(viewModel.dateTime).format("h"),
+                    min: moment(viewModel.dateTime).format("mm"),
+                    apm: moment(viewModel.dateTime).format("A"),
+                    month: moment(viewModel.dateTime).format("MMMM"),
+                    day: moment(viewModel.dateTime).format("DD"),
+                    year: moment(viewModel.dateTime).format("YYYY"),
+                    location: ''
+                };
                 viewModel.dueDate = moment(viewModel.dueDate).format("MM-DD-YY");
                 viewModel.dateTime = moment(viewModel.dateTime).format("MM-DD-YYYY");
                 viewModel.customer.dob = moment(viewModel.customer.dob).format("MM-DD-YYYY");
                 viewModel.customer.policyStart = moment(viewModel.customer.policyStart).format("MM-DD-YYYY");
-                viewModel.otherParty.dob = moment(viewModel.dateTime).format("MM-DD-YYYY");
-                viewModel.timeLocation = {
-                    hour:moment(viewModel.dateTime).format("h"),
-                    min : moment(viewModel.dateTime).format("mm"),
-                    apm : moment(viewModel.dateTime).format("A"),
-                    month: moment(viewModel.dateTime).format("MMMM"),
-                    day: moment(viewModel.dateTime).format("DD"),
-                    year: moment(viewModel.dateTime).format("YYYY"),
-                    location : ''
-                };
+                viewModel.otherParty.dob = moment(viewModel.otherParty.dob).format("MM-DD-YYYY");
                 viewModel.hour = moment(viewModel.dateTime).format("h");
                 viewModel.min = moment(viewModel.dateTime).format("mm");
                 viewModel.apm = moment(viewModel.dateTime).format("A");

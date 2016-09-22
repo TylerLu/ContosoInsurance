@@ -23,7 +23,7 @@ public enum OperationStatus
     Success = 1,
 }
 
-public static void TraceStatus(this TelemetryClient client, string functionName, string correlationId, string description, OperationStatus? operationResult = null)
+public static void TrackStatus(this TelemetryClient client, string functionName, string correlationId, string description, OperationStatus? operationResult = null)
 {
     var properties = GetCommonProperties("Status Log", functionName, correlationId);
     properties["Description"] = description;
@@ -33,13 +33,13 @@ public static void TraceStatus(this TelemetryClient client, string functionName,
     client.TrackEvent("Azure Function Status", properties, metrics);
 }
 
-public static void TraceStatus(this TelemetryClient client, string functionName, string correlationId, string description, bool isSuccess)
+public static void TrackStatus(this TelemetryClient client, string functionName, string correlationId, string description, bool isSuccess)
 {
     var operationResult = isSuccess ? OperationStatus.Success : OperationStatus.Failure;
-    TraceStatus(client, functionName, correlationId, description, operationResult);
+    TrackStatus(client, functionName, correlationId, description, operationResult);
 }
 
-public static void TraceException(this TelemetryClient client, string functionName, string correlationId, Exception ex)
+public static void TrackException(this TelemetryClient client, string functionName, string correlationId, Exception ex)
 {
     var properties = GetCommonProperties("Error Log", functionName, correlationId);
     properties["LogName"] = "Azure Function Status";

@@ -37,5 +37,12 @@ namespace System
         {
             return condition ? queryable.Where(predicate) : queryable;
         }
+
+        public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default(TValue))
+        {
+            var v = defaultValue;
+            dictionary.TryGetValue(key, out v);
+            return v;
+        }
     }
 }

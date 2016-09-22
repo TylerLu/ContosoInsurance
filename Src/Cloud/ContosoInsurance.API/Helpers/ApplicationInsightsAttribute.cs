@@ -15,19 +15,12 @@ namespace ContosoInsurance.API.Helpers
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if (actionExecutedContext.Exception != null) return;
+
             var correlationId = actionExecutedContext.ActionContext.ActionArguments[Constants.CorrelationIdKey] as string;
             var client = ApplicationInsights.CreateTelemetryClient();
-
-            if (actionExecutedContext.Exception == null)
-            {
-                var status = actionExecutedContext.Response.IsSuccessStatusCode
-                    ? OperationStatus.Success
-                    : OperationStatus.Failure;
-                client.TraceRestAPIStatus(correlationId, Description, status);
-            }
-            else
-                client.TraceRestAPIException(correlationId, actionExecutedContext.Exception);
-
+            var status = actionExecutedContext.Response.IsSuccessStatusCode ? OperationStatus.Success : OperationStatus.Failure;
+            client.TrackRestAPIStatus(correlationId, Description, status);
             client.Flush();
         }
     }

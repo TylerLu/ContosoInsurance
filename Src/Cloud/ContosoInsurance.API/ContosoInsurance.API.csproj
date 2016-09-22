@@ -213,6 +213,7 @@
     <Compile Include="Controllers\TableControllers\VehicleController.cs" />
     <Compile Include="DataObjects\TodoItem.cs" />
     <Compile Include="Helpers\ApplicationInsightsAttribute.cs" />
+    <Compile Include="Helpers\ApplicationInsightsLogErrorAttribute.cs" />
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\CustomBodyModelValidator.cs" />
     <Compile Include="Helpers\DefaultStorageProvider.cs" />

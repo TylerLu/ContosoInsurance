@@ -14,7 +14,7 @@ namespace ContosoInsurance.Common.Utils
 
     public static class TelemetryClientExtension
     {
-        public static void TraceStatus(this TelemetryClient client, string eventName, string correlationId, string description, OperationStatus status, IDictionary<string, double> metrics = null)
+        public static void TrackStatus(this TelemetryClient client, string eventName, string correlationId, string description, OperationStatus status, IDictionary<string, double> metrics = null)
         {
             var properties = GetCommonProperties("Status Log", correlationId);
             properties["Description"] = description;
@@ -22,33 +22,33 @@ namespace ContosoInsurance.Common.Utils
             client.TrackEvent(eventName, properties, metrics);
         }
 
-        public static void TraceException(this TelemetryClient client, string logName, string correlationId, Exception ex)
+        public static void TrackException(this TelemetryClient client, string logName, string correlationId, Exception ex)
         {
             var properties = GetCommonProperties("Error Log", correlationId);
             properties["LogName"] = logName;
             client.TrackException(ex, properties);
         }
 
-        public static void TraceRestAPIStatus(this TelemetryClient client, string correlationId, string description, OperationStatus status)
+        public static void TrackRestAPIStatus(this TelemetryClient client, string correlationId, string description, OperationStatus status)
         {
             var metrics = new Dictionary<string, double> { { "REST API", 0 } };
-            TraceStatus(client, "REST API Status", correlationId, description, status, metrics);
+            TrackStatus(client, "REST API Status", correlationId, description, status, metrics);
         }
 
-        public static void TraceWebAppStatus(this TelemetryClient client, string correlationId, string description, OperationStatus status)
+        public static void TrackWebAppStatus(this TelemetryClient client, string correlationId, string description, OperationStatus status)
         {
             var metrics = new Dictionary<string, double> { { "Web App", 0 } };
-            TraceStatus(client, "Web App Status", correlationId, description, status, metrics);
+            TrackStatus(client, "Web App Status", correlationId, description, status, metrics);
         }
 
-        public static void TraceRestAPIException(this TelemetryClient client, string correlationId, Exception ex)
+        public static void TrackRestAPIException(this TelemetryClient client, string correlationId, Exception ex)
         {
-            TraceException(client, "REST API Error", correlationId, ex);
+            TrackException(client, "REST API Error", correlationId, ex);
         }
 
-        public static void TraceWebAppException(this TelemetryClient client, string correlationId, Exception ex)
+        public static void TrackWebAppException(this TelemetryClient client, string correlationId, Exception ex)
         {
-            TraceException(client, "Web App Error", correlationId, ex);
+            TrackException(client, "Web App Error", correlationId, ex);
         }
 
 

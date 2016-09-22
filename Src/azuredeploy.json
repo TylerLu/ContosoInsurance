@@ -381,7 +381,7 @@
                         "CorrelationId": "@triggerBody()['correlationId']",
                         "Description": "Auto Approval Email Sent to @{triggerBody()['customerEmail']}",
                         "Host": "To be determined",
-                        "LogType": "Sta tus Log",
+                        "LogType": "Status Log",
                         "RunName": "@workflow()['run']['name']",
                         "Status": "Success"
                       }

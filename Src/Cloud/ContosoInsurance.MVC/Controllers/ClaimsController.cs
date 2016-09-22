@@ -29,11 +29,11 @@ namespace ContosoInsurance.MVC.Controllers
 
         [ApplicationInsights("Data queried from CRM Claims SQL database", IdParamName = "claimId")]
         [HttpGet, Route("search")]
-        public async Task<JsonResult> Search(int? claimId, int? policyHolderId, string firstName, string lastName)
+        public async Task<JsonResult> Search(int? claimId, string policyHolderId, string firstName, string lastName)
         {
             var queryable = dbContext.Claims
                     .WhereIf(i => i.Id == claimId, claimId.HasValue)
-                    .WhereIf(i => i.Vehicle.Customer.Id == policyHolderId, policyHolderId.HasValue)
+                    .WhereIf(i => i.Vehicle.Customer.PolicyId == policyHolderId,policyHolderId.IsNotNullAndEmpty())
                     .WhereIf(i => i.Vehicle.Customer.FirstName.Contains(firstName), firstName.IsNotNullAndEmpty())
                     .WhereIf(i => i.Vehicle.Customer.LastName.Contains(lastName), lastName.IsNotNullAndEmpty())
                     .Select(i => new

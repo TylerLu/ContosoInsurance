@@ -33,6 +33,7 @@ The sample also demonstrates how to use other technologies including:
 ## Documentation ##
 
 **Scenario Flow Documentation**
+
 See the [Contoso Insurance Visio Document](/Contoso Insurance.vsdx) for an end to end picture of the flow of the entire scenario and the components used all along the way.
 
 **Technical Documentation**
@@ -58,34 +59,15 @@ Download and install the following tools to build and/or develop this applicatio
 **Create an Computer Vision Account**
 
 1. Open https://www.microsoft.com/cognitive-services/en-us/sign-up in your web browser.
-1. Click Let's Go
+1. Click **Let's Go**
 1. Sign in
 1. Select the **Computer Vision - Preview** check box
 1. Select the **I agree to the Microsoft Cognitive Services Terms and Microsoft Privacy Statement** check box
 1. Click **Subscribe**
-1. Copy the Computer Vision Services keys and save them in a text file.  You will need one of them in a subsequent step.
+1. Copy the Computer Vision Services keys and save them in a text file.  
 
+>**Note:** You will need one of the Computer Vision Services keys in a subsequent step.
 
-**Integrate Azure with Github**
-
-1. Create a token for Azure. 
-
-	Open https://github.com/settings/tokens, click **Generate new token**
-
-	![](Images/Deployment/github-new-personal-access-token.png)
-
-	Click **Generate token**, the copy the access token.
-
-1. Update the Github token in Azure Resource Explorer.
-
-	Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub, Log in with you Azure account.
-
-	Make sure you selected the correct subscription and **Read/Write** mode is selected.
-
-	![](Images/Deployment/update-github-token-in-azure-resource-explorer.png)
-
-	Click **Edit**, update the token. Then click **PUT**.
-	
 **Deploy the Azure Components**
 
 1. Check to ensure that the build is passing VSTS Build
@@ -98,33 +80,33 @@ Download and install the following tools to build and/or develop this applicatio
 
 	![](Images/Deployment/azure-custom-deployment.png)
 
-	* **Resource group**: To reduce failure, please use a new Resource Group.
+	* **Resource group**: To reduce failures, please use a new Resource Group.
 
-	* **SITENAME**: Please use the default value. The first 6 charaters of the Resource Group Id will be appended to the site name to avoid name duplication error.
+	* **SITENAME**: Use the default value. The first 6 characters of the Resource Group Id will be appended to the site name to avoid name duplication errors.
 
-	* **SQLADMINISTRATORLOGINPASSWORD**: Please DO use a strong password.
+	* **SQLADMINISTRATORLOGINPASSWORD**: **DO** use a strong password.
 
-	* **SOURCECODEREPOSITORYURL**: Please use the repository you just forked.
+	* **SOURCECODEREPOSITORYURL**: Use the repository you just forked.
 
 	* **SOURCECODEMANUALINTEGRATION** : If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
 
-		>**IMPORTANT Note:**: If you set this value to false then follow the steps in the GitHub Authorization section in this document befoe you clikc the Create button to deploy the Azure components.
+		>**IMPORTANT Note:**: If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document befoe you click the Create button to deploy the Azure components.
 
-	* **VISIONSERVICESUBSCRIPTIONKEY**: Please use the key of the the Computer Vision Services you just created.
+	* **VISIONSERVICESUBSCRIPTIONKEY**: Use one of the Computer Vision Services keys you just created.
 	
-	Click **OK**.
+5. Click **OK**.
 
-	Click **Review Legal terms**, then click **Purchase**.
+6. Click **Review Legal terms**, then click **Purchase**.
 
-	Click **Create**.
+7. Click **Create**.
 
 	>**Notes:** 
 	>- The deployment creates a Basic (B1) hosting plan in Azure where all of the components are deployed.
 	>- The deployment process takes about 8 minutes.
 
-6. When the deployment steps complete, you will get the following azure components in the Resource Group.
+	>- When the deployment steps complete, you will see the following Azure components in the Resource Group.
 
-	![](Images/Deployment/azure-components.png)
+	> ![](Images/Deployment/azure-components.png)
 
 **Update the Contoso_ClaimAutoApproverUrl App Setting in the Function App**
 	
@@ -202,7 +184,7 @@ Download and install the following tools to build and/or develop this applicatio
 	./UploadVehicleImages.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
 	```
 
-	>**Note:** Use the Storage Account Name and Storage Account Keys associated with your Storage Account.
+	>**Note:** Use the *Storage Account Name* and *Storage Account Key* associated with your Storage Account.
 
 **Configure Authentications**
 
@@ -210,45 +192,77 @@ Download and install the following tools to build and/or develop this applicatio
 
 	![](Images/Deployment/azure-api-app.png)
 
-	[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
+	Follow the steps in this article: [How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
 		
 	![](Images/Deployment/auth-api-app.png)
 
-	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Allow request (no action)**
+	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Allow request (no action)**.  This is shown in the screenshot above.
 
 2. Configure the Web App to use AAD Authentication.
 	
 	![](Images/Deployment/azure-web-app.png)
 
-	[How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
+	Follow the steps in the **Manually configure Azure Active Directory with advanced settings** section in this article: [How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
 
-	Follow the steps in the **Manually configure Azure Active Directory with advanced settings** section.
-		
 	![](Images/Deployment/auth-web-app.png)
 
-	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Log in with Azure Active Directory**
+	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Log in with Azure Active Directory**.  This is shown in the screenshot above.
 
-**Authenticate the Office365 API Connection**
+**Authenticate the Office 365 API Connection**
 	
-![](Images/Deployment/azure-office365-api-connection.png)
+1. Open the **API Connection**.	
 
-1. Open the API Connection.	
+	![](Images/Deployment/azure-office365-api-connection.png)
+
+1. Click the **orange alert**.
 
 	![](Images/Deployment/authenticate-office365-api-connection-01.png)
 
-	Click the orange alert.
-
+1. Click **Authorize**:
+	
 	![](Images/Deployment/authenticate-office365-api-connection-02.png)
 
-1. Click **Authroize**:
+1. Sign in with your Office 365 account.
 	
 	![](Images/Deployment/authenticate-office365-api-connection-03.png)
 
-	Sigh in with your office 365 account.
-	
+1. Click **Save**.
+
 	![](Images/Deployment/authenticate-office365-api-connection-04.png)
 
-1. Click **Save**.
+## Create Customer User Accounts ##
+
+User account creation is not completely automated yet in this sample.  Therefore, there are a few steps you need to do to register the customer user accounts in the databases so they work with the sample data.  The customer user accounts are Microsoft Accounts and are used to sign into the mobile app.  Only one customer account is required to run the code sample, although the SQL and PowerShell scripts you ran in previous steps provisioned sample data for 2 customer accounts (in the event you want to make more than one).
+
+**Create Microsoft Account**
+
+1. Go to https://www.outlook.com and create a Microsoft Account.
+
+**Get User Id for the Microsoft Account** 
+
+1. Install the [Contoso Moments Azure Web App](https://github.com/azure-appservice-samples/ContosoMoments)
+1. Login to the Contoso Moments Azure Web App with the Microsoft Account.
+1. Open the database associated with the Contoso Moments Web App and copy the **Id** from the **Users** table.
+
+	![](images/Deployment/Get-UserId.png)
+
+1. Connect to the **CRMClaims** database and open the **Customers** table.
+
+	![](Images/Deployment/azure-crm-claims-database.png) 
+	
+	![](Images/Deployment/CRMClaims-Customers.png)
+
+1. Replace the **UserId** column for one of the rows with the Id for the Microsoft Account.  
+>**IMPORTANT Note:** Make a note of which *UserId* you replaced, you will need it to complete the steps below.
+1. In the same row, replace the **Email** column with the email address for the Microsoft Account.
+1. Connect to the **MobileClaims** database and open the **CustomerVehicles** table.
+	
+	![](Images/Deployment/azure-mobile-claims-database.png) 
+	
+	![](Images/Deployment/MobileClaims-CustomerVehicles.png)
+
+1. Find the rows that match the UserId you replaced, there are two of them for each customer.  Use the UserId you made a note of in the steps above to find the matching rows.
+1. **In both matching rows**, replace the **UserId** columns with the Id for the Microsoft Account.
 
 ## How To: Run the mobile client app for local execution and debugging on the iOS simulator##
 
@@ -263,7 +277,7 @@ Download and install the following tools to build and/or develop this applicatio
 	1.	Click **OK**.
 1.  Configure the debugging target device according to the screenshot below.
 
-	![](Images/VS-iOS-Deployment-Settings.png)
+	![](Images/Deployment/VS-iOS-Deployment-Settings.png)
 1.   Press **F5**.
 1.   Observe the iOS Simulator start on the Mac Agent and load the Contoso Insurance mobile app.
 
@@ -276,26 +290,26 @@ Download and install the following tools to build and/or develop this applicatio
 
 ## How To: View the custom events and metrics in Application Insights to monitor and debug the application
 
-The sample logs status information and exceptions to Application Insights for every step in the process.  This starts the moment a user logs into the mobile application and continues until the very end when a claim is manually approved or rejected by the claims adjuster.
+The sample logs status information and exceptions to Application Insights for every step in the process.  This starts moment they are received from the mobile app and continues until the very end when a claim is manually approved or rejected by the claims adjuster.
 
 To view the custom events and metrics in Application Insights follow these steps.
 
 1.  Open https://portal.azure.com in a web browser and log in.
 1.  Click the Application Insights link in the left menu.
-1.	Click contosoinsurance.
+1.	Click the contosoinsurance Application Insights application that was created when you deployed all the components.
 1.	Click Search.
 
-	![](images/App-Insights-Search.png)
+	![](Images/Deployment/App-Insights-Search.png)
 
 1.	Observe all of the Custom Events.
 
-	![](images/App-Insights-Search-Results.png)
+	![](Images/Deployment/App-Insights-Search-Results.png)
 
 1.	Click a Custom Event in the list to see the metrics logged for the event.
 	
 	>**Note:**  You can refer to the Application Insights Logging Matrix in the [Azure Components document](/Azure Components.docx) to see all of the Custom Metrics logged for each Custom Event.  In the example below you can see this custom event was written by the HandleNewClaim Azure Function when it invoked the ClaimAutoApprover Azure Function.
 
-	![](images/App-Insights-Custom-Event.png)
+	![](Images/Deployment/App-Insights-Custom-Event.png)
 
 **Track an individual claim**
 
@@ -304,23 +318,13 @@ Each claim has a CorrelationId associated with it.  You can see this in the scre
 1.  Copy the CorrelationId from a Custom Event.
 2.  Click **Search**.
 
-	![](images/App-Insights-Search.png)
+	![](Images/Deployment/App-Insights-Search.png)
 
 2.	Paste the CorrelationId into the **Search textbox** and observe all the Custom Events associated with the CorrelationId.
 
 	>**Note:**  This is an excellent way to debug errors in the system and is also especially helpful to determine how long a given step takes to execute.  This sample typically processes claims from the point where they are submitted in the mobile app to the point where they are ready for manual approval in 15 seconds when running the sample on the most basic App Services service level!
 	
-	![](images/App-Insights-Search-Results-CorrelationId.png) 
-
-## How To: Customize the service ##
-
-**Authentication**
-
-The web and mobile client supports Microsoft Account Authentication. Follow this tutorial:
-
-[How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
-
->**Note:** Ensure that the Action to take when request is not authenticated is set to Allow request (no action)  
+	![](Images/Deployment/App-Insights-Search-Results-CorrelationId.png) 
 
 ## GitHub Authorization ##
 
@@ -329,14 +333,50 @@ The web and mobile client supports Microsoft Account Authentication. Follow this
 1. Open https://github.com/settings/tokens in your web browser.
 2. Sign into your GitHub account where you forked this repository.
 3. Click **Generate Token**
-4. Enter **ContosoInsurance** in the Token description text box
+4. Enter a value in the **Token description** text box
 5. Select all the **check boxes**
+
+	![](Images/Deployment/github-new-personal-access-token.png)
+
 6. Click **Generate token**
 7. Copy the token
 
-**Add Token To Azure**
+**Add the GitHub Token to Azure in the Azure Resource Explorer**
 
 1. Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
-1. Paste the token into the **token parameter**.
-	![](Images/Deployment/Authorize-GitHub.png)
-1. Click **PUT**
+2. Log in with your Azure account.
+3. Selected the correct Azure subscription.
+4. Select **Read/Write** mode.
+5. Click **Edit**.
+6. Paste the token into the **token parameter**.
+	![](Images/Deployment/update-github-token-in-azure-resource-explorer.png)
+7. Click **PUT**
+
+## Contributors
+Roles|Author(s)
+--------|---------
+Project Lead / Architect / Documentation |Todd Baginski (Microsoft MVP, Canviz Consulting) @tbag
+Mobile Apps | Cloris Sun (Canviz Consulting)
+Web Apps | Albert Xie (Canviz Consulting)
+Azure Components, Services, Deployment | Tyler Lu (Canviz Consulting) @TylerLu
+Testing | Ring Li (Canviz Consulting)
+Testing | Melody She (Canviz Consulting)
+UX Design | Justin So (Canviz Consulting)
+PM | Johnny Chu (Canviz Consulting) @johnathanchu
+PM | Arthur Zheng (Canviz Consulting)
+Sponsor / Support | Donna Malayeri (Microsoft) @lindydonna
+Sponsor / Support | Cory Fowler (Microsoft) @SyntaxC4-MSFT
+Sponsor / Support | Jeremy Thake (Microsoft) @jthake
+Sponsor / Support | Jeff Hollan (Microsoft) @jeffhollan
+Sponsor / Support | Yochay Kiriaty (Microsoft) @yochay
+Sponsor / Support | Fabio Kavalcante (Microsoft)
+Sponsor / Support | Chris Gillum (Microsoft) @cgillum
+
+## Version history
+
+Version|Date|Comments
+-------|----|--------
+1.0|Sept 26, 2016|Initial release
+
+## Disclaimer
+**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**

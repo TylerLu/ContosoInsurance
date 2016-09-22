@@ -32,7 +32,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     }
     catch (Exception ex)
     {
-        telemetryClient.TraceException(FunctionName, correlationId, ex);
+        telemetryClient.TrackException(FunctionName, correlationId, ex);
         return req.CreateResponse(HttpStatusCode.InternalServerError, new { error = ex.Message });
     }
     finally
@@ -49,7 +49,7 @@ private static async Task<bool> ApproveClaimAsync(int id, string correlationId, 
             .Include(i => i.Vehicle)
             .Where(i => i.Id == id)
             .FirstOrDefaultAsync();
-        telemetryClient.TraceStatus(FunctionName, correlationId, "Data queried from CRM Claims SQL database", true);
+        telemetryClient.TrackStatus(FunctionName, correlationId, "Data queried from CRM Claims SQL database", true);
         if (claim == null) throw new ApplicationException("Could not found the claim");
 
         var isTheFirstTime = !await db.Claims
@@ -62,7 +62,7 @@ private static async Task<bool> ApproveClaimAsync(int id, string correlationId, 
         claim.Status = approved ? CRM.ClaimStatus.AutoApproved : CRM.ClaimStatus.AutoRejected;
 
         await db.SaveChangesAsync();
-        telemetryClient.TraceStatus(FunctionName, correlationId, "Data updated in CRM Claims SQL database", true);
+        telemetryClient.TrackStatus(FunctionName, correlationId, "Data updated in CRM Claims SQL database", true);
 
         return approved;
     }

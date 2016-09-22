@@ -27,7 +27,7 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
     }
     catch (Exception ex)
     {
-        telemetryClient.TraceException(FunctionName, claim.CorrelationId, ex);
+        telemetryClient.TrackException(FunctionName, claim.CorrelationId, ex);
         return req.CreateResponse(HttpStatusCode.BadRequest, new { error = ex.Message });
     }
     finally
@@ -44,15 +44,15 @@ private static async Task ApproveClaimAsync(int id, string correlationId, CRM.Cl
             .Include(i => i.Vehicle)
             .Where(i => i.Id == id)
             .FirstOrDefaultAsync();
-        telemetryClient.TraceStatus(FunctionName, correlationId, "Data queried from CRM Claims SQL database", true);
+        telemetryClient.TrackStatus(FunctionName, correlationId, "Data queried from CRM Claims SQL database", true);
         if (claim == null) throw new ApplicationException("Could not find the claim");
 
         claim.DamageAssessment = damageAssessment;
         claim.Status = approved ? CRM.ClaimStatus.ManualApproved : CRM.ClaimStatus.ManualRejected;
         await db.SaveChangesAsync();
-        telemetryClient.TraceStatus(FunctionName, correlationId, "Data updated in CRM Claims SQL database", true);
+        telemetryClient.TrackStatus(FunctionName, correlationId, "Data updated in CRM Claims SQL database", true);
 
         var description = approved ? "Claim Manually Approved" : "Claim Manually Rejected";
-        telemetryClient.TraceStatus(FunctionName, correlationId, description, true);
+        telemetryClient.TrackStatus(FunctionName, correlationId, description, true);
     }
 }

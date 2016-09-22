@@ -27,7 +27,7 @@
                 "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
               },
               "connection": {
-                "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+                "name": "@parameters('$connections')['office365']['connectionId']"
               }
             },
             "method": "post",
@@ -80,7 +80,7 @@
                   "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/office365"
                 },
                 "connection": {
-                  "name": "@parameters('$connections')['contosoinsurance-office365']['connectionId']"
+                  "name": "@parameters('$connections')['office365']['connectionId']"
                 }
               },
               "method": "post",

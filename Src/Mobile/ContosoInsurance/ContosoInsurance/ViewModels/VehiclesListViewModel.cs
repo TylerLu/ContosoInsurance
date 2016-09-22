@@ -102,18 +102,18 @@ namespace ContosoInsurance.ViewModels
 
         private async Task<Position> GetGPS()
         {
-            Position sourceImagePath = new Position();
+            Position position = new Position();
             try
             {
                 IPlatform platform = DependencyService.Get<IPlatform>();
-                sourceImagePath = await platform.GetGeolocator(App.UIContext);
+                position = await platform.GetGeolocator(App.UIContext);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Failure to get GPS coordinates - " + ex.Message);
                 Trace.WriteLine("Failure to get GPS coordinates - " + ex);
             }
-            return sourceImagePath;
+            return position;
         }
 
         public void Dispose()

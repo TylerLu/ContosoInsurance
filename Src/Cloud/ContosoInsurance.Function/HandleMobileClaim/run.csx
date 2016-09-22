@@ -23,7 +23,7 @@ public static async Task Run(MobileClaim claim,
     IAsyncCollector<NewClaim> newClaims)
 {
     var telemetryClient = ApplicationInsights.CreateTelemetryClient();
-    telemetryClient.TraceStatus(FunctionName, claim.Id, "Function triggered by mobile-claims queue");
+    telemetryClient.TrackStatus(FunctionName, claim.Id, "Function triggered by mobile-claims queue");
 
     try
     {
@@ -32,7 +32,7 @@ public static async Task Run(MobileClaim claim,
     }
     catch (Exception ex)
     {
-        telemetryClient.TraceException(FunctionName, claim.Id, ex);
+        telemetryClient.TrackException(FunctionName, claim.Id, ex);
     }
     finally
     {
@@ -46,7 +46,7 @@ private static async Task HandleMobileClaim(MobileClaim claim,
     IAsyncCollector<NewClaim> newClaims, TelemetryClient telemetryClient)
 {
     var mobileClaim = await GetMobileClaimAsync(claim.Id);
-    telemetryClient.TraceStatus(FunctionName, claim.Id, "Data queried from Mobile Claims SQL database", OperationStatus.Success);
+    telemetryClient.TrackStatus(FunctionName, claim.Id, "Data queried from Mobile Claims SQL database", OperationStatus.Success);
 
     var CRMClaim = await GetCRMClaimAsync(mobileClaim,
         otherPartyCardImage, otherPartyLicenseImage, otherPartyPlateImages,
@@ -55,7 +55,7 @@ private static async Task HandleMobileClaim(MobileClaim claim,
 
     // Write to CRM Claims Database 
     await AddCRMClaimAsync(CRMClaim);
-    telemetryClient.TraceStatus(FunctionName, claim.Id, "Data inserted into CRM Claims SQL database", OperationStatus.Success);
+    telemetryClient.TrackStatus(FunctionName, claim.Id, "Data inserted into CRM Claims SQL database", OperationStatus.Success);
 
     // Write to NewClaimForApprovalQueue 
     await newClaims.AddAsync(new NewClaim
@@ -63,7 +63,7 @@ private static async Task HandleMobileClaim(MobileClaim claim,
         Id = CRMClaim.Id,
         CorrelationId = claim.Id
     });
-    telemetryClient.TraceStatus(FunctionName, claim.Id, "Data pushed into new-claims queue", OperationStatus.Success);
+    telemetryClient.TrackStatus(FunctionName, claim.Id, "Data pushed into new-claims queue", OperationStatus.Success);
 }
 
 private static async Task<Mobile.Claim> GetMobileClaimAsync(string id)
@@ -89,21 +89,21 @@ private static async Task<CRM.Claim> GetCRMClaimAsync(Mobile.Claim mobileClaim,
     };
     if (otherPartyCardImage != null)
     {
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Started");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Started");
         await OCR.UpdateAsync(otherParty, CRM.ImageKind.InsuranceCard, await otherPartyCardImage.OpenReadAsync());
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Complete");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.InsuranceCard} OCR Complete");
     }
     if (otherPartyLicenseImage != null)
     {
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Started");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Started");
         await OCR.UpdateAsync(otherParty, CRM.ImageKind.DriverLicense, await otherPartyLicenseImage.OpenReadAsync());
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Complete");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.DriverLicense} OCR Complete");
     }
     if (otherPartyPlateImages != null)
     {
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Started");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Started");
         await OCR.UpdateAsync(otherParty, CRM.ImageKind.LicensePlate, await otherPartyPlateImages.OpenReadAsync());
-        telemetryClient.TraceStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Complete");
+        telemetryClient.TrackStatus(FunctionName, mobileClaim.Id, $"{CRM.ImageKind.LicensePlate} OCR Complete");
     }    
     if (!string.IsNullOrEmpty(otherParty.DriversLicenseNumber))
         otherParty.DriversLicenseNumber = otherParty.DriversLicenseNumber.Replace(" ", "");

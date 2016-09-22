@@ -26,10 +26,10 @@ namespace ContosoInsurance.MVC.Helper
                 var status = IsSuccess(filterContext.HttpContext.Response.StatusCode)
                     ? OperationStatus.Success
                     : OperationStatus.Failure;
-                client.TraceWebAppStatus(CorrelationId, Description, status);
+                client.TrackWebAppStatus(CorrelationId, Description, status);
             }
             else
-                client.TraceWebAppException(CorrelationId, filterContext.Exception);
+                client.TrackWebAppException(CorrelationId, filterContext.Exception);
 
             client.Flush();
         }

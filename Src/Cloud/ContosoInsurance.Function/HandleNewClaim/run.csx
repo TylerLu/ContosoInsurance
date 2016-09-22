@@ -16,7 +16,7 @@ private static readonly string FunctionName = "HandleNewClaim";
 public static async Task Run(Claim newClaim, TraceWriter log)
 {
     var telemetryClient = ApplicationInsights.CreateTelemetryClient();
-    telemetryClient.TraceStatus(FunctionName, newClaim.CorrelationId, "Function triggered by new-claims queue");
+    telemetryClient.TrackStatus(FunctionName, newClaim.CorrelationId, "Function triggered by new-claims queue");
 
     try
     {
@@ -24,7 +24,7 @@ public static async Task Run(Claim newClaim, TraceWriter log)
     }
     catch (Exception ex)
     {
-        telemetryClient.TraceException(FunctionName, newClaim.CorrelationId, ex);
+        telemetryClient.TrackException(FunctionName, newClaim.CorrelationId, ex);
     }
     finally
     {
@@ -35,7 +35,7 @@ public static async Task Run(Claim newClaim, TraceWriter log)
 private static async Task HandleNewClaim(Claim claim, TelemetryClient telemetryClient)
 {
     var customer = await GetCustomer(claim.Id);
-    telemetryClient.TraceStatus(FunctionName, claim.CorrelationId, "Data queried from CRM Claims SQL database", true);
+    telemetryClient.TrackStatus(FunctionName, claim.CorrelationId, "Data queried from CRM Claims SQL database", true);
     if (customer == null) return;
 
     var payload = new
@@ -48,7 +48,7 @@ private static async Task HandleNewClaim(Claim claim, TelemetryClient telemetryC
         claimDetailsPageBaseUrl = Settings.ClaimDetailsPageBaseUrl
     };
     var response = await Utils.PostTo(Settings.ClaimAutoApproverUrl, payload);
-    telemetryClient.TraceStatus(FunctionName, claim.CorrelationId, "Invoked ClaimAutoApprover Azure Function", response.IsSuccessStatusCode);
+    telemetryClient.TrackStatus(FunctionName, claim.CorrelationId, "Invoked ClaimAutoApprover Azure Function", response.IsSuccessStatusCode);
 }
 
 private static async Task<CRM.Customer> GetCustomer(int claimId)

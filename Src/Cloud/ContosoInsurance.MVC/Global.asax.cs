@@ -1,5 +1,6 @@
 ﻿using ContosoInsurance.Common.Data.CRM;
 using ContosoInsurance.Common.Data.Migrations;
+using ContosoInsurance.MVC.Helper;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -12,10 +13,16 @@ namespace ContosoInsurance.MVC
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RegisterFilters();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ClaimsDbContext, CRMClaimsConfiguration>());
+        }
+
+        private static void RegisterFilters()
+        {
+            GlobalFilters.Filters.Add(new ApplicationInsightsLogErrorAttribute());
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }

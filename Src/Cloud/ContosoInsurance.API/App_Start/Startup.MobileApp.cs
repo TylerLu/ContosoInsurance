@@ -34,8 +34,10 @@ namespace ContosoInsurance.API
                 //.MapLegacyCrossDomainController()
                 .ApplyTo(config);
 
+            config.Filters.Add(new ApplicationInsightsLogErrorAttribute());
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CRM.ClaimsDbContext, CRMClaimsConfiguration>());
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Mobile.ClaimsDbContext, MobileClaimsConfiguration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Mobile.ClaimsDbContext, MobileClaimsConfiguration>());            
 
             MobileAppSettingsDictionary settings = config.GetMobileAppSettingsProvider().GetMobileAppSettings();
 
