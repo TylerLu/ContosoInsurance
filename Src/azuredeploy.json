@@ -56,7 +56,7 @@
     },
     "visionServiceSubscriptionKey": {
       "type": "string",
-      "defaultValue": "16fee8b5b10e440cb3c05f5dbeced6e7",
+      "defaultValue": "",
       "metadata": {
         "description": "https://www.microsoft.com/cognitive-services/en-us/computer-vision-api"
       }
@@ -250,9 +250,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('functionAppName'), 'connectionstrings')]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],
@@ -843,9 +843,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('apiSiteName'), 'connectionstrings')]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],
@@ -911,9 +911,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('webSiteName'), 'connectionstrings')]"
           ],
           "properties": {
-            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],
