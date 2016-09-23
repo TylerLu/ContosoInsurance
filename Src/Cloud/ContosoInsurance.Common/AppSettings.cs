@@ -18,5 +18,7 @@ namespace ContosoInsurance.Common
             public static string MobileClaims = "mobile-claims";
         }
 
+        public static readonly string AutoSeedUserData = CloudConfigurationManager.GetSetting("AutoSeedUserData");
+
     }
 }

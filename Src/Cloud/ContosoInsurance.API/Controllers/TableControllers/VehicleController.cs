@@ -19,9 +19,10 @@ namespace ContosoInsurance.API.Controllers
         }
 
         // GET tables/Vehicle
+        [AutoSeedData]
         public async Task<IQueryable<Vehicle>> GetAllVehicle()
         {
-            var currentUserId = await AuthenticationHelper.GetUserId(Request, User);
+            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
             return Query().Where(i => i.UserId == currentUserId);
         }
 

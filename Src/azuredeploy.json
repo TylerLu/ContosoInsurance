@@ -250,9 +250,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('functionAppName'), 'connectionstrings')]"
           ],
           "properties": {
-            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],
@@ -811,6 +811,7 @@
           "properties": {
             "MS_AzureStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "AutoSeedUserData": "true",
             "command": "src\\Cloud\\ContosoInsurance.API\\deploy.cmd"
           }
         },
@@ -843,9 +844,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('apiSiteName'), 'connectionstrings')]"
           ],
           "properties": {
-            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],
@@ -911,9 +912,9 @@
             "[resourceId('Microsoft.Web/Sites/config', variables('webSiteName'), 'connectionstrings')]"
           ],
           "properties": {
-            "repoUrl": "[parameters('sourceCodeRepositoryURL')]",
+            "RepoUrl": "[parameters('sourceCodeRepositoryURL')]",
             "branch": "[parameters('sourceCodeBranch')]",
-            "isManualIntegration": "parameters('sourceCodeManualIntegration')]"
+            "IsManualIntegration": "parameters('sourceCodeManualIntegration')]"
           }
         }
       ],

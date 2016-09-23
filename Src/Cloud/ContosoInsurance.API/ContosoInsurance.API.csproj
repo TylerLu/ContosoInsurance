@@ -218,7 +218,10 @@
     <Compile Include="Helpers\CustomBodyModelValidator.cs" />
     <Compile Include="Helpers\DefaultStorageProvider.cs" />
     <Compile Include="Helpers\DefaultContainerNameResolver.cs" />
+    <Compile Include="Helpers\SeedDataHelper.cs" />
+    <Compile Include="Helpers\AutoSeedDataAttribute.cs" />
     <Compile Include="Models\ApproveResult.cs" />
+    <Compile Include="Models\ImageSeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -247,6 +250,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="deploy.cmd" />
+    <Content Include="DemoData\vehicle-demo1.png" />
+    <Content Include="DemoData\vehicle-demo2.png" />
     <None Include="Properties\PublishProfiles\contosoinsurance-api - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\contosoinsurance-api - Web Deploy.pubxml" />
   </ItemGroup>
