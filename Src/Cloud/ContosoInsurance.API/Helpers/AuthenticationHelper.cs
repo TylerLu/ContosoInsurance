@@ -9,34 +9,14 @@ namespace ContosoInsurance.API.Helpers
 {
     public static class AuthenticationHelper
     {
-
         internal static async Task<string> GetUserIdAsync(HttpRequestMessage request, IPrincipal user)
         {
-            var creds = await GetCurrentCredential(request, user);
-            return creds != null ?
-                string.Format("{0}:{1}", creds.Provider,  creds.Claims.GetValue(ClaimTypes.NameIdentifier)):
-                null;
+            var creds = await GetCurrentCredentialAsync(request, user);
+            if (creds == null) return null;
+            return $"{creds.Provider}:{creds.Claims.GetValue(ClaimTypes.NameIdentifier)}";
         }
 
-        internal static async Task<string> GetGivennameAsync(HttpRequestMessage request, IPrincipal user)
-        {
-            var creds = await GetCurrentCredential(request, user);
-            return creds != null ?creds.Claims.GetValue(ClaimTypes.GivenName):string.Empty;
-        }
-
-        internal static async Task<string> GetSurnameAsync(HttpRequestMessage request, IPrincipal user)
-        {
-            var creds = await GetCurrentCredential(request, user);
-            return creds != null ? creds.Claims.GetValue(ClaimTypes.Surname):string.Empty;
-        }
-
-        internal static async Task<string> GetEmailAsync(HttpRequestMessage request, IPrincipal user)
-        {
-            var creds = await GetCurrentCredential(request, user);
-            return creds != null ? creds.Claims.GetValue(ClaimTypes.Email) : string.Empty;
-        }
-
-        private static async Task<ProviderCredentials> GetCurrentCredential(HttpRequestMessage request, IPrincipal user)
+        internal static async Task<ProviderCredentials> GetCurrentCredentialAsync(HttpRequestMessage request, IPrincipal user)
         {
             var principal = user as ClaimsPrincipal;
             var claim = principal.FindFirst("http://schemas.microsoft.com/identity/claims/identityprovider");
@@ -50,7 +30,6 @@ namespace ContosoInsurance.API.Helpers
                 creds = await user.GetAppServiceIdentityAsync<FacebookCredentials>(request);
             else if (provider.IgnoreCaseEqualsTo("aad"))
                 creds = await user.GetAppServiceIdentityAsync<AzureActiveDirectoryCredentials>(request);
-
             return creds;
         }
     }

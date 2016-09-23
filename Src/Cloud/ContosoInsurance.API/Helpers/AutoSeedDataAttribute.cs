@@ -1,6 +1,7 @@
 ﻿using ContosoInsurance.Common;
 using System;
 using System.Diagnostics;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,28 +14,22 @@ namespace ContosoInsurance.API.Helpers
     {
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            Trace.TraceError("Enter");
-            await base.OnActionExecutingAsync(actionContext, cancellationToken);
-            if (IsSwitchOff())
-                return;
-            var controller = (actionContext.ControllerContext.Controller as ApiController);
-            var principal = controller.User;
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(actionContext.ControllerContext.Request, principal);
-            var givenname = await AuthenticationHelper.GetGivennameAsync(actionContext.ControllerContext.Request, principal);
-            var surname = await AuthenticationHelper.GetSurnameAsync(actionContext.ControllerContext.Request, principal);
-            var email = await AuthenticationHelper.GetEmailAsync(actionContext.ControllerContext.Request, principal);
-            await CheckSeedDataAsync(currentUserId, givenname, surname, email);
-        }
+            if (!AppSettings.AutoSeedUserData) return;
 
-        private bool IsSwitchOff()
-        {
-            return !AppSettings.AutoSeedUserData.IgnoreCaseEqualsTo("true");
-        }
+            var controller = actionContext.ControllerContext.Controller as ApiController;
+            if (!controller.User.Identity.IsAuthenticated) return;
 
-        private async Task CheckSeedDataAsync(string userId, string givenname, string surname, string email)
-        {
-            var seedDataHelper = new SeedDataHelper(userId, givenname, surname, email);
-            await seedDataHelper.TrySeedAsync();
+            var currentUserId = await AuthenticationHelper.GetUserIdAsync(controller.Request, controller.User);
+            var helper = new SeedDataHelper();
+            if (helper.IsCustomerExisted(currentUserId)) return;
+
+            var creds = await AuthenticationHelper.GetCurrentCredentialAsync(controller.Request, controller.User);
+
+            var firstName = creds.Claims.GetValue(ClaimTypes.GivenName);
+            var lastName = creds.Claims.GetValue(ClaimTypes.Surname);
+            // TODO: Get email
+            await helper.SeedAsync(currentUserId, firstName, lastName, null);
         }
+        
     }
 }
