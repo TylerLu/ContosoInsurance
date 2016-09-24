@@ -59,31 +59,33 @@ Download and install the following tools to run, build and/or develop this appli
 	
 	> **Note:** You must install the Xamarin Platform to run the mobile app.
 
-## GitHub Authorization ##
+**GitHub Authorization**
 
-**Generate Token**
+1. Generate Token
 
-1. Open https://github.com/settings/tokens in your web browser.
-2. Sign into your GitHub account where you forked this repository.
-3. Click **Generate Token**
-4. Enter a value in the **Token description** text box
-5. Select all the **check boxes**
+    * Open https://github.com/settings/tokens in your web browser.
+    * Sign into your GitHub account where you forked this repository.
+    * Click **Generate Token**
+    * Enter a value in the **Token description** text box
+    * Select all the **check boxes**
+    
+    ![](Images/Deployment/github-new-personal-access-token.png)
 
-	![](Images/Deployment/github-new-personal-access-token.png)
+    * Click **Generate token**
+    * Copy the token
 
-6. Click **Generate token**
-7. Copy the token
+2. Add the GitHub Token to Azure in the Azure Resource Explorer
 
-**Add the GitHub Token to Azure in the Azure Resource Explorer**
-
-1. Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
-2. Log in with your Azure account.
-3. Selected the correct Azure subscription.
-4. Select **Read/Write** mode.
-5. Click **Edit**.
-6. Paste the token into the **token parameter**.
+    * Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
+    * Log in with your Azure account.
+    * Selected the correct Azure subscription.
+    * Select **Read/Write** mode.
+    * Click **Edit**.
+    * Paste the token into the **token parameter**.
+    
 	![](Images/Deployment/update-github-token-in-azure-resource-explorer.png)
-7. Click **PUT**
+	
+    * Click **PUT**
 
 **Create a Computer Vision Account**
 
@@ -226,8 +228,6 @@ The Logic App uses an Office 365 API Connection to send email.  To authorize the
 
 ## Create Customer User Accounts ##
 
-User account creation is not completely automated yet in this sample.  Therefore, there is a step you need to do to update  customer user accounts in the database so they can receive email.  
-
 The customer user accounts used to sign into the mobile app are Microsoft Accounts.  Each time you sign into the mobile app, the system checks to see if you have previously signed in with the Microsoft Account and proceeds like this:
 
 - If you **have not** signed in to the mobile app with the Microsoft Account before, the system creates records in the SQL databases associated with the account and uploads the customers sample vehicle images to blob storage.  Then, the mobile app displays the vehicles page in the mobile app.
@@ -239,48 +239,6 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 	> <add key="AutoSeedUserData" value="true"/>
 	> ```
 	> If you change this app setting vale after you deploy the web api app and you deploy again with the ARM template then you will have to manually change it again.
-	
-**After the first time you sign in with a new customer account you must update the customer account in the database so they can receive email.**  This is a one time operation.
-
-1. In the list of components in the Resource Group the ARM template created (pictured above), click the **CRMClaims SQL database**.
-
-	![](Images/Deployment/azure-crm-claims-database.png)
- 
-1. Click the **Tools** button.
-	
-	![](Images/Deployment/CRMClaims-SQL-Database-Tools.png)
-
-3. Click **Open In Visual Studio**.
-
-	![](Images/Deployment/SQL-Database-Tools-Open-In-Visual-Studio.png)
-
-3. Click the **Open In Visual Studio** button.
-
-	![](Images/Deployment/SQL-Database-Tools-Open-In-Visual-Studio-Button.png)
-
-1. Enter the Password and check the Remember Password checkbox.
-2. Click **Connect**.
-
-	![](Images/Deployment/Visual-Studio-Connect-Database.png)
-
-1. Select the **Add my subnet IP range** radio button.
-2. In the **From** textbox enter **0.0.0.0**
-3. In the **To** textbox enter **255.255.255.255**
-4. Click **OK**
-
-	![](Images/Deployment/Create-New-Firewall-Rule.png)
-
-5. In the **SQL Server Object Explorer**, expand the nodes in the tree to show the **CRMClaims** database tables.
-
-	![](Images/Deployment/CRMClaims-Customers-Table.png)
-
-6. Right-click the Customers table and select View Data.
-
-	![](Images/Deployment/CRMClaims-Customers-Table-View-Data.png)
-
-1. Replace the **Email** column for the row associated with the Microsoft Account you just signed in with the email address for the Microsoft Account.
-
-	![](Images/Deployment/CRMClaims-Customers-Table-Update-Email.png)
 
 ## How To: Run the mobile client app for local execution and debugging on the iOS simulator##
 
