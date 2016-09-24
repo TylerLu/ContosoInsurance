@@ -15,6 +15,7 @@ Contoso Insurance is a sample that demonstrates the advantages of using the Azur
 	- Web hook triggers
 	- Queue triggers
 - Azure Cognitive Services - Computer Vision API
+- ARM Templates
 
 The sample also demonstrates how to use other technologies including:
 
@@ -51,12 +52,40 @@ See the [Azure Components document](/Azure Components.docx) for a complete and d
 
 ## How To: Configure your Development Environment ##
 
-Download and install the following tools to build and/or develop this application locally.
+Download and install the following tools to run, build and/or develop this application locally.
 
 - [Visual Studio 2015 Community](https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)
-- [Xamarin Platform for Visual Studio](https://xamarin.com/platform)
+- [Xamarin Platform for Visual Studio](https://xamarin.com/platform) 
+	
+	> **Note:** You must install the Xamarin Platform to run the mobile app.
 
-**Create an Computer Vision Account**
+## GitHub Authorization ##
+
+**Generate Token**
+
+1. Open https://github.com/settings/tokens in your web browser.
+2. Sign into your GitHub account where you forked this repository.
+3. Click **Generate Token**
+4. Enter a value in the **Token description** text box
+5. Select all the **check boxes**
+
+	![](Images/Deployment/github-new-personal-access-token.png)
+
+6. Click **Generate token**
+7. Copy the token
+
+**Add the GitHub Token to Azure in the Azure Resource Explorer**
+
+1. Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
+2. Log in with your Azure account.
+3. Selected the correct Azure subscription.
+4. Select **Read/Write** mode.
+5. Click **Edit**.
+6. Paste the token into the **token parameter**.
+	![](Images/Deployment/update-github-token-in-azure-resource-explorer.png)
+7. Click **PUT**
+
+**Create a Computer Vision Account**
 
 1. Open https://www.microsoft.com/cognitive-services/en-us/sign-up in your web browser.
 1. Click **Let's Go**
@@ -92,6 +121,13 @@ Download and install the following tools to build and/or develop this applicatio
 
 		>**IMPORTANT Note:**: If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document befoe you click the Create button to deploy the Azure components.
 
+	* **CLAIMSADJUSTEREMAIL**: Use an Office 365 Organization Account email address for this setting value.  
+	 
+		>**IMPORTANT Notes:**: 
+		> * **This account must be a user in the Azure Active Directory associated with the Azure Subscription where you deploy the sample.**  
+		> * **This account must also have an Office 365 license granted to it and an Exchange mailbox created so it can send and receive emails.**  
+		> * You will log into the web application with this account to play the role of the claims adjuster.
+	
 	* **VISIONSERVICESUBSCRIPTIONKEY**: Use one of the Computer Vision Services keys you just created.
 	
 5. Click **OK**.
@@ -110,87 +146,43 @@ Download and install the following tools to build and/or develop this applicatio
 
 **Update the Contoso_ClaimAutoApproverUrl App Setting in the Function App**
 	
-1. Get the Url for the ClaimAutoApprover Logic App  :	
+1. In the list of components in the Resource Group the ARM template created (pictured above), click the **ContosoInsuranceClaimAutoApprover Logic App**.
 
 	![](Images/Deployment/azure-claim-auto-approver.png)
 
+1. Scroll to the bottom of the blade on the right side of the screen.
+1. In the **All triggers** section, click the **manual** link.
+1. In the manual blade, mouse over the **Callback url** and select **Click to copy**.	
+
 	![](Images/Deployment/get-claim-auto-approver-url.png)
 
-1. Update the **Contoso_ClaimAutoApproverUrl** App Setting for the Function App:
+1. In the list of components in the Resource Group the ARM template created (pictured above), click the **Function App**.
+ 
+	![](Images/Deployment/azure-function-app.png)
 
-	![](Images/Deployment/azure-function-app.png)	
+1. Click the **Function app settings** link
+ 
+	![](Images/Deployment/function-app-settings-link.png)
+
+1. Click the **Configure app settings** button
+
+	![](Images/Deployment/function-app-settings.png)
+
+1. Paste the Callback Url you copied from the ContosoInsuranceClaimAutoApprover Logic App into the **Contoso_ClaimAutoApproverUrl** App Setting.
 	
 	![Update appsettings of the Function App](Images/Deployment/update-appsettings-of-the-function-app.png)
 
-**Initialize databases with sample data**
+	>**Note:**  If you deploy the Function App again with the ARM template then you will have to manually set  the **Contoso_ClaimAutoApproverUrl** App Setting again.
 
-1. Execute the **/Cloud/InitMobileClaims.sql** SQL script against the MobileClaims database.
-	
-	![](Images/Deployment/azure-mobile-claims-database.png)
- 
-2. Execute the **/Cloud/InitCRMClaims.sql** SQL script against the CRMClaims database. 
-
-	![](Images/Deployment/azure-crm-claims-database.png)
-
-**Initialize the Storage Account with sample images**
-
-1. Get the name and key of the Storage Account.
-
-	![](Images/Deployment/azure-storage-account.png)
-		
-	![Get the name and key of the storage account](Images/Deployment/get-name-and-key-of-the-storage-account.png)
-
-1. Execute the **/Cloud/InitStorage.ps1** PowerShell script. 
-
-	>**Note:** Use the *Storage Account Name* and *Storage Account Key* associated with your Storage Account.
-
-	```PowerShell
-	./InitStorage.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
-	```
-
-**Populate demo data**
-
-1. Execute the **/Cloud/Demo Data/MobileClaims.sql** SQL Script against the MobileClaims database. 
-		
-	![](Images/Deployment/azure-mobile-claims-database.png)
- 
-1. Update the Storage Account Name in the **/Src/Cloud/Demo Data/CRMClaims.sql** SQL script.
-		
-	![](Images/Deployment/azure-storage-account.png)
-
-	```sql
-	DECLARE @imageUrlBase nvarchar(255) = 'https://<Your Storage Account Name>.blob.core.windows.net/vehicle-images/vehicle-';
-	```	
-
-	For example:
-
-	If your storage account name is contosoinsurancestorage then the updated value will look like this:
-
-	```sql	
-	DECLARE @imageUrlBase nvarchar(255) = 'https://contosoinsurancestorage.blob.core.windows.net/vehicle-images/vehicle-';
-	```
-
-1. Execute the **/Cloud/Demo Data/CRMClaims.sql** SQL script against the CRMClaims database. 
-	
-	![](Images/Deployment/azure-crm-claims-database.png)
-	
-**Upload vehicle images to the storage account**
-
-1. Execute the **/Cloud/Demo Data/UploadVehicleImages.ps1** PowerShell script. 
-
-	![](Images/Deployment/azure-storage-account.png)
-
-	```PowerShell
-	./UploadVehicleImages.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
-	```
-
-	>**Note:** Use the *Storage Account Name* and *Storage Account Key* associated with your Storage Account.
-
-**Configure Authentications**
+**Configure Authentication For Web Apps**
 
 1. Configure the API App to use Microsoft Authentication
 
 	![](Images/Deployment/azure-api-app.png)
+
+	>**Note:** Step 1 in the article below tells you to copy the Url for your web app.  To copy the URL for your web app click the API **App Service** in the list of components in the Resource Group the ARM template created (pictured above).  Then, mouse over the **URL** and select **Click to copy**.
+	>
+	>![](Images/Deployment/Copy-Web-Api-URL.png)
 
 	Follow the steps in this article: [How to configure your App Service application to use Microsoft Account login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-microsoft-authentication/)
 		
@@ -202,13 +194,15 @@ Download and install the following tools to build and/or develop this applicatio
 	
 	![](Images/Deployment/azure-web-app.png)
 
-	Follow the steps in the **Manually configure Azure Active Directory with advanced settings** section in this article: [How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
+	If the Express configuration does not work, follow the steps in the **Manually configure Azure Active Directory with advanced settings** section in this article: [How to configure your App Service application to use Azure Active Directory login](https://azure.microsoft.com/en-us/documentation/articles/app-service-mobile-how-to-configure-active-directory-authentication/)
 
 	![](Images/Deployment/auth-web-app.png)
 
 	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Log in with Azure Active Directory**.  This is shown in the screenshot above.
 
 **Authenticate the Office 365 API Connection**
+
+The Logic App uses an Office 365 API Connection to send email.  To authorize the Logic App to call the Office 365 API and send email, follow these steps.
 	
 1. Open the **API Connection**.	
 
@@ -232,37 +226,61 @@ Download and install the following tools to build and/or develop this applicatio
 
 ## Create Customer User Accounts ##
 
-User account creation is not completely automated yet in this sample.  Therefore, there are a few steps you need to do to register the customer user accounts in the databases so they work with the sample data.  The customer user accounts are Microsoft Accounts and are used to sign into the mobile app.  Only one customer account is required to run the code sample, although the SQL and PowerShell scripts you ran in previous steps provisioned sample data for 2 customer accounts (in the event you want to make more than one).
+User account creation is not completely automated yet in this sample.  Therefore, there is a step you need to do to update  customer user accounts in the database so they can receive email.  
 
-**Create Microsoft Account**
+The customer user accounts used to sign into the mobile app are Microsoft Accounts.  Each time you sign into the mobile app, the system checks to see if you have previously signed in with the Microsoft Account and proceeds like this:
 
-1. Go to https://www.outlook.com and create a Microsoft Account.
+- If you **have not** signed in to the mobile app with the Microsoft Account before, the system creates records in the SQL databases associated with the account and uploads the customers sample vehicle images to blob storage.  Then, the mobile app displays the vehicles page in the mobile app.
+- If you **have** signed in with the Microsoft Account before, the mobile app loads the vehicles page in the mobile app.
 
-**Get User Id for the Microsoft Account** 
-
-1. Install the [Contoso Moments Azure Web App](https://github.com/azure-appservice-samples/ContosoMoments)
-1. Login to the Contoso Moments Azure Web App with the Microsoft Account.
-1. Open the database associated with the Contoso Moments Web App and copy the **Id** from the **Users** table.
-
-	![](Images/Deployment/Get-UserId.png)
-
-1. Connect to the **CRMClaims** database and open the **Customers** table.
-
-	![](Images/Deployment/azure-crm-claims-database.png) 
+	>**Note:**  The following app setting in the api web app's web.config file controls if data is auto seeded for new users.  If you do not want to auto seed data for new users set this value to false.
+	>
+	> ```xml
+	> <add key="AutoSeedUserData" value="true"/>
+	> ```
+	> If you change this app setting vale after you deploy the web api app and you deploy again with the ARM template then you will have to manually change it again.
 	
-	![](Images/Deployment/CRMClaims-Customers.png)
+**After the first time you sign in with a new customer account you must update the customer account in the database so they can receive email.**  This is a one time operation.
 
-1. Replace the **UserId** column for one of the rows with the Id for the Microsoft Account.  
->**IMPORTANT Note:** Make a note of which *UserId* you replaced, you will need it to complete the steps below.
-1. In the same row, replace the **Email** column with the email address for the Microsoft Account.
-1. Connect to the **MobileClaims** database and open the **CustomerVehicles** table.
-	
-	![](Images/Deployment/azure-mobile-claims-database.png) 
-	
-	![](Images/Deployment/MobileClaims-CustomerVehicles.png)
+1. In the list of components in the Resource Group the ARM template created (pictured above), click the **CRMClaims SQL database**.
 
-1. Find the rows that match the UserId you replaced, there are two of them for each customer.  Use the UserId you made a note of in the steps above to find the matching rows.
-1. **In both matching rows**, replace the **UserId** columns with the Id for the Microsoft Account.
+	![](Images/Deployment/azure-crm-claims-database.png)
+ 
+1. Click the **Tools** button.
+	
+	![](Images/Deployment/CRMClaims-SQL-Database-Tools.png)
+
+3. Click **Open In Visual Studio**.
+
+	![](Images/Deployment/SQL-Database-Tools-Open-In-Visual-Studio.png)
+
+3. Click the **Open In Visual Studio** button.
+
+	![](Images/Deployment/SQL-Database-Tools-Open-In-Visual-Studio-Button.png)
+
+1. Enter the Password and check the Remember Password checkbox.
+2. Click **Connect**.
+
+	![](Images/Deployment/Visual-Studio-Connect-Database.png)
+
+1. Select the **Add my subnet IP range** radio button.
+2. In the **From** textbox enter **0.0.0.0**
+3. In the **To** textbox enter **255.255.255.255**
+4. Click **OK**
+
+	![](Images/Deployment/Create-New-Firewall-Rule.png)
+
+5. In the **SQL Server Object Explorer**, expand the nodes in the tree to show the **CRMClaims** database tables.
+
+	![](Images/Deployment/CRMClaims-Customers-Table.png)
+
+6. Right-click the Customers table and select View Data.
+
+	![](Images/Deployment/CRMClaims-Customers-Table-View-Data.png)
+
+1. Replace the **Email** column for the row associated with the Microsoft Account you just signed in with the email address for the Microsoft Account.
+
+	![](Images/Deployment/CRMClaims-Customers-Table-Update-Email.png)
 
 ## How To: Run the mobile client app for local execution and debugging on the iOS simulator##
 
@@ -341,32 +359,6 @@ customEvents
 As you can see below, this claim took 22 seconds to process.
 
 ![](Images/Deployment/Application-Insights-Analytics.png)
-
-## GitHub Authorization ##
-
-**Generate Token**
-
-1. Open https://github.com/settings/tokens in your web browser.
-2. Sign into your GitHub account where you forked this repository.
-3. Click **Generate Token**
-4. Enter a value in the **Token description** text box
-5. Select all the **check boxes**
-
-	![](Images/Deployment/github-new-personal-access-token.png)
-
-6. Click **Generate token**
-7. Copy the token
-
-**Add the GitHub Token to Azure in the Azure Resource Explorer**
-
-1. Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
-2. Log in with your Azure account.
-3. Selected the correct Azure subscription.
-4. Select **Read/Write** mode.
-5. Click **Edit**.
-6. Paste the token into the **token parameter**.
-	![](Images/Deployment/update-github-token-in-azure-resource-explorer.png)
-7. Click **PUT**
 
 ## Contributors
 Roles|Author(s)
