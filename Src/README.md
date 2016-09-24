@@ -191,6 +191,7 @@ Download and install the following tools to run, build and/or develop this appli
 	![](Images/Deployment/auth-api-app.png)
 
 	>**IMPORTANT Note:** Ensure that the Action to take when a request is not authenticated is set to **Allow request (no action)**.  This is shown in the screenshot above.
+	
 	>**IMPORTANT Note:** Ensure that **wl.offline_access**, **wl.signin** and **wl.emails** are selected.  This is shown in the screenshot above.	
 
 2. Configure the Web App to use AAD Authentication.
