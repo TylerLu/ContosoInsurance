@@ -228,6 +228,23 @@ The Logic App uses an Office 365 API Connection to send email.  To authorize the
 
 	![](Images/Deployment/authenticate-office365-api-connection-04.png)
 
+**Initialize the Storage Account**
+
+1. Get the name and key of the Storage Account.
+
+	![](Images/Deployment/azure-storage-account.png)
+		
+	![Get the name and key of the storage account](Images/Deployment/get-name-and-key-of-the-storage-account.png)
+
+1. Execute the **src/Cloud/InitStorage.ps1** PowerShell script. 
+
+	>**Note:** The PowserShell below will create necessary blob containers and queues.
+	> Please Use the *Storage Account Name* and *Storage Account Key* associated with your Storage Account.
+
+	```PowerShell
+	./InitStorage.ps1 <<Your Storage Account Name>> <<Your Storage Account Key>>
+	```
+
 ## Create Customer User Accounts ##
 
 The customer user accounts used to sign into the mobile app are Microsoft Accounts.  Each time you sign into the mobile app, the system checks to see if you have previously signed in with the Microsoft Account and proceeds like this:
