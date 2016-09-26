@@ -121,11 +121,11 @@ Download and install the following tools to run, build and/or develop this appli
 
 	* **SOURCECODEMANUALINTEGRATION** : If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
 
-		>**IMPORTANT Note:**: If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document befoe you click the Create button to deploy the Azure components.
+		>**IMPORTANT Note:**: If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document before you click the Create button to deploy the Azure components.
 
 	* **CLAIMSADJUSTEREMAIL**: Use an Office 365 Organization Account email address for this setting value.  
 	 
-		>**IMPORTANT Notes:**: 
+		>**IMPORTANT Notes:**
 		> * **This account must be a user in the Azure Active Directory associated with the Azure Subscription where you deploy the sample.**  
 		> * **This account must also have an Office 365 license granted to it and an Exchange mailbox created so it can send and receive emails.**  
 		> * You will log into the web application with this account to play the role of the claims adjuster.
@@ -238,7 +238,7 @@ The Logic App uses an Office 365 API Connection to send email.  To authorize the
 
 1. Execute the **src/Cloud/InitStorage.ps1** PowerShell script. 
 
-	>**Note:** The PowserShell below will create necessary blob containers and queues.
+	>**Note:** The PowerShell below will create necessary blob containers and queues.
 	> Please Use the *Storage Account Name* and *Storage Account Key* associated with your Storage Account.
 
 	```PowerShell
