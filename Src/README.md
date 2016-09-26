@@ -121,7 +121,7 @@ Download and install the following tools to run, build and/or develop this appli
 
 	* **SOURCECODEMANUALINTEGRATION** : If deploying from the main repo, use true for ManualIntegration, otherwise use false. This parameter controls whether or not a webhook is created when you deploy. If you don't have permissions to the repo and it tries to create a webhook (i.e., ManualIntegration is false, then deployment will fail).
 
-		>**IMPORTANT Note:**: If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document before you click the Create button to deploy the Azure components.
+		>**IMPORTANT Note:** If you set this value to false then **YOU MUST** follow the steps in the GitHub Authorization section in this document before you click the Create button to deploy the Azure components.
 
 	* **CLAIMSADJUSTEREMAIL**: Use an Office 365 Organization Account email address for this setting value.  
 	 
