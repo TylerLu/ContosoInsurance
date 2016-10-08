@@ -263,7 +263,7 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 
 >**Note:** Currently, only the iOS version of the mobile app is fully implemented.  The Android version of the app is a prototype and is not fully implemented. 
 
-1. Use Visual Studio 2015 to open the **src/Cloud/ContosoInsurance-Cloud.sln** Visual Studio Solution file.
+1. Use Visual Studio 2015 to open the **src/Cloud/ContosoInsurance-Mobile.sln** Visual Studio Solution file.
 1.	Set up your Mac computer to act as a remote build machine.
 	1.	Click the **Tools** menu and select **Options**.
 	1.	Click **Xamarin**.
@@ -275,6 +275,16 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 	![](Images/Deployment/VS-iOS-Deployment-Settings.png)
 1.   Press **F5**.
 1.   Observe the iOS Simulator start on the Mac Agent and load the Contoso Insurance mobile app.
+
+> **Note:** If you do not set a location for the mobile ap it will fail with an exception.
+
+1.	In the Simulator menu, click **Debug**, **Location**, **Custom Location**.
+
+	![](Images/Deployment/iOS-Simulator-Location.png)
+
+1.	Enter a **latitude** and **longitude**.
+2.	Click **OK**.
+
 
 ## How To: Install the web application for local execution and debugging ##
  
