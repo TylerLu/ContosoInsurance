@@ -322,7 +322,6 @@
     <AndroidResource Include="Resources\drawable\FocusAddNewImg.png" />
     <AndroidResource Include="Resources\drawable\navmenu.png" />
     <AndroidResource Include="Resources\drawable\Settings.png" />
-    <AndroidResource Include="Resources\drawable\dropArrow.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="GCMClient">

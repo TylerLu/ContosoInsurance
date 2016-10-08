@@ -112,22 +112,13 @@
           <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Padding="15,0" BackgroundColor="#256bf9">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <Image Source="dropArrow.png" Aspect="AspectFit"  Grid.Column="0" VerticalOptions="Start"/>
-          <Label Text="Logout" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" Grid.Column="1" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+          <Label Text="Logout" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
           <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="LogoutBtn_Tapped" />
           </Grid.GestureRecognizers>
         </Grid>
         <Grid Grid.Row="1" Padding="15,0" BackgroundColor="#256bf9">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <Label Text="Settings" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" Grid.Column="1" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+          <Label Text="Settings" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
           <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="SettingsBtn_Tapped" />
           </Grid.GestureRecognizers>

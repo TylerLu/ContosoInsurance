@@ -19,6 +19,7 @@ public static class CRM
 
     public class ClaimsDbContext : DbContext
     {
+        private const string schema = "CRM";
         private const string connectionStringName = "Name=CRMClaims";
 
         public ClaimsDbContext() : base(connectionStringName) { }
@@ -35,6 +36,12 @@ public static class CRM
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Claim>().ToTable("Claims", schema);
+            modelBuilder.Entity<ClaimImage>().ToTable("ClaimImages", schema);
+            modelBuilder.Entity<Customer>().ToTable("Customers", schema);
+            modelBuilder.Entity<CustomerVehicle>().ToTable("CustomerVehicles", schema);
+            modelBuilder.Entity<OtherParty>().ToTable("OtherParties", schema);
+
             modelBuilder.Entity<Claim>()
                 .HasMany(i => i.Images)
                 .WithRequired(i => i.Claim)

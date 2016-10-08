@@ -105,10 +105,16 @@ var claimDetailFn = function () {
                         return '';
                 })(),
             };
+
+            var modal = $('#defaultModal');
+            modal.find('.modal-body').text('Working on it...');
+            modal.find('.modal-footer').hide();
+            modal.modal({ keyboard: false })
+
             self.Request('approve', 'post', requestData, function (data) {
-                var msg = 'The Claim is ' + (approved?'approved':'rejected') + '.';
-                alert(msg);
-                location.href = location.href + "?t=" + new Date().getTime();
+                var msg = 'The Claim is ' + (approved ? 'approved' : 'rejected') + '.';
+                modal.find('.modal-body').text(msg);
+                modal.find('.modal-footer').show();
             });
         };
         detail.showDetail = function (item) {
