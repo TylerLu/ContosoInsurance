@@ -28,9 +28,9 @@ namespace ContosoInsurance.Views
             base.OnAppearing();
             if (viewModel.vehiclesData.Count == 0)
             {
-                using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
+                try
                 {
-                    try
+                    using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
                     {
                         var vehicles = await viewModel.GetVehiclesAsync();
                         foreach (var ve in vehicles)
@@ -52,14 +52,14 @@ namespace ContosoInsurance.Views
                             vehicleListCtrl.Children.Add(frame);
                         }
                         vehicleListCtrl.Padding = new Thickness(0, 0, 0, 20);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("Failed to get vehicles - " + ex.Message);
-                        Trace.WriteLine("Failure to get vehicles - " + ex);
-                        await DisplayAlert("Error", "Failed to get vehicles - " + ex.Message, "Close");
-                        await Navigation.PopToRootAsync();
-                    }
+                    } 
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to get vehicles - " + ex.Message);
+                    Trace.WriteLine("Failure to get vehicles - " + ex);
+                    await DisplayAlert("Error", "Failed to get vehicles - " + ex.Message, "Close");
+                    await Navigation.PopToRootAsync();
                 }
             }
         }

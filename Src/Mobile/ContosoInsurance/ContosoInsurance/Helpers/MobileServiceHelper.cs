@@ -103,7 +103,6 @@ namespace ContosoInsurance.Helpers
             await Client.SyncContext.PushAsync();
             await vehicleTableSync.PullAsync(QueryVehicleString, vehicleTableSync.CreateQuery());
         }
-
         internal async Task DoLoginAsync()
         {
             var platform = DependencyService.Get<IPlatform>();
@@ -122,6 +121,14 @@ namespace ContosoInsurance.Helpers
                 var platform = DependencyService.Get<IPlatform>();
                 platform.ClearCache();
             
+                await Client.LogoutAsync();
+            }
+        }
+        internal async Task ClearCachAsync()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+            platform.ClearCache();
+            if (Client != null){
                 await Client.LogoutAsync();
             }
         }

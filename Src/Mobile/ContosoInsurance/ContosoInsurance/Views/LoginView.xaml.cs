@@ -16,9 +16,9 @@ namespace ContosoInsurance.Views
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
+            try
             {
-                try
+                using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
                 {
                     MobileServiceHelper.msInstance.InitMobileService();
                     await MobileServiceHelper.msInstance.DoLoginAsync();
@@ -27,12 +27,13 @@ namespace ContosoInsurance.Views
                     await Navigation.PushAsync(vehiclesView, true);
                     NavigationPage.SetHasBackButton(vehiclesView, false);
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Failure to log in - " + ex.Message);
-                    Trace.WriteLine("Failure to log in - " + ex);
-                    await DisplayAlert("Error", "Login Failure. "+ ex.Message, "Close");
-                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failure to log in - " + ex.Message);
+                Trace.WriteLine("Failure to log in - " + ex);
+                await MobileServiceHelper.msInstance.ClearCachAsync();
+                await DisplayAlert("Error", "Login Failure. " + ex.Message, "Close");
             }
         }
         

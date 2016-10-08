@@ -76,9 +76,9 @@ namespace ContosoInsurance.Views
 
         public async void CameraBtn_Tapped(object sender, EventArgs e)
         {
-            using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
+            try
             {
-                try
+                using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
                 {
                     int selectIndex = claimViewModel.getIncidentSelectIconIndex();
 
@@ -100,12 +100,12 @@ namespace ContosoInsurance.Views
                         claimViewModel.PropertyChangeImages(); ;
                     }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Image upload failed." + ex.Message);
-                    Trace.WriteLine("Image upload failed - " + ex);
-                    await DisplayAlert("Image upload failed", "Image upload failed. Please try again later", "Ok");
-                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Image upload failed." + ex.Message);
+                Trace.WriteLine("Image upload failed - " + ex);
+                await DisplayAlert("Image upload failed", "Image upload failed. Please try again later", "Ok");
             }
         }
 

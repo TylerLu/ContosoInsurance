@@ -49,17 +49,25 @@ namespace ContosoInsurance.ViewModels
 
         private async void DownloadStatusObserver(ImageDownloadEvent evt)
         {
-            var ve = vehiclesData.Where(x => x.Id == evt.Id).FirstOrDefault();
-            Debug.WriteLine($"Image download event: {ve?.Id}");
-            if (ve != null && !ve.ImageLoaded)
+            try
             {
-                var result = await GetVehicleFileAsync(ve);
-                ve.File = result.FirstOrDefault();
-                if (ve.File != null)
+                var ve = vehiclesData.Where(x => x.Id == evt.Id).FirstOrDefault();
+                Debug.WriteLine($"Image download event: {ve?.Id}");
+                if (ve != null && !ve.ImageLoaded)
                 {
-                    string filePath = await FileHelper.GetLocalFilePathAsync(ve.Id, ve.File.Name, MobileServiceHelper.msInstance.DataFilesPath);
-                    ve.ImageLoaded = await FileSystem.Current.LocalStorage.CheckExistsAsync(filePath) == ExistenceCheckResult.FileExists;
+                    var result = await GetVehicleFileAsync(ve);
+                    ve.File = result.FirstOrDefault();
+                    if (ve.File != null)
+                    {
+                        string filePath = await FileHelper.GetLocalFilePathAsync(ve.Id, ve.File.Name, MobileServiceHelper.msInstance.DataFilesPath);
+                        ve.ImageLoaded = await FileSystem.Current.LocalStorage.CheckExistsAsync(filePath) == ExistenceCheckResult.FileExists;
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("Failed to download image - " + ex.Message);
+                Trace.WriteLine("Failed to download image - " + ex);
             }
         }
 
