@@ -51,6 +51,11 @@ namespace ContosoInsurance.Common.Utils
             TrackException(client, "Web App Error", correlationId, ex);
         }
 
+        public static void TrackWebAppException(this TelemetryClient client, Exception ex)
+        {
+            TrackException(client, "Web App Error", "", ex);
+        }
+
 
         private static Dictionary<string, string> GetCommonProperties(string logType, string correlationId)
         {

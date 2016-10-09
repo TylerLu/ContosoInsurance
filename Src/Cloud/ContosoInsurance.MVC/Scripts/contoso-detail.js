@@ -109,7 +109,7 @@ var claimDetailFn = function () {
             var modal = $('#defaultModal');
             modal.find('.modal-body').text('Working on it...');
             modal.find('.modal-footer').hide();
-            modal.modal({ keyboard: false })
+            modal.modal({ keyboard: false, backdrop: 'static' });
 
             self.Request('approve', 'post', requestData, function (data) {
                 var msg = 'The Claim is ' + (approved ? 'approved' : 'rejected') + '.';

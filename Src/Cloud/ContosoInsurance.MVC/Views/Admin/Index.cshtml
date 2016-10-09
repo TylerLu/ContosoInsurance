@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Admin Panel";
+}
+
+<div class="admin-panel">
+    <h2>Admin Panel</h2>
+    <article>
+        <h3>Wipe Claims</h3>
+        <p>Click the button below to wipe all the claims.</p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#wipeClaimsConfirmModal">Wipe claims</button>
+        <div class="modal fade" id="wipeClaimsConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">Are you sure to wipe all the claims.</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="wipeClaimsBtn" type="button" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="wipeClaimsInProgressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">Working on it...</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="wipeClaimsFinishedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#wipeClaimsBtn').on('click', function () {
+            $('#wipeClaimsConfirmModal').modal('hide');
+            $('#wipeClaimsInProgressModal').modal('show');
+            $.post("/Admin/WipeClaims")
+            .done(function (result) {
+                $('#wipeClaimsInProgressModal').modal('hide');
+                $('#wipeClaimsFinishedModal').find('.modal-body').html(result.message);
+                $('#wipeClaimsFinishedModal').modal('show');
+            });
+        });
+    </script>
+}
