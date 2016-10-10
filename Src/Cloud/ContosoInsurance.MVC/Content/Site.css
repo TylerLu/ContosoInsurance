@@ -70,9 +70,10 @@ ul.nav-tabs >li.active{background-color:gray;}
 .nav .logo a img{padding-left:40px;display: inline-block;padding-top: 12px;}
 .nav .logo a h1{display: inline-block;margin-left: 17px;vertical-align: top;margin-top: 15px;text-transform: uppercase;color: #fff;font-weight: lighter;font-size: 38px;font-family:Helvetica Neue LT Std Regular;}
 .nav .user-info{display: inline-block;width: 15%;text-align: right;vertical-align: middle;float:right;clear:both;margin-top: 25px;margin-right: 23px;}
-.nav .user-info>div{display: inline-block;vertical-align: top;}
-.nav .user-info .login-name{color:#fff;font-size: 16px;padding-right: 3px;}
-.nav .user-info .login-status>img{width: 19px;height: 20px;}
+.nav .user-info a{text-decoration:none;}
+.nav .user-info a span{display: inline-block;vertical-align: top;}
+.nav .user-info a .login-name{color:#fff;font-size: 16px;padding-right: 3px;}
+.nav .user-info a .login-status>img{width: 19px;height: 20px;}
 
 table {display: table;width: 100%;}
 table thead, table tbody {float: left;width: 100%;}

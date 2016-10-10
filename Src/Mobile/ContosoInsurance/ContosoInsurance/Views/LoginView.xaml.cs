@@ -18,7 +18,7 @@ namespace ContosoInsurance.Views
         {
             try
             {
-                using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
+                //using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
                 {
                     MobileServiceHelper.msInstance.InitMobileService();
                     await MobileServiceHelper.msInstance.DoLoginAsync();
