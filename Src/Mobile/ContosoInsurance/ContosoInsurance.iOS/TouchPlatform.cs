@@ -12,7 +12,6 @@ using Foundation;
 using UIKit;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
-using Xamarin.Auth;
 using System.Linq;
 using ContosoInsurance.Helpers;
 using Xamarin.Geolocation;
@@ -87,11 +86,6 @@ namespace ContosoInsurance.iOS
             }
 
             return view;
-        }
-
-        public AccountStore GetAccountStore()
-        {
-            return AccountStore.Create();
         }
         public async Task<Position> GetGeolocator(object context)
         {

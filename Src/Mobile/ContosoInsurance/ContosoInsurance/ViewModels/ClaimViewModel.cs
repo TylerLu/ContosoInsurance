@@ -197,12 +197,15 @@ namespace ContosoInsurance.ViewModels
             var claimTableAsync = MobileServiceHelper.msInstance.claimTableSync;
 
             await claimTableAsync.PushFileChangesAsync();
+            Utils.TraceStatus("Images submitted to blob storage");
             await client.SyncContext.PushAsync();
-            
+            Utils.TraceStatus("Claims synched with SQL server");
+
             var jsonRequest = new JObject();
             jsonRequest["Id"] = cl.Id;
 
             await client.InvokeApiAsync(string.Format("SubmitClaimForProcessing/{0}", cl.Id), jsonRequest, HttpMethod.Post, null);
+            Utils.TraceStatus("Claim submitted to REST API");
             return;
 
         }

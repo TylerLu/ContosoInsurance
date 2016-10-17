@@ -153,6 +153,7 @@ namespace ContosoInsurance.MVC.Controllers
                     correlationId = claim.CorrelationId,
                     damageAssessment = damageAssessment,
                     approved = approved,
+                    customerUserId = customer.UserId,
                     customerName = customer.FirstName + " " + customer.LastName,
                     customerEmail = customer.Email
             });

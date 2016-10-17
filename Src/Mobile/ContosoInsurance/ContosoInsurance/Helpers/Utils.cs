@@ -2,6 +2,11 @@
 using Xamarin.Forms;
 using Microsoft.WindowsAzure.MobileServices.Eventing;
 using ContosoInsurance.Models;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Diagnostics;
+using HockeyApp;
+
 
 namespace ContosoInsurance.Helpers
 {
@@ -47,7 +52,6 @@ namespace ContosoInsurance.Helpers
             SetIndicatorActivity(false);
         }
     }
-
     public static class Utils
     {       
         public static bool IsOnline()
@@ -55,6 +59,39 @@ namespace ContosoInsurance.Helpers
             var networkConnection = DependencyService.Get<INetworkConnection>();
             networkConnection.CheckNetworkConnection();
             return networkConnection.IsConnected;
+        }
+
+
+
+        public static void TraceException(string logEvent, Exception ex)
+        {
+            Debug.WriteLine(logEvent + ex.Message);
+            Trace.WriteLine(logEvent + ex);
+
+
+            Dictionary<string, string> properties = new Dictionary<string, string>()
+            {
+                { "LogType", "Error Log"},
+                { "Version", Assembly.GetCallingAssembly().GetName().Version.ToString()},
+                { "Description", logEvent + ex.Message}
+            };
+            /*Hockey APP*/
+            MetricsManager.TrackEvent("Failure", properties, null);
+        }
+        public static void TraceStatus(string logEvent)
+        {
+            Debug.WriteLine(logEvent);
+            Trace.WriteLine(logEvent);
+
+            Dictionary<string, string> properties = new Dictionary<string, string>()
+            {
+                { "LogType", "Status Log"},
+                { "Version", Assembly.GetCallingAssembly().GetName().Version.ToString()},
+                { "Description", logEvent},
+                { "Status", "Success"}
+            };
+            /*Hockey APP*/
+            MetricsManager.TrackEvent(logEvent, properties, null);
         }
     }
 }

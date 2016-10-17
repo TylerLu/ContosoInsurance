@@ -223,12 +223,6 @@ fieldset[disabled] .btn-primary.active {
   overflow: hidden;
 }
 
-body.modal-open,
-.modal-open .navbar-fixed-top,
-.modal-open .navbar-fixed-bottom {
-  margin-right: 15px;
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -238,7 +232,6 @@ body.modal-open,
   z-index: 1040;
   display: none;
   overflow: auto;
-  overflow-y: scroll;
 }
 
 .modal.fade .modal-dialog {

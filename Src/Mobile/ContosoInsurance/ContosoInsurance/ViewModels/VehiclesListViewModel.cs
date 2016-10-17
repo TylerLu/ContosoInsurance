@@ -74,7 +74,7 @@ namespace ContosoInsurance.ViewModels
         public async Task<List<Vehicle>> GetVehiclesAsync()
         {
             await MobileServiceHelper.msInstance.SyncAsync();
-
+            Utils.TraceStatus("Vehicles synched with SQL server");
             var veTableSync = MobileServiceHelper.msInstance.vehicleTableSync;
             return await veTableSync.ToListAsync();
         }

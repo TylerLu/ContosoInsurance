@@ -56,8 +56,7 @@ namespace ContosoInsurance.Views
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Failed to get vehicles - " + ex.Message);
-                    Trace.WriteLine("Failure to get vehicles - " + ex);
+                    Utils.TraceException("Failed to get vehicles - ", ex);
                     await DisplayAlert("Error", "Failed to get vehicles - " + ex.Message, "Close");
                     await Navigation.PopToRootAsync();
                 }
@@ -68,7 +67,7 @@ namespace ContosoInsurance.Views
         {
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += NextButton_Clicked;
-            bottomView.NextImage.GestureRecognizers.Add(tapGestureRecognizer);
+            bottomView.NextButton.GestureRecognizers.Add(tapGestureRecognizer);
         }
 
         public void EmptyClaimViewModel()

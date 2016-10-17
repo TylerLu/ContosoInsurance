@@ -1,0 +1,12 @@
+{
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+        "Microsoft.ApplicationInsights": "2.1.0",
+        "Microsoft.Azure.NotificationHubs": "1.0.7",
+        "Microsoft.WindowsAzure.ConfigurationManager": "3.2.1",
+        "Newtonsoft.Json": "6.0.8"
+      }
+    }
+  }
+}

@@ -29,12 +29,12 @@ namespace ContosoInsurance.Views
         {
             var nextTapGestureRecognizer = new TapGestureRecognizer();
             nextTapGestureRecognizer.Tapped += NextButton_Clicked;
-            bottomView.NextImage.GestureRecognizers.Add(nextTapGestureRecognizer);
+            bottomView.NextButton.GestureRecognizers.Add(nextTapGestureRecognizer);
 
-            bottomView.PreviousImage.IsVisible = true;
+            bottomView.PreviousButton.IsVisible = true;
             var backTapGestureRecognizer = new TapGestureRecognizer();
             backTapGestureRecognizer.Tapped += PreviousButton_Clicked;
-            bottomView.PreviousImage.GestureRecognizers.Add(backTapGestureRecognizer);
+            bottomView.PreviousButton.GestureRecognizers.Add(backTapGestureRecognizer);
         }
 
         #region User Common Actions
@@ -65,8 +65,7 @@ namespace ContosoInsurance.Views
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to submit claim - " + ex.Message);
-                Trace.WriteLine("Failed to submit claim - " + ex);
+                Utils.TraceException("Failed to submit claim. ", ex);
                 await DisplayAlert("Error", ex.Message, "Close");
             }
         }

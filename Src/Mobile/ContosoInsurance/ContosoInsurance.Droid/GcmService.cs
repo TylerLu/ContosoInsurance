@@ -1,20 +1,24 @@
 using Android.App;
 using Android.Content;
+using Android.Media;
+using Android.Support.V4.App;
 using Android.Util;
 using Gcm.Client;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ContosoInsurance.Helpers;
 
 [assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
 [assembly: UsesPermission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
 [assembly: UsesPermission(Name = "com.google.android.c2dm.permission.RECEIVE")]
-
-[assembly: UsesPermission(Name = "android.permission.GET_ACCOUNTS")]
 [assembly: UsesPermission(Name = "android.permission.INTERNET")]
 [assembly: UsesPermission(Name = "android.permission.WAKE_LOCK")]
+//GET_ACCOUNTS is only needed for android versions 4.0.3 and below
+[assembly: UsesPermission(Name = "android.permission.GET_ACCOUNTS")]
 namespace ContosoInsurance.Droid
 {
     [BroadcastReceiver(Permission = Gcm.Client.Constants.PERMISSION_GCM_INTENTS)]
@@ -24,9 +28,10 @@ namespace ContosoInsurance.Droid
 
     public class PushHandlerBroadcastReceiver : GcmBroadcastReceiverBase<GcmService>
     {
-        public static string[] SENDER_IDS = new string[] { "952946361628" };
+        public static string[] SENDER_IDS = new string[] { "705339177819" };
         public const string TAG = "ContosoMoments-GCM";
     }
+
 
     [Service]
     public class GcmService : GcmServiceBase
@@ -39,17 +44,20 @@ namespace ContosoInsurance.Droid
         public static void RegisterWithMobilePushNotifications()
         {
             MobileServiceClient client = MobileServiceHelper.msInstance.Client;
-            
-            if (RegistrationID != null && client != null) {
+
+            if (RegistrationID != null && client != null)
+            {
                 var push = client.GetPush();
 
-                MainActivity.DefaultService.RunOnUiThread(async () => {
-                    try {
+                MainActivity.DefaultService.RunOnUiThread(async () =>
+                {
+                    try
+                    {
                         var gcmBody = new JObject {
                             {
                                 "data",
                                 new JObject {
-                                    { "message", "$(messageParam)" }
+                                    { "message", "$(Message)" }
                                 }
                             }
                         };
@@ -67,7 +75,8 @@ namespace ContosoInsurance.Droid
                         Log.Verbose(PushHandlerBroadcastReceiver.TAG, "NotificationHub registration successful");
 
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         Log.Error(PushHandlerBroadcastReceiver.TAG, "RegisterWithMobilePushNotifications: " + ex.Message);
                     }
                 });
@@ -89,7 +98,8 @@ namespace ContosoInsurance.Droid
 
             var msg = new StringBuilder();
 
-            if (intent != null && intent.Extras != null) {
+            if (intent != null && intent.Extras != null)
+            {
                 foreach (var key in intent.Extras.KeySet())
                     msg.AppendLine(key + "=" + intent.Extras.Get(key).ToString());
             }
@@ -101,13 +111,15 @@ namespace ContosoInsurance.Droid
             edit.Commit();
 
             string message = intent.Extras.GetString("message");
-            if (!string.IsNullOrEmpty(message)) {
-                createNotification("New like received!", "Liked image: " + message);
+            if (!string.IsNullOrEmpty(message))
+            {
+                createNotification("New todo item!", "Todo item: " + message);
                 return;
             }
 
             string msg2 = intent.Extras.GetString("msg");
-            if (!string.IsNullOrEmpty(msg2)) {
+            if (!string.IsNullOrEmpty(msg2))
+            {
                 createNotification("New hub message!", msg2);
                 return;
             }
@@ -123,16 +135,23 @@ namespace ContosoInsurance.Droid
             //Create an intent to show ui
             var uiIntent = new Intent(this, typeof(MainActivity));
 
+            //Use Notification Builder
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
             //Create the notification
-            var notification = new Notification(Android.Resource.Drawable.SymActionEmail, title);
-
-            //Auto cancel will remove the notification once the user touches it
-            notification.Flags = NotificationFlags.AutoCancel;
-
-            //Set the notification info
             //we use the pending intent, passing our ui intent over which will get called
             //when the notification is tapped.
-            notification.SetLatestEventInfo(this, title, desc, PendingIntent.GetActivity(this, 0, uiIntent, 0));
+            var notification = builder.SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0))
+                    .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
+                    .SetTicker(title)
+                    .SetContentTitle(title)
+                    .SetContentText(desc)
+
+                    //Set the notification sound
+                    .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
+
+                    //Auto cancel will remove the notification once the user touches it
+                    .SetAutoCancel(true).Build();
 
             //Show the notification
             notificationManager.Notify(1, notification);

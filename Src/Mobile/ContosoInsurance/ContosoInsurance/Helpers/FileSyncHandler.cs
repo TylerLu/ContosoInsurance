@@ -34,8 +34,7 @@ namespace ContosoInsurance.Helpers
                 }
             }
             catch (Exception ex) { // should catch WrappedStorageException, but this type is internal in the Storage SDK!
-                Debug.WriteLine("Exception while downloading blob, blob probably does not exist: " + ex.Message);
-                Trace.WriteLine("Exception while downloading blob, blob probably does not exist: " + ex);
+                Utils.TraceException("Exception while downloading blob, blob probably does not exist: ", ex);
             }
         }
     }

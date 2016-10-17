@@ -30,7 +30,7 @@ namespace ContosoInsurance.API
                         .MapTableControllers()
                         .AddEntityFramework()
                     )
-                //.AddPushNotifications()
+                .AddPushNotifications()
                 //.MapLegacyCrossDomainController()
                 .ApplyTo(config);
 

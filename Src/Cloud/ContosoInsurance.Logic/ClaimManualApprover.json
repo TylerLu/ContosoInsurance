@@ -13,6 +13,23 @@
     },
     "Is_Claim_Approved": {
       "actions": {
+        "Push_Manual_Approved_Notification": {
+          "inputs": {
+            "body": {
+              "CorrelationId": "@{triggerBody()['correlationId']}",
+              "Properties": {
+                "ClaimId": "@{triggerBody()['id']}",
+                "Message": "The claim you recently submitted was manually approved."
+              },
+              "TagExpression": "_UserId:@{triggerBody()['customerUserId']}"
+            },
+            "function": {
+              "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/PushNotification"
+            }
+          },
+          "runAfter": { },
+          "type": "Function"
+        },
         "Send_Manual_Approved_Email": {
           "inputs": {
             "body": {
@@ -33,7 +50,11 @@
             "method": "post",
             "path": "/Mail"
           },
-          "runAfter": { },
+          "runAfter": {
+            "Push_Manual_Approved_Notification": [
+              "Succeeded"
+            ]
+          },
           "type": "ApiConnection"
         },
         "TrackCustomEvent_-_Manual_Approved_Email_Sent": {
@@ -66,6 +87,23 @@
       },
       "else": {
         "actions": {
+          "Push_Manual_Rejected_Notification": {
+            "inputs": {
+              "body": {
+                "CorrelationId": "@{triggerBody()['correlationId']}",
+                "Properties": {
+                  "ClaimId": "@{triggerBody()['id']}",
+                  "Message": "The claim you recently submitted was manually rejected."
+                },
+                "TagExpression": "_UserId:@{triggerBody()['customerUserId']}"
+              },
+              "function": {
+                "id": "/subscriptions/ba4b754a-7463-466a-bd84-9d07c7ac9c9e/resourceGroups/ContosoInsurance/providers/Microsoft.Web/sites/contosoinsurance-function/functions/PushNotification"
+              }
+            },
+            "runAfter": { },
+            "type": "Function"
+          },
           "Send_Manual_Rejected_Email": {
             "inputs": {
               "body": {
@@ -86,7 +124,11 @@
               "method": "post",
               "path": "/Mail"
             },
-            "runAfter": { },
+            "runAfter": {
+              "Push_Manual_Rejected_Notification": [
+                "Succeeded"
+              ]
+            },
             "type": "ApiConnection"
           },
           "TrackCustomEvent_-_Manual_Rejected_Email_Sent": {
@@ -153,10 +195,16 @@
             "approved": {
               "type": "bool"
             },
+            "correlationId": {
+              "type": "string"
+            },
             "customerEmail": {
               "type": "string"
             },
             "customerName": {
+              "type": "string"
+            },
+            "customerUserId": {
               "type": "string"
             },
             "damageAssessment": {

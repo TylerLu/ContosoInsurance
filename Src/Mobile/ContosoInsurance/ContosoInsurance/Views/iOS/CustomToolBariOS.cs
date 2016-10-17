@@ -2,41 +2,70 @@
 
 namespace ContosoInsurance.Views
 {
-	public class CustomToolBariOS : ContentView
-	{
-        public Image PreviousImage { get; set; }
-        public Image NextImage { get; set; }
+    public class CustomToolBariOS : ContentView
+    {
+        public View PreviousButton { get; set; }
+        public View NextButton { get; set; }
         public CustomToolBariOS()
         {
+            var isIOS = Device.OS == TargetPlatform.iOS;
+            var buttonWidth = isIOS ? 13 : 50;
+
             var bottomGrid = new Grid();
             bottomGrid.RowSpacing = 0;
             bottomGrid.ColumnSpacing = 0;
-            
-            bottomGrid.BackgroundColor = Color.FromHex("F9F9F9");
-            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(13) });
-            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star});
-            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(13) });
 
-            PreviousImage = new Image
-            {
-                Source = "back.png",
-                Aspect = Aspect.AspectFit,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
-            PreviousImage.IsVisible = false;
-            bottomGrid.Children.Add(PreviousImage, 0, 0);
+            bottomGrid.BackgroundColor = Color.FromHex(isIOS ? "F9F9F9" : "D6D6D6");
+            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(buttonWidth) });
+            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            bottomGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(buttonWidth) });
 
-            NextImage = new Image
+            if (isIOS)
             {
-                Source = "forward.png",
-                Aspect = Aspect.AspectFit,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
+                PreviousButton = new Image
+                {
+                    Source = "back.png",
+                    Aspect = Aspect.AspectFit
+                };
+            }
+            else
+            {
+                PreviousButton = new Label
+                {
+                    Text = "BACK",
+                    FontSize = 16,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    TextColor = Color.Black
+                };
+            }
+            PreviousButton.VerticalOptions = LayoutOptions.CenterAndExpand;
+            PreviousButton.HorizontalOptions = LayoutOptions.FillAndExpand;
+            PreviousButton.IsVisible = false;
+
+            if (isIOS)
+            {
+                NextButton = new Image
+                {
+                    Source = "forward.png",
+                    Aspect = Aspect.AspectFit
+                };
+            }
+            else
+            {
+                NextButton = new Label
+                {
+                    Text = "NEXT",
+                    FontSize = 16,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    TextColor = Color.Black
+                };
+            }
+            NextButton.VerticalOptions = LayoutOptions.CenterAndExpand;
+            NextButton.HorizontalOptions = LayoutOptions.FillAndExpand;
+
+            bottomGrid.Children.Add(PreviousButton, 0, 0);
+            bottomGrid.Children.Add(NextButton, 2, 0);
             bottomGrid.Padding = new Thickness(15, 0);
-            bottomGrid.Children.Add(NextImage, 2, 0);
-
             Content = bottomGrid;
         }
     }

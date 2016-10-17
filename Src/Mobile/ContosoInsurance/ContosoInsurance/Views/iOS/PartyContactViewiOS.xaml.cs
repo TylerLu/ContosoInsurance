@@ -51,12 +51,12 @@ namespace ContosoInsurance.Views
         {
             var nextTapGestureRecognizer = new TapGestureRecognizer();
             nextTapGestureRecognizer.Tapped += NextButton_Clicked;
-            bottomView.NextImage.GestureRecognizers.Add(nextTapGestureRecognizer);
+            bottomView.NextButton.GestureRecognizers.Add(nextTapGestureRecognizer);
 
-            bottomView.PreviousImage.IsVisible = true;
+            bottomView.PreviousButton.IsVisible = true;
             var backTapGestureRecognizer = new TapGestureRecognizer();
             backTapGestureRecognizer.Tapped += PreviousButton_Clicked;
-            bottomView.PreviousImage.GestureRecognizers.Add(backTapGestureRecognizer);
+            bottomView.PreviousButton.GestureRecognizers.Add(backTapGestureRecognizer);
         }
 
         #region User Common Actions

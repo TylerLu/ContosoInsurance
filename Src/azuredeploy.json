@@ -69,6 +69,8 @@
     "office365ConnectionName": "[concat(variables('lowerSiteName'), '-office365')]",
     "storageAccountName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
     "sqlServerName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-dbserver')]",
+    "notificationHubName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
+    "notificationHubNamespaceName": "[concat(variables('notificationHubName'), '-ns')]",
     "applicationInsightsName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
     "functionAppName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-function')]",
     "claimAutoApproverName": "[concat(parameters('siteName'), 'ClaimAutoApprover')]",
@@ -186,6 +188,30 @@
       ]
     },
     {
+      "type": "Microsoft.NotificationHubs/namespaces",
+      "kind": "NotificationHub",
+      "name": "[variables('notificationHubNamespaceName')]",
+      "apiVersion": "2014-09-01",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "Free"
+      },
+      "properties": {
+        "namespaceType": "NotificationHub"
+      },
+      "resources": [
+        {
+          "type": "notificationHubs",
+          "name": "[variables('notificationHubName')]",
+          "apiVersion": "2014-09-01",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.NotificationHubs/namespaces', variables('notificationHubNamespaceName'))]"
+          ]
+        }
+      ]
+    },
+    {
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
       "name": "[variables('functionAppName')]",
@@ -206,7 +232,8 @@
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites/', variables('functionAppName'))]",
             "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]"
+            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
+            "[resourceId('Microsoft.NotificationHubs/namespaces/notificationHubs/', variables('notificationHubNamespaceName'), variables('notificationHubName'))]"
           ],
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
@@ -217,6 +244,8 @@
             "Contoso_ClaimDetailsPageBaseUrl": "[variables('claimDetailsPageBaseUrl')]",
             "MS_VisionServiceSubscriptionKey": "[parameters('visionServiceSubscriptionKey')]",
             "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "MS_NotificationHubName": "[variables('notificationHubName')]",
+            "MS_NotificationHubConnectionString": "[listkeys(resourceId('Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules', variables('notificationHubNamespaceName'), variables('notificationHubName'), 'DefaultFullSharedAccessSignature'), '2014-09-01').primaryConnectionString]",
             "FUNCTIONS_EXTENSION_VERSION": "latest",
             "command": "src\\Cloud\\ContosoInsurance.Function\\deploy.cmd"
           }
@@ -260,7 +289,8 @@
         "[resourceId('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]",
         "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
         "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.NotificationHubs/namespaces/', variables('notificationHubNamespaceName'))]"
       ]
     },
     {
@@ -608,10 +638,16 @@
                     "approved": {
                       "type": "bool"
                     },
+                    "correlationId": {
+                      "type": "string"
+                    },
                     "customerEmail": {
                       "type": "string"
                     },
                     "customerName": {
+                      "type": "string"
+                    },
+                    "customerUserId": {
                       "type": "string"
                     },
                     "damageAssessment": {
@@ -646,8 +682,29 @@
             },
             "Is_Claim_Approved": {
               "actions": {
-                "Send_Manual_Approved_Email": {
+                "Push_Manual_Approved_Notification": {
                   "runAfter": { },
+                  "type": "Function",
+                  "inputs": {
+                    "body": {
+                      "CorrelationId": "@{triggerBody()['correlationId']}",
+                      "Properties": {
+                        "ClaimId": "@{triggerBody()['id']}",
+                        "Message": "The claim you recently submitted was manually approved."
+                      },
+                      "TagExpression": "_UserId:@{triggerBody()['customerUserId']}"
+                    },
+                    "function": {
+                      "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/PushNotification')]"
+                    }
+                  }
+                },
+                "Send_Manual_Approved_Email": {
+                  "runAfter": {
+                    "Push_Manual_Approved_Notification": [
+                      "Succeeded"
+                    ]
+                  },
                   "type": "ApiConnection",
                   "inputs": {
                     "body": {
@@ -704,8 +761,29 @@
               },
               "else": {
                 "actions": {
-                  "Send_Manual_Rejected_Email": {
+                  "Push_Manual_Rejected_Notification": {
                     "runAfter": { },
+                    "type": "Function",
+                    "inputs": {
+                      "body": {
+                        "CorrelationId": "@{triggerBody()['correlationId']}",
+                        "Properties": {
+                          "ClaimId": "@{triggerBody()['id']}",
+                          "Message": "The claim you recently submitted was manually rejected."
+                        },
+                        "TagExpression": "_UserId:@{triggerBody()['customerUserId']}"
+                      },
+                      "function": {
+                        "id": "[concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/functions/PushNotification')]"
+                      }
+                    }
+                  },
+                  "Send_Manual_Rejected_Email": {
+                    "runAfter": {
+                      "Push_Manual_Rejected_Notification": [
+                        "Succeeded"
+                      ]
+                    },
                     "type": "ApiConnection",
                     "inputs": {
                       "body": {
@@ -806,11 +884,14 @@
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites/', variables('apiSiteName'))]",
             "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]"
+            "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
+            "[resourceId('Microsoft.NotificationHubs/namespaces/notificationHubs/', variables('notificationHubNamespaceName'), variables('notificationHubName'))]"
           ],
           "properties": {
             "MS_AzureStorageAccountConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "MS_ApplicationInsightsInstrumentationKey": "[reference(concat('microsoft.insights/components/', variables('applicationInsightsName'))).InstrumentationKey]",
+            "MS_NotificationHubName": "[variables('notificationHubName')]",
+            "MS_NotificationHubConnectionString": "[listkeys(resourceId('Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules', variables('notificationHubNamespaceName'), variables('notificationHubName'), 'DefaultFullSharedAccessSignature'), '2014-09-01').primaryConnectionString]",
             "AutoSeedUserData": "true",
             "command": "src\\Cloud\\ContosoInsurance.API\\deploy.cmd"
           }
@@ -821,7 +902,8 @@
           "name": "connectionstrings",
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites/', variables('apiSiteName'))]",
-            "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
+            "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]",
+            "[resourceId('Microsoft.NotificationHubs/namespaces/', variables('notificationHubNamespaceName'))]"
           ],
           "properties": {
             "MobileClaims": {

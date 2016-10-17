@@ -19,7 +19,7 @@ namespace ContosoInsurance.Helpers
         public static string QueryVehicleString = "allVehicle";
         public static string QueryClaimString = "allClaim";
 
-        private const string LocalDbFilename = "localDb.sqlite";
+        private const string LocalDbFilenamePrefix = "localDb.sqlite.";
         public MobileServiceClient Client;
         public MobileServiceUser AuthenticatedUser;
 
@@ -41,7 +41,7 @@ namespace ContosoInsurance.Helpers
         {
             if (!Client.SyncContext.IsInitialized)
             {
-                var store = new MobileServiceSQLiteStore(LocalDbFilename + userId);
+                var store = new MobileServiceSQLiteStore(LocalDbFilenamePrefix + userId.Replace(':', '.'));
                 store.DefineTable<Models.Vehicle>();
                 store.DefineTable<Models.Claim>();
 
@@ -108,8 +108,7 @@ namespace ContosoInsurance.Helpers
             var platform = DependencyService.Get<IPlatform>();
             var user = await platform.LoginAsync(MobileServiceAuthenticationProvider.MicrosoftAccount);
             msInstance.AuthenticatedUser = user;
-            Debug.WriteLine("Authenticated with user: " + user.UserId);
-            Trace.WriteLine("Authenticated with user: " + user.UserId);
+            Utils.TraceStatus("Authenticated with user: " + user.UserId);
             await InitLocalStoreAsync(user.UserId);
         }
 

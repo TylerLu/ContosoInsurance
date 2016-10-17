@@ -28,12 +28,12 @@ namespace ContosoInsurance.Views
         {
             var nextTapGestureRecognizer = new TapGestureRecognizer();
             nextTapGestureRecognizer.Tapped += NextButton_Clicked;
-            bottomView.NextImage.GestureRecognizers.Add(nextTapGestureRecognizer);
+            bottomView.NextButton.GestureRecognizers.Add(nextTapGestureRecognizer);
 
-            bottomView.PreviousImage.IsVisible = true;
+            bottomView.PreviousButton.IsVisible = true;
             var backTapGestureRecognizer = new TapGestureRecognizer();
             backTapGestureRecognizer.Tapped += PreviousButton_Clicked;
-            bottomView.PreviousImage.GestureRecognizers.Add(backTapGestureRecognizer);
+            bottomView.PreviousButton.GestureRecognizers.Add(backTapGestureRecognizer);
         }
 
         public void AddIncidentIcon()
@@ -103,8 +103,7 @@ namespace ContosoInsurance.Views
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Image upload failed." + ex.Message);
-                Trace.WriteLine("Image upload failed - " + ex);
+                Utils.TraceException("Image upload failed. ", ex);
                 await DisplayAlert("Image upload failed", "Image upload failed. Please try again later", "Ok");
             }
         }
