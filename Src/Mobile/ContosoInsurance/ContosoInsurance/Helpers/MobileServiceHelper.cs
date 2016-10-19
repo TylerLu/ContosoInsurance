@@ -57,6 +57,8 @@ namespace ContosoInsurance.Helpers
 
             IPlatform platform = DependencyService.Get<IPlatform>();
             DataFilesPath = await platform.GetDataFilesPath();
+
+            await platform.RegisterWithMobilePushNotifications();
         }
 
         internal Task DownloadFileAsync(MobileServiceFile file)

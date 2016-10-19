@@ -24,7 +24,7 @@ namespace ContosoInsurance.Views
                     MobileServiceHelper.msInstance.InitMobileService();
                     await MobileServiceHelper.msInstance.DoLoginAsync();
 
-                    var vehiclesView = new VehiclesListViewiOS();
+                    var vehiclesView = new VehiclesListView();
                     await Navigation.PushAsync(vehiclesView, true);
                     NavigationPage.SetHasBackButton(vehiclesView, false);
                 }
@@ -39,7 +39,7 @@ namespace ContosoInsurance.Views
         
         private async void SettingsBtn_Tapped(object sender, EventArgs e)
         {
-            var settingsView = new SettingsViewiOS();
+            var settingsView = new SettingsView();
             NavigationPage.SetHasBackButton(settingsView, false);
             await Navigation.PushAsync(settingsView, false);
         }

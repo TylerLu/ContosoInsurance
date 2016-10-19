@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:CustomerView="clr-namespace:ContosoInsurance.Views"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ContosoInsurance.Views.SettingsViewiOS">
+             x:Class="ContosoInsurance.Views.SettingsView">
   <ContentPage.ToolbarItems>
     <ToolbarItem Name="Save" Order="Default" Priority="0" Clicked="SaveClicked" />
     <ToolbarItem Icon="navmenu.png" Order="Default" Priority="0" Clicked="MenuClicked" />
@@ -27,7 +27,7 @@
       </Label>
       
       <Grid Grid.Row="3" Padding="15,0">
-        <Entry x:Name="settingsURL" Keyboard="Telephone" Placeholder="xxx-xxx-xxxx"
+        <Entry x:Name="settingsURL"
                                   HeightRequest="35" FontSize="Medium"
                                   HorizontalTextAlignment="Center"
                                   VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555"/>

@@ -29,7 +29,7 @@ namespace ContosoInsurance.API.Controllers.TableControllers
         [Route("tables/Claim/{id}/StorageToken")]
         public async Task<HttpResponseMessage> PostStorageTokenRequest(string id, StorageTokenRequest request)
         {
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
+            var currentUserId = AuthenticationHelper.GetUserId(Request, User);
             if (!claimsDbContext.Claims.Any(i => i.Id == id && i.UserId == currentUserId))
                 Request.CreateBadRequestResponse(ErrorMessage);
 
@@ -42,7 +42,7 @@ namespace ContosoInsurance.API.Controllers.TableControllers
         [Route("tables/Claim/{id}/MobileServiceFiles")]
         public async Task<HttpResponseMessage> GetFiles(string id)
         {
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
+            var currentUserId = AuthenticationHelper.GetUserId(Request, User);
             if (!claimsDbContext.Claims.Any(i => i.Id == id && i.UserId == currentUserId))
                 Request.CreateBadRequestResponse(ErrorMessage);
 

@@ -15,12 +15,22 @@
         <Grid  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" 
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" RowSpacing="0">
           <Grid.RowDefinitions>
+              
+              
             <RowDefinition Height="10"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="245"/>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength" iOS="245"  Android="280"/>
+                </RowDefinition.Height>
+            </RowDefinition>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength" iOS="30"  Android="50" WinPhone="80*" />
+                </RowDefinition.Height>
+            </RowDefinition>
             <RowDefinition Height="*"/>
           </Grid.RowDefinitions>
           

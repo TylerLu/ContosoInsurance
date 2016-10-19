@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -153,7 +154,7 @@ namespace ContosoInsurance.MVC.Controllers
                     correlationId = claim.CorrelationId,
                     damageAssessment = damageAssessment,
                     approved = approved,
-                    customerUserId = customer.UserId,
+                    customerUserId = Regex.Match(customer.UserId, @"sid:\w+").Value,
                     customerName = customer.FirstName + " " + customer.LastName,
                     customerEmail = customer.Email
             });

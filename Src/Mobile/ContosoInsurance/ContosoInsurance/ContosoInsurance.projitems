@@ -37,74 +37,62 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomIncidentIcon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomToolBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Custom\CustomVehicleFrame.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\CustomToolBariOS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDescriptioniOS.xaml.cs">
-      <DependentUpon>IncidentDescriptioniOS.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IncidentDescription.xaml.cs">
       <SubType>Code</SubType>
+      <DependentUpon>IncidentDescription.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDetailViewiOS.xaml.cs">
-      <DependentUpon>IncidentDetailViewiOS.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\IncidentDetailView.xaml.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\PartyContactViewiOS.xaml.cs">
-      <DependentUpon>PartyContactViewiOS.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\PartyInfoViewiOS.xaml.cs">
-      <DependentUpon>PartyInfoViewiOS.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\SettingsViewiOS.xaml.cs">
-      <DependentUpon>SettingsViewiOS.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\iOS\VehiclesListViewiOS.xaml.cs">
-      <DependentUpon>VehiclesListViewiOS.xaml</DependentUpon>
-      <SubType>Code</SubType>
+      <DependentUpon>IncidentDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PartyContactView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PartyContactView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PartyInfoView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PartyInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SettingsView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\VehiclesListView.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>VehiclesListView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IncidentDescription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\IncidentDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\VehiclesListViewiOS.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\PartyContactView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\PartyInfoViewiOS.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\PartyInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\PartyContactViewiOS.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDetailViewiOS.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\SettingsViewiOS.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\iOS\IncidentDescriptioniOS.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VehiclesListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

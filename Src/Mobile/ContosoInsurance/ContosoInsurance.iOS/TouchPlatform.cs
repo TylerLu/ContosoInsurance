@@ -93,5 +93,10 @@ namespace ContosoInsurance.iOS
             Position position = await locator.GetPositionAsync(timeout: 10000);
             return position;
         }
+        public async Task RegisterWithMobilePushNotifications()
+        {
+            AppDelegate.IsAfterLogin = true;
+            await AppDelegate.RegisterWithMobilePushNotifications();
+        }
     }
 }

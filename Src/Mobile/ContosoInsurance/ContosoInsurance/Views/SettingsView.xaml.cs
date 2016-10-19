@@ -4,9 +4,9 @@ using ContosoInsurance.Helpers;
 
 namespace ContosoInsurance.Views
 {
-	public partial class SettingsViewiOS : ContentPage
+	public partial class SettingsView : ContentPage
 	{
-        public SettingsViewiOS ()
+        public SettingsView ()
 		{
             Title = "Contoso Insurance";
             InitializeComponent ();

@@ -23,7 +23,7 @@ namespace ContosoInsurance.API.Controllers
         // GET tables/Claim
         public async Task<IQueryable<Claim>> GetAllClaim()
         {
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
+            var currentUserId = AuthenticationHelper.GetUserId(Request, User);
             return Query().Where(i => i.UserId == currentUserId);
         }
 
@@ -40,7 +40,7 @@ namespace ContosoInsurance.API.Controllers
         {
             ActionContext.ActionArguments[Constants.CorrelationIdKey] = item.Id;
 
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
+            var currentUserId = AuthenticationHelper.GetUserId(Request, User);
             item.UserId = currentUserId;
 
             Claim current = await InsertAsync(item);

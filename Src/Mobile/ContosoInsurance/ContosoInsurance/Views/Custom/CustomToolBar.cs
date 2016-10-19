@@ -2,11 +2,11 @@
 
 namespace ContosoInsurance.Views
 {
-    public class CustomToolBariOS : ContentView
+    public class CustomToolBar : ContentView
     {
         public View PreviousButton { get; set; }
         public View NextButton { get; set; }
-        public CustomToolBariOS()
+        public CustomToolBar()
         {
             var isIOS = Device.OS == TargetPlatform.iOS;
             var buttonWidth = isIOS ? 13 : 50;

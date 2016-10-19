@@ -22,7 +22,7 @@ namespace ContosoInsurance.API.Controllers
         [AutoSeedData]
         public async Task<IQueryable<Vehicle>> GetAllVehicle()
         {
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(Request, User);
+            var currentUserId = AuthenticationHelper.GetUserId(Request, User);
             return Query().Where(i => i.UserId == currentUserId);
         }
 

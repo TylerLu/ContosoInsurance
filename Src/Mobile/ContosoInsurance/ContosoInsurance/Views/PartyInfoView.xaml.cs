@@ -7,13 +7,13 @@ using ContosoInsurance.Helpers;
 
 namespace ContosoInsurance.Views
 {
-	public partial class PartyInfoViewiOS : ContentPage
+	public partial class PartyInfoView : ContentPage
     {
         private ClaimViewModel claimViewModel;
         private ClaimImageTypeModel type;
         private string fileName;
 
-        public PartyInfoViewiOS (ClaimViewModel cv, ClaimImageTypeModel cmType)
+        public PartyInfoView (ClaimViewModel cv, ClaimImageTypeModel cmType)
 		{
             Title = "Contoso Insurance";
             InitializeComponent ();
@@ -91,14 +91,14 @@ namespace ContosoInsurance.Views
                 || type == ClaimImageTypeModel.InsuranceCard)
             {
 
-                var nextPage = new PartyInfoViewiOS(claimViewModel, type + 1);
+                var nextPage = new PartyInfoView(claimViewModel, type + 1);
 
                 await Navigation.PushAsync(nextPage, true);
                 NavigationPage.SetHasBackButton(nextPage, false);
             }
             else if (type == ClaimImageTypeModel.DriversLicense)
             {
-                var nextPage = new PartyContactViewiOS(claimViewModel);
+                var nextPage = new PartyContactView(claimViewModel);
 
                 await Navigation.PushAsync(nextPage, true);
                 NavigationPage.SetHasBackButton(nextPage, false);
@@ -120,7 +120,7 @@ namespace ContosoInsurance.Views
         public async void SettingsBtn_Tapped(object sender, EventArgs e)
         {
             this.menuList.IsVisible = false;
-            var settingsView = new SettingsViewiOS();
+            var settingsView = new SettingsView();
             NavigationPage.SetHasBackButton(settingsView, false);
             await Navigation.PushAsync(settingsView, false);
         }

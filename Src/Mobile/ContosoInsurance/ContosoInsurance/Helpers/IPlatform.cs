@@ -25,5 +25,7 @@ namespace ContosoInsurance
         void ClearCache();
   
         Task<Position> GetGeolocator(object context);
+
+        Task RegisterWithMobilePushNotifications();
     }
 }

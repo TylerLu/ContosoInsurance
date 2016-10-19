@@ -10,7 +10,7 @@ using Gcm.Client;
 
 namespace ContosoInsurance.Droid
 {
-    [Activity (Label = "Contoso Insurance", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity (Label = "Contoso Insurance", Icon = "@drawable/icon", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         public static MainActivity instance;

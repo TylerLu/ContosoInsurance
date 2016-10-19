@@ -18,7 +18,7 @@ namespace ContosoInsurance.API.Helpers
             var controller = actionContext.ControllerContext.Controller as ApiController;
             if (!controller.User.Identity.IsAuthenticated) return;
 
-            var currentUserId = await AuthenticationHelper.GetUserIdAsync(controller.Request, controller.User);
+            var currentUserId = AuthenticationHelper.GetUserId(controller.Request, controller.User);
             var helper = new SeedDataHelper();
             if (await helper.IsCustomerExistedAsync(currentUserId)) return;
 

@@ -42,20 +42,13 @@ namespace ContosoInsurance.iOS
             //http://motzcod.es/post/150988588867/updating-azure-mobile-sqlitestore-to-30
             //SQLitePCL.Batteries.Init();
 
-            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0)) {
-                var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Sound |
-                                                                              UIUserNotificationType.Alert |
-                                                                              UIUserNotificationType.Badge, null);
+            var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert 
+                                                                          | UIUserNotificationType.Badge
+                                                                          | UIUserNotificationType.Sound,
+                                                                          new NSSet());
 
-                UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
-                UIApplication.SharedApplication.RegisterForRemoteNotifications();
-
-            }
-            else {
-                UIApplication.SharedApplication.RegisterForRemoteNotificationTypes(UIRemoteNotificationType.Badge |
-                                                                                   UIRemoteNotificationType.Sound |
-                                                                                   UIRemoteNotificationType.Alert);
-            }
+            UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+            UIApplication.SharedApplication.RegisterForRemoteNotifications();
 
             var formsApp = new ContosoInsurance.App();
             LoadApplication(formsApp);
@@ -78,7 +71,7 @@ namespace ContosoInsurance.iOS
                     {
                         "aps",
                         new JObject {
-                            { "alert", "$(messageParam)" }
+                            { "alert", "$(Message)" }
                         }
                     }
                 };
@@ -98,7 +91,26 @@ namespace ContosoInsurance.iOS
                 }
                 catch (Exception ex) {
                     System.Diagnostics.Debug.WriteLine("Exception in RegisterWithMobilePushNotifications: " + ex.Message);
+
+                    UIAlertView avAlert1 = new UIAlertView("Notification", "Exception in RegisterWithMobilePushNotifications", null, "OK", null);
+                    avAlert1.Show();
                 }
+            }
+        }
+
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+
+            string alert = string.Empty;
+            if (aps.ContainsKey(new NSString("alert")))
+                alert = (aps[new NSString("alert")] as NSString).ToString();
+
+            //show alert
+            if (!string.IsNullOrEmpty(alert))
+            {
+                UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
+                avAlert.Show();
             }
         }
 
@@ -108,18 +120,6 @@ namespace ContosoInsurance.iOS
 
             if (IsAfterLogin)
                 await RegisterWithMobilePushNotifications();
-        }
-
-        public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
-        {
-            NSObject inAppMessage;
-
-            bool success = userInfo.TryGetValue(new NSString("inAppMessage"), out inAppMessage);
-
-            if (success) {
-                var alert = new UIAlertView("Got push notification", inAppMessage.ToString(), null, "OK", null);
-                alert.Show();
-            }
         }
 
         public override void OnActivated(UIApplication uiApplication)

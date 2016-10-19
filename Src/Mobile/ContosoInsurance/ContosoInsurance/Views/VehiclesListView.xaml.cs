@@ -10,10 +10,10 @@ using ContosoInsurance.ViewModels;
 
 namespace ContosoInsurance.Views
 {
-	public partial class VehiclesListViewiOS : ContentPage
+	public partial class VehiclesListView : ContentPage
     {
         private VehiclesListViewModel viewModel;
-        public VehiclesListViewiOS()
+        public VehiclesListView()
         {
             this.Title = "Contoso Insurance";
             InitializeComponent();
@@ -101,7 +101,7 @@ namespace ContosoInsurance.Views
             using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
             {
                 await viewModel.CheckCreateClaimAsync(this);
-                var partyView = new PartyInfoViewiOS(viewModel.claimViewModel, ClaimImageTypeModel.LicensePlate);
+                var partyView = new PartyInfoView(viewModel.claimViewModel, ClaimImageTypeModel.LicensePlate);
                 await Navigation.PushAsync(partyView, true);
                 NavigationPage.SetHasBackButton(partyView, false);
             }
@@ -122,7 +122,7 @@ namespace ContosoInsurance.Views
         public async void SettingsBtn_Tapped(object sender, EventArgs e)
         {
             this.menuList.IsVisible = false;
-            var settingsView = new SettingsViewiOS();
+            var settingsView = new SettingsView();
             NavigationPage.SetHasBackButton(settingsView, false);
             await Navigation.PushAsync(settingsView, false);
         }

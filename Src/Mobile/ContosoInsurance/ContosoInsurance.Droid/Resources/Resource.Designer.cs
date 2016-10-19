@@ -2387,8 +2387,8 @@ namespace ContosoInsurance.Droid
 			// aapt resource value: 0x7f0200aa
 			public const int navmenu = 2130837674;
 			
-			// aapt resource value: 0x7f0200af
-			public const int notification_template_icon_bg = 2130837679;
+			// aapt resource value: 0x7f0200b0
+			public const int notification_template_icon_bg = 2130837680;
 			
 			// aapt resource value: 0x7f0200ab
 			public const int segement1 = 2130837675;
@@ -2401,6 +2401,9 @@ namespace ContosoInsurance.Droid
 			
 			// aapt resource value: 0x7f0200ae
 			public const int Settings = 2130837678;
+			
+			// aapt resource value: 0x7f0200af
+			public const int splash = 2130837679;
 			
 			static Drawable()
 			{
@@ -3300,12 +3303,6 @@ namespace ContosoInsurance.Droid
 			
 			// aapt resource value: 0x7f080025
 			public const int character_counter_pattern = 2131230757;
-			
-			// aapt resource value: 0x7f080071
-			public const int facebook_app_id = 2131230833;
-			
-			// aapt resource value: 0x7f080072
-			public const int fb_login_protocol_scheme = 2131230834;
 			
 			// aapt resource value: 0x7f080029
 			public const int hockeyapp_crash_dialog_app_name_fallback = 2131230761;
@@ -4390,6 +4387,9 @@ namespace ContosoInsurance.Droid
 			
 			// aapt resource value: 0x7f0a0003
 			public const int Theme_MediaRouter_LightControlPanel = 2131361795;
+			
+			// aapt resource value: 0x7f0a0175
+			public const int Theme_Splash = 2131362165;
 			
 			// aapt resource value: 0x7f0a010e
 			public const int ThemeOverlay_AppCompat = 2131362062;

@@ -4,12 +4,12 @@ using Xamarin.Forms.Platform.iOS;
 using UIKit;
 using System.Linq;
 
-[assembly: ExportRenderer(typeof(IncidentDescriptioniOS), typeof(ExtendedPageRenderer))]
-[assembly: ExportRenderer(typeof(IncidentDetailViewiOS), typeof(ExtendedPageRenderer))]
-[assembly: ExportRenderer(typeof(PartyContactViewiOS), typeof(ExtendedPageRenderer))]
-[assembly: ExportRenderer(typeof(PartyInfoViewiOS), typeof(ExtendedPageRenderer))]
-[assembly: ExportRenderer(typeof(VehiclesListViewiOS), typeof(ExtendedPageRenderer))]
-[assembly: ExportRenderer(typeof(SettingsViewiOS), typeof(ExtendedPageRendererTwoSide))]
+[assembly: ExportRenderer(typeof(IncidentDescription), typeof(ExtendedPageRenderer))]
+[assembly: ExportRenderer(typeof(IncidentDetailView), typeof(ExtendedPageRenderer))]
+[assembly: ExportRenderer(typeof(PartyContactView), typeof(ExtendedPageRenderer))]
+[assembly: ExportRenderer(typeof(PartyInfoView), typeof(ExtendedPageRenderer))]
+[assembly: ExportRenderer(typeof(VehiclesListView), typeof(ExtendedPageRenderer))]
+[assembly: ExportRenderer(typeof(SettingsView), typeof(ExtendedPageRendererTwoSide))]
 namespace ContosoInsurance.Views
 {
     public class ExtendedPageRenderer:PageRenderer
