@@ -261,7 +261,9 @@ The Logic App uses an Office 365 API Connection to send email.  To authorize the
 
      Copy the **Server key (legacy token)**. 
 
-     > **Note**: The **Sender ID** will be used in the Android App.
+     > **Note**: The **Sender ID** will be used on the **Settings** page of the Android App.
+
+     > ![](Images/Deployment/android-app-settings.png)
 
    * Paste the server key to the **API Key** input box below.
 
