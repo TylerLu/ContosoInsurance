@@ -42,6 +42,8 @@ namespace ContosoInsurance.Views
                 };
                 returnbutton.Clicked += MenuClicked;
                 ToolbarItems.Add(returnbutton);
+
+                this.gcmSenderId.Text = Settings.Current.MobileGcmSenderId;
             }
         }
 
@@ -53,17 +55,20 @@ namespace ContosoInsurance.Views
                 await DisplayAlert("Configuration Error", "Invalid URI entered", "OK");
                 return;
             }
-            bool bMobileAppUrlChange = (Settings.Current.MobileAppUrl != newUri);
-            bool bHockeyAppIdChange = (Settings.Current.MobileHockeyAppId != hockeyId.Text);
 
-            if (bHockeyAppIdChange)
+            if (Settings.Current.MobileHockeyAppId != hockeyId.Text)
             {
                 Settings.Current.MobileHockeyAppId = hockeyId.Text;
                 await DisplayAlert("Configuration Hint", "Restart the App to enable Hockey App.", "OK");
-                //return;
             }
 
-            if (bMobileAppUrlChange)
+            if(Device.OS == TargetPlatform.Android && Settings.Current.MobileGcmSenderId != gcmSenderId.Text)
+            {
+                Settings.Current.MobileGcmSenderId = gcmSenderId.Text;
+                await DisplayAlert("Configuration Hint", "Restart the App to enable Google Cloud Messaging.", "OK");
+            }
+
+            if (Settings.Current.MobileAppUrl != newUri)
             {
                 Settings.Current.MobileAppUrl = newUri;
                 await MobileServiceHelper.msInstance.DoLogOutAsync();

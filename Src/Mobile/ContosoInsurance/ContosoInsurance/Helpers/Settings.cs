@@ -34,6 +34,15 @@ namespace ContosoInsurance
         private const string HockeyAppIdKey = nameof(HockeyAppIdKey);
         public const string DefaultHockeyAppId = "8e7c354ae6d34dc7bacfc5033f4a88d1";
 
+        public string MobileGcmSenderId
+        {
+            get { return AppSettings.GetValueOrDefault<string>(HockeyAppIdKey, DefaultGcmSenderId); }
+
+            set { AppSettings.AddOrUpdateValue<string>(HockeyAppIdKey, value); }
+        }
+        private const string GcmSenderKey = nameof(GcmSenderKey);
+        public const string DefaultGcmSenderId = "705339177819";
+
 
         private static ISettings AppSettings
         {

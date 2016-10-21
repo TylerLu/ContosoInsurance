@@ -30,7 +30,7 @@ namespace ContosoInsurance.Droid
 
     public class PushHandlerBroadcastReceiver : GcmBroadcastReceiverBase<GcmService>
     {
-        public static string[] SENDER_IDS = new string[] { "705339177819" };
+        public static string[] SENDER_IDS = new string[] { Settings.Current.MobileGcmSenderId };
         public const string TAG = "ContosoMoments-GCM";
     }
 

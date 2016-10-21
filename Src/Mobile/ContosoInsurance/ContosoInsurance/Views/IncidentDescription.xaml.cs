@@ -47,6 +47,7 @@ namespace ContosoInsurance.Views
 
         private async void NextButton_Clicked(object sender, EventArgs e)
         {
+
             try
             {
                 using (var scope = new ActivityIndicatorScope(activityIndicator, activityIndicatorPanel, true))
@@ -56,10 +57,16 @@ namespace ContosoInsurance.Views
                     await DisplayAlert("Thank you.", "Your claim has been submitted.", "Close");
 
                     ((VehiclesListView)claimViewModel.ParentPage).EmptyClaimViewModel();
-                    for (int i = Navigation.NavigationStack.Count - 1; i > 1; i--)
+
+                    //pop up to vehicles list view
+                    if (Navigation.NavigationStack.Count > 2)
                     {
-                        Page removedPage = Navigation.NavigationStack[i];
-                        Navigation.RemovePage(removedPage);
+                        for (int i = Navigation.NavigationStack.Count - 2; i > 1; i--)
+                        {
+                            Page removedPage = Navigation.NavigationStack[i];
+                            Navigation.RemovePage(removedPage);
+                        }
+                        Navigation.PopAsync();
                     }
                 }
             }

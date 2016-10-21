@@ -68,8 +68,8 @@ namespace ContosoInsurance.Views
         }
 
         private async void NextButton_Clicked(object sender, EventArgs e)
-        {                
-            if (Regex.IsMatch(this.partyPhoneNumber.Text, @"^(\d{3}-)\d{3}-\d{4}$"))
+        {
+            if (this.partyPhoneNumber.Text != null && Regex.IsMatch(this.partyPhoneNumber.Text, @"^(\d{3}-)\d{3}-\d{4}$"))
             {
                if(claimViewModel.OtherPartyMobilePhone != partyPhoneNumber.Text)
                 {

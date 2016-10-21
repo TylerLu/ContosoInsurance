@@ -17,12 +17,9 @@
                     <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
                 </Label.IsVisible>
             </Label>
-            <BoxView Color="Transparent" HeightRequest="10">
-                <Label.IsVisible>
-                    <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
-                </Label.IsVisible>
-            </BoxView>
-            <Label Text="APP SERVICE URL"  FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center">
+                <BoxView Color="Transparent" HeightRequest="10"/>
+
+                <Label Text="APP SERVICE URL"  FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center">
                 <Label.TextColor>
                     <OnPlatform x:TypeArguments="Color"  Android="#000" iOS="#555555"/>
                 </Label.TextColor>
@@ -35,15 +32,11 @@
             </Label>
             <Entry x:Name="settingsURL"
                             HeightRequest="35" FontSize="Medium"
-                            HorizontalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
                             HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
             </Entry>
 
-            <BoxView Color="Transparent" HeightRequest="10">
-                <Label.IsVisible>
-                    <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
-                </Label.IsVisible>
-            </BoxView>
+            <BoxView Color="Transparent" HeightRequest="10"/>
             <Label Text="Hockey App Id"  FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center">
                 <Label.TextColor>
                     <OnPlatform x:TypeArguments="Color"  Android="#000" iOS="#555555"/>
@@ -57,33 +50,44 @@
             </Label>
             <Entry x:Name="hockeyId"
                             HeightRequest="35" FontSize="Medium"
-                            HorizontalTextAlignment="Center"
+                            HorizontalTextAlignment="Start"
                             HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
             </Entry>
-            <BoxView Color="Transparent" HeightRequest="50">
+
+            <BoxView Color="Transparent" HeightRequest="10"/>
+            <Label Text="GCM Sender ID"  FontSize="Medium" VerticalTextAlignment="Center" TextColor="#000" HeightRequest="30" HorizontalTextAlignment="Start">
                 <Label.IsVisible>
                     <OnPlatform x:TypeArguments="x:Boolean"  Android="true" iOS="false"/>
                 </Label.IsVisible>
-            </BoxView>
-            <Grid VerticalOptions="FillAndExpand" ColumnSpacing="0">
-                <Grid.IsVisible>
+            </Label>
+            <Entry x:Name="gcmSenderId"
+                    HeightRequest="35" FontSize="Medium"
+                    HorizontalTextAlignment="Start"
+                    HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
+                <Entry.IsVisible>
                     <OnPlatform x:TypeArguments="x:Boolean"  Android="true" iOS="false"/>
-                </Grid.IsVisible>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="28*"/>
-                    <ColumnDefinition Width="44*"/>
-                    <ColumnDefinition Width="28*"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="SAVE" Grid.Row="0" Grid.Column="1" BackgroundColor="#256bf9" TextColor="White" FontSize="Medium" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SaveClicked" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </Grid>
-        </StackLayout>
+                </Entry.IsVisible>
+            </Entry>
+            <BoxView Color="Transparent" HeightRequest="50"/>
+            <Grid VerticalOptions="FillAndExpand" ColumnSpacing="0">
+            <Grid.IsVisible>
+                <OnPlatform x:TypeArguments="x:Boolean"  Android="true" iOS="false"/>
+            </Grid.IsVisible>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="28*"/>
+                <ColumnDefinition Width="44*"/>
+                <ColumnDefinition Width="28*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="SAVE" Grid.Row="0" Grid.Column="1" BackgroundColor="#256bf9" TextColor="White" FontSize="Medium" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="SaveClicked" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </StackLayout>
     <Grid x:Name="menuList"  IsVisible="False"
             RowSpacing="0"  ColumnSpacing="0" BackgroundColor="#c3c3c3"
             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
