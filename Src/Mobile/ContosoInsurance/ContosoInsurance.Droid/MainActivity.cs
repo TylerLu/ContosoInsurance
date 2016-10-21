@@ -7,17 +7,26 @@ using Android.Content;
 using HockeyApp.Android;
 using HockeyApp.Android.Metrics;
 using Gcm.Client;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
+
+using Android.Support.V7.App;
+using Android.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace ContosoInsurance.Droid
 {
     [Activity (Label = "Contoso Insurance", Icon = "@drawable/icon", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         public static MainActivity instance;
-        public const string HOCKEYAPP_APPID = "8e7c354ae6d34dc7bacfc5033f4a88d1";
+        private string HOCKEYAPP_APPID = Settings.Current.MobileHockeyAppId;
 
         protected override void OnCreate (Bundle bundle)
         {
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+
             base.OnCreate (bundle);
 
             this.Window.AddFlags(WindowManagerFlags.Fullscreen);
@@ -31,15 +40,30 @@ namespace ContosoInsurance.Droid
 
             instance = this;
 
-            // Register the crash manager before Initializing the trace writer
-            CrashManager.Register(this, HOCKEYAPP_APPID);
+            Toolbar toolbar = (Toolbar)FindViewById(ContosoInsurance.Droid.Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
 
-            //Register to with the Update Manager
-            UpdateManager.Register(this, HOCKEYAPP_APPID);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            SupportActionBar.SetHomeButtonEnabled(true);
 
-            MetricsManager.Register(Application, HOCKEYAPP_APPID);
-            MetricsManager.EnableUserMetrics();
+            toolbar.SetNavigationIcon(ContosoInsurance.Droid.Resource.Drawable.navmenu);
+            //toolbar.SetLogo(ContosoInsurance.Droid.Resource.Drawable.navmenu);
 
+            try
+            {
+                // Register the crash manager before Initializing the trace writer
+                CrashManager.Register(this, HOCKEYAPP_APPID);
+
+                //Register to with the Update Manager
+                //UpdateManager.Register(this, HOCKEYAPP_APPID);
+
+                MetricsManager.Register(Application, HOCKEYAPP_APPID);
+                MetricsManager.EnableUserMetrics();
+            }
+            catch(Exception e)
+            {
+                CreateAndShowDialog(e.Message, "Error");
+            }
             try
             {
                 // Check to ensure everything's setup right
@@ -58,7 +82,6 @@ namespace ContosoInsurance.Droid
             {
                 CreateAndShowDialog(e.Message, "Error");
             }
-
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
@@ -73,7 +96,7 @@ namespace ContosoInsurance.Droid
 
         private void CreateAndShowDialog(String message, String title)
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this);
 
             builder.SetMessage(message);
             builder.SetTitle(title);

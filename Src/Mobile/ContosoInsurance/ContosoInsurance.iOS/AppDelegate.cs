@@ -17,7 +17,7 @@ namespace ContosoInsurance.iOS
     {
         public static NSData DeviceToken { get; private set; }
         public static bool IsAfterLogin = false;
-        const string HOCKEYAPP_APPID = "173bb49bbecf4b61873990c2aed13abf";
+        private string HOCKEYAPP_APPID = Settings.Current.MobileHockeyAppId;
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -53,12 +53,18 @@ namespace ContosoInsurance.iOS
             var formsApp = new ContosoInsurance.App();
             LoadApplication(formsApp);
 
-            var manager = BITHockeyManager.SharedHockeyManager;
-            manager.Configure(HOCKEYAPP_APPID);
-            manager.StartManager();
-            manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
+            try
+            {
+                var manager = BITHockeyManager.SharedHockeyManager;
+                manager.Configure(HOCKEYAPP_APPID);
+                manager.DisableUpdateManager = true;
+                manager.StartManager();
+                manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
+            }
+            catch (Exception e)
+            {
+            }
 
-       
             return base.FinishedLaunching(app, options);
         }
 

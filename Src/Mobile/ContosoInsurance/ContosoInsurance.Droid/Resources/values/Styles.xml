@@ -4,4 +4,14 @@
     <item name="android:windowBackground">@drawable/splash</item>
     <item name="android:windowNoTitle">true</item>
   </style>
+
+  <style name="Theme.ContosoInsurance" parent="Theme.ContosoInsurance.Base">
+  </style>
+  <style name="Theme.ContosoInsurance.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primaryDark</item>
+    <item name="colorAccent">@color/accent</item>
+    <item name="android:windowBackground">@color/window_background</item>
+  </style>
+  
 </resources>

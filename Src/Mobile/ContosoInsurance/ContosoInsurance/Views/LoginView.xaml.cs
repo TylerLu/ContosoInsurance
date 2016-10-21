@@ -25,8 +25,9 @@ namespace ContosoInsurance.Views
                     await MobileServiceHelper.msInstance.DoLoginAsync();
 
                     var vehiclesView = new VehiclesListView();
-                    await Navigation.PushAsync(vehiclesView, true);
                     NavigationPage.SetHasBackButton(vehiclesView, false);
+                    await Navigation.PushAsync(vehiclesView, true);
+                    
                 }
             }
             catch (Exception ex)
@@ -40,7 +41,7 @@ namespace ContosoInsurance.Views
         private async void SettingsBtn_Tapped(object sender, EventArgs e)
         {
             var settingsView = new SettingsView();
-            NavigationPage.SetHasBackButton(settingsView, false);
+            NavigationPage.SetHasBackButton(settingsView, Device.OS == TargetPlatform.Android);
             await Navigation.PushAsync(settingsView, false);
         }
     }

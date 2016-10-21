@@ -4,13 +4,45 @@ using ContosoInsurance.Helpers;
 
 namespace ContosoInsurance.Views
 {
-	public partial class SettingsView : ContentPage
-	{
-        public SettingsView ()
-		{
-            Title = "Contoso Insurance";
-            InitializeComponent ();
+    public partial class SettingsView : ContentPage
+    {
+        public SettingsView()
+        {
+            InitializeComponent();
             this.settingsURL.Text = Settings.Current.MobileAppUrl;
+            this.hockeyId.Text = Settings.Current.MobileHockeyAppId;
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                Title = "Contoso Insurance";
+                ToolbarItem savebutton = new ToolbarItem
+                {
+                    Text = "Save",
+                    Order = ToolbarItemOrder.Default,
+                    Priority = 0
+                };
+                savebutton.Clicked += SaveClicked;
+                ToolbarItem menubutton = new ToolbarItem
+                {
+                    Icon = "navmenu.png",
+                    Order = ToolbarItemOrder.Default,
+                    Priority = 0
+                };
+                menubutton.Clicked += MenuClicked;
+                ToolbarItems.Add(savebutton);
+                ToolbarItems.Add(menubutton);
+            }
+            else
+            {
+                Title = "Settings";
+                ToolbarItem returnbutton = new ToolbarItem
+                {
+                    Icon = "navmenu.png",
+                    Order = ToolbarItemOrder.Primary,
+                    Priority = 0
+                };
+                returnbutton.Clicked += MenuClicked;
+                ToolbarItems.Add(returnbutton);
+            }
         }
 
         public async void SaveClicked(object sender, EventArgs e)
@@ -21,17 +53,25 @@ namespace ContosoInsurance.Views
                 await DisplayAlert("Configuration Error", "Invalid URI entered", "OK");
                 return;
             }
+            bool bMobileAppUrlChange = (Settings.Current.MobileAppUrl != newUri);
+            bool bHockeyAppIdChange = (Settings.Current.MobileHockeyAppId != hockeyId.Text);
 
-            if (Settings.Current.MobileAppUrl == settingsURL.Text || Settings.Current.MobileAppUrl == newUri)
+            if (bHockeyAppIdChange)
             {
-                Settings.Current.MobileAppUrl = newUri;
-                await Navigation.PopAsync(false);
+                Settings.Current.MobileHockeyAppId = hockeyId.Text;
+                await DisplayAlert("Configuration Hint", "Restart the App to enable Hockey App.", "OK");
+                //return;
             }
-            else
+
+            if (bMobileAppUrlChange)
             {
                 Settings.Current.MobileAppUrl = newUri;
                 await MobileServiceHelper.msInstance.DoLogOutAsync();
                 await Navigation.PopToRootAsync(false);
+            }
+            else
+            {
+                await Navigation.PopAsync(false);
             }
         }
 

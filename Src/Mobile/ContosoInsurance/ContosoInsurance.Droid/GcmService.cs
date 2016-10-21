@@ -111,43 +111,22 @@ namespace ContosoInsurance.Droid
             edit.PutString("last_msg", msg.ToString());
             edit.Commit();
 
-            string message = intent.Extras.GetString("message");
+            var message = intent.Extras.GetString("message");
             if (!string.IsNullOrEmpty(message))
-            {
-                createNotification("Notification", message);
-                return;
-            }
-
-            createNotification("Unknown message details", msg.ToString());
+                createNotification("Contoso Insurance", message);
+            else
+                createNotification("Contoso Insurance - unknown message details", msg.ToString());
         }
 
         void createNotification(string title, string desc)
         {
-            //Create notification
+            var builder = new Notification.Builder(Application.Context)
+                .SetContentTitle(title)
+                .SetContentText(desc)
+                .SetSmallIcon(Android.Resource.Drawable.SymActionEmail);
+            var notification = builder.Build();
+
             var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
-
-            //Create an intent to show ui
-            var uiIntent = new Intent(this, typeof(MainActivity));
-
-            //Use Notification Builder
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-            //Create the notification
-            //we use the pending intent, passing our ui intent over which will get called
-            //when the notification is tapped.
-            var notification = builder.SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0))
-                    .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
-                    .SetTicker(title)
-                    .SetContentTitle(title)
-                    .SetContentText(desc)
-
-                    //Set the notification sound
-                    .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
-
-                    //Auto cancel will remove the notification once the user touches it
-                    .SetAutoCancel(true).Build();
-
-            //Show the notification
             notificationManager.Notify(1, notification);
         }
 

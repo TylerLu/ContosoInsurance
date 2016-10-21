@@ -53,6 +53,21 @@ namespace ContosoInsurance.Views
             imageStack.HeightRequest = 70;
             label.HeightRequest = 35;
             HeightRequest = 105;
+            Device.OnPlatform(
+                    iOS: () =>
+                    {
+                        image.HeightRequest = 54;
+                        imageStack.HeightRequest = 70;
+                        label.HeightRequest = 35;
+                        HeightRequest = 105;
+                    },
+                    Android: () =>
+                    {
+                        image.HeightRequest = 64;
+                        imageStack.HeightRequest = 84;
+                        label.HeightRequest = 42;
+                        HeightRequest = 126;
+                    });
         }
-	}
+    }
 }

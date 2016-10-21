@@ -3,50 +3,101 @@
              xmlns:CustomerView="clr-namespace:ContosoInsurance.Views"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContosoInsurance.Views.SettingsView">
-  <ContentPage.ToolbarItems>
-    <ToolbarItem Name="Save" Order="Default" Priority="0" Clicked="SaveClicked" />
-    <ToolbarItem Icon="navmenu.png" Order="Default" Priority="0" Clicked="MenuClicked" />
-  </ContentPage.ToolbarItems>
-
-  <ContentPage.Content >
+    <ContentPage.Content >
     <RelativeLayout>
-    <Grid VerticalOptions="FillAndExpand" RowSpacing="0"  ColumnSpacing="0" BackgroundColor="White"
-          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="10"/>
-        <RowDefinition Height="35"/>
-        <RowDefinition Height="45"/>
-        <RowDefinition Height="35"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
-      
-      <Label Text="SETTINGS" Grid.Row="1" FontSize="Medium" TextColor="#007aff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" >
-      </Label>
-      <Label Text="APP SERVICE URL" Grid.Row="2" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" >
-      </Label>
-      
-      <Grid Grid.Row="3" Padding="15,0">
-        <Entry x:Name="settingsURL"
-                                  HeightRequest="35" FontSize="Medium"
-                                  HorizontalTextAlignment="Center"
-                                  VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555"/>
-      </Grid>
-    </Grid>
+        <StackLayout VerticalOptions="FillAndExpand" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}" Padding="15,0">
+            <BoxView Color="Transparent">
+                <BoxView.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double"  Android="0" iOS="10"/>
+                </BoxView.HeightRequest>
+            </BoxView>
+            <Label Text="SETTINGS" FontSize="Medium" TextColor="#007aff" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HeightRequest="35">
+                <Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
+                </Label.IsVisible>
+            </Label>
+            <BoxView Color="Transparent" HeightRequest="10">
+                <Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
+                </Label.IsVisible>
+            </BoxView>
+            <Label Text="APP SERVICE URL"  FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color"  Android="#000" iOS="#555555"/>
+                </Label.TextColor>
+                <Label.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double"  Android="30"  iOS="45"/>
+                </Label.HeightRequest>
+                <Label.HorizontalTextAlignment>
+                    <OnPlatform x:TypeArguments="TextAlignment"  Android="Start" iOS="Center"/>
+                </Label.HorizontalTextAlignment>
+            </Label>
+            <Entry x:Name="settingsURL"
+                            HeightRequest="35" FontSize="Medium"
+                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
+            </Entry>
+
+            <BoxView Color="Transparent" HeightRequest="10">
+                <Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean"  Android="false" iOS="true"/>
+                </Label.IsVisible>
+            </BoxView>
+            <Label Text="Hockey App Id"  FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color"  Android="#000" iOS="#555555"/>
+                </Label.TextColor>
+                <Label.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double"  Android="30"  iOS="45"/>
+                </Label.HeightRequest>
+                <Label.HorizontalTextAlignment>
+                    <OnPlatform x:TypeArguments="TextAlignment"  Android="Start" iOS="Center"/>
+                </Label.HorizontalTextAlignment>
+            </Label>
+            <Entry x:Name="hockeyId"
+                            HeightRequest="35" FontSize="Medium"
+                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
+            </Entry>
+            <BoxView Color="Transparent" HeightRequest="50">
+                <Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean"  Android="true" iOS="false"/>
+                </Label.IsVisible>
+            </BoxView>
+            <Grid VerticalOptions="FillAndExpand" ColumnSpacing="0">
+                <Grid.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean"  Android="true" iOS="false"/>
+                </Grid.IsVisible>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28*"/>
+                    <ColumnDefinition Width="44*"/>
+                    <ColumnDefinition Width="28*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="SAVE" Grid.Row="0" Grid.Column="1" BackgroundColor="#256bf9" TextColor="White" FontSize="Medium" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="SaveClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </StackLayout>
     <Grid x:Name="menuList"  IsVisible="False"
-                    RowSpacing="0"  ColumnSpacing="0" BackgroundColor="#c3c3c3"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0, Constant=30}">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
-      <Grid Grid.Row="0" Padding="15,0" BackgroundColor="#256bf9">
-        <Label Text="Logout" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
-        <Grid.GestureRecognizers>
-          <TapGestureRecognizer Tapped="LogoutBtn_Tapped" />
-        </Grid.GestureRecognizers>
+            RowSpacing="0"  ColumnSpacing="0" BackgroundColor="#c3c3c3"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0, Constant=30}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Padding="15,0" BackgroundColor="#256bf9">
+            <Label Text="Logout" FontSize="Medium" TextColor="#dfe6fe" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="LogoutBtn_Tapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
       </Grid>
-    </Grid>
     </RelativeLayout>
     
   </ContentPage.Content >

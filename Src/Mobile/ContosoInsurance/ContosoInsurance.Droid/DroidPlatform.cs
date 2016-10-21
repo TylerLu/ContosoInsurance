@@ -57,7 +57,7 @@ namespace ContosoInsurance.Droid
                 var uiContext = context as Context;
                 if (uiContext != null) {
                     var mediaPicker = new MediaPicker(uiContext);
-                    var photo = await mediaPicker.TakePhotoAsync(new StoreCameraMediaOptions());
+                    var photo = await mediaPicker.PickPhotoAsync();
 
                     return photo.Path;
                 }

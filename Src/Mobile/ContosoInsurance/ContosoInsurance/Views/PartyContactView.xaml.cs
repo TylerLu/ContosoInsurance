@@ -76,8 +76,8 @@ namespace ContosoInsurance.Views
                     await claimViewModel.UpdateClaimPartyMobileAsync(partyPhoneNumber.Text);
                 }
                 var nextPage = new IncidentDetailView(claimViewModel);
-                await Navigation.PushAsync(nextPage, true);
                 NavigationPage.SetHasBackButton(nextPage, false);
+                await Navigation.PushAsync(nextPage, true);
             }
             else
             {

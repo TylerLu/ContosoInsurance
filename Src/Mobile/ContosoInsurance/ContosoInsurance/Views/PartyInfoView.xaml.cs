@@ -90,18 +90,15 @@ namespace ContosoInsurance.Views
             if (type == ClaimImageTypeModel.LicensePlate
                 || type == ClaimImageTypeModel.InsuranceCard)
             {
-
                 var nextPage = new PartyInfoView(claimViewModel, type + 1);
-
-                await Navigation.PushAsync(nextPage, true);
                 NavigationPage.SetHasBackButton(nextPage, false);
+                await Navigation.PushAsync(nextPage, true);
             }
             else if (type == ClaimImageTypeModel.DriversLicense)
             {
                 var nextPage = new PartyContactView(claimViewModel);
-
-                await Navigation.PushAsync(nextPage, true);
                 NavigationPage.SetHasBackButton(nextPage, false);
+                await Navigation.PushAsync(nextPage, true);
             }
         }
 

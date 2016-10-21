@@ -76,7 +76,14 @@ namespace ContosoInsurance.Helpers
                 { "Description", logEvent + ex.Message}
             };
             /*Hockey APP*/
-            MetricsManager.TrackEvent("Failure", properties, null);
+            try
+            {
+                MetricsManager.TrackEvent("Failure", properties, null);
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(logEvent + e);
+            }
         }
         public static void TraceStatus(string logEvent)
         {
@@ -90,8 +97,16 @@ namespace ContosoInsurance.Helpers
                 { "Description", logEvent},
                 { "Status", "Success"}
             };
-            /*Hockey APP*/
-            MetricsManager.TrackEvent(logEvent, properties, null);
+            try
+            {
+                /*Hockey APP*/
+                MetricsManager.TrackEvent(logEvent, properties, null);
+            }
+
+            catch (Exception e)
+            {
+                Debug.WriteLine(logEvent + e);
+            }
         }
     }
 }

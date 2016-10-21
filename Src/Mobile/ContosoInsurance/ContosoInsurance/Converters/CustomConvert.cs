@@ -41,7 +41,7 @@ namespace ContosoInsurance.Converters
             }
             else
             {
-                return "CameraBk.png";
+                return Device.OS == TargetPlatform.iOS ? "CameraBk.png": "CameraBk2.png";
             }
         }
 
@@ -193,6 +193,29 @@ namespace ContosoInsurance.Converters
                 }
             }
             return "CameraBk.png";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    class IncidentSelectImageAspectConvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var Images = (ObservableCollection<FileViewModel>)value;
+
+            string start = ClaimImage.IncidentImagePrefix;
+            if (Images != null && Images.Count > 0)
+            {
+                var fileModel = Images.Where(i => i.File.Name.StartsWith(start) && i.Selected).SingleOrDefault();
+                if (fileModel != null)
+                {
+                    return Aspect.AspectFit;
+                }
+            }
+            return Aspect.Fill;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

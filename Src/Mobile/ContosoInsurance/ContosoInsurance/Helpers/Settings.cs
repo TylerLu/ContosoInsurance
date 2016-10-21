@@ -25,6 +25,16 @@ namespace ContosoInsurance
         private const string MobileAppUrlKey = nameof(MobileAppUrlKey);
         public const string DefaultMobileAppUrl = "https://contosoinsurance-api.azurewebsites.net";
 
+        public string MobileHockeyAppId
+        {
+            get { return AppSettings.GetValueOrDefault<string>(HockeyAppIdKey, DefaultHockeyAppId); }
+
+            set { AppSettings.AddOrUpdateValue<string>(HockeyAppIdKey, value); }
+        }
+        private const string HockeyAppIdKey = nameof(HockeyAppIdKey);
+        public const string DefaultHockeyAppId = "8e7c354ae6d34dc7bacfc5033f4a88d1";
+
+
         private static ISettings AppSettings
         {
             get

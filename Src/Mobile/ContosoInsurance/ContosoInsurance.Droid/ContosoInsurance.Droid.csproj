@@ -304,6 +304,10 @@
     </None>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\Layout\tabs.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\toolbar.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Icon.png" />
@@ -327,14 +331,6 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\loginLogo.png" />
     <AndroidResource Include="Resources\drawable\CameraBk.png" />
     <AndroidResource Include="Resources\drawable\CameraBt.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\CameraBk.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\CameraBt.png" />
-    <AndroidResource Include="Resources\drawable-ldpi\CameraBk.png" />
-    <AndroidResource Include="Resources\drawable-ldpi\CameraBt.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\CameraBk.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\CameraBt.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\CameraBk.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\CameraBt.png" />
     <AndroidResource Include="Resources\drawable\back.png" />
     <AndroidResource Include="Resources\drawable\forward.png" />
     <AndroidResource Include="Resources\drawable\segement1.png" />
@@ -346,6 +342,9 @@
     <AndroidResource Include="Resources\drawable\Settings.png" />
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\values\Styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values-v21\styles.xml" />
+    <AndroidResource Include="Resources\drawable\CameraBk2.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="GCMClient">
@@ -360,6 +359,9 @@
       <Visible>False</Visible>
       <Version>0.7.7</Version>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\menu\" />
   </ItemGroup>
   <Import Project="..\ContosoMoments\ContosoMoments.projitems" Label="Shared" Condition="Exists('..\ContosoMoments\ContosoMoments.projitems')" />
   <Import Project="..\ContosoInsurance\ContosoInsurance.projitems" Label="Shared" />

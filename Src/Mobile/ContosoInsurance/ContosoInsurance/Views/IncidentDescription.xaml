@@ -20,47 +20,42 @@
                     </RowDefinition>
                     <RowDefinition>
                         <RowDefinition.Height>
-                            <OnPlatform x:TypeArguments="GridLength" iOS="30" Android="84" />
+                            <OnPlatform x:TypeArguments="GridLength" iOS="30" Android="Auto" />
                         </RowDefinition.Height>
                     </RowDefinition>
                     <RowDefinition Height="*"/>
                     <RowDefinition>
                         <RowDefinition.Height>
-                            <OnPlatform x:TypeArguments="GridLength" iOS="44" Android="72" />
+                            <OnPlatform x:TypeArguments="GridLength" iOS="44" Android="65" />
                         </RowDefinition.Height>
                     </RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0"/>
-                <Grid Grid.Row="1">
-                    <Grid.Padding>
+                <Image Grid.Row="1" Source="segement3.png" Aspect="AspectFit" HorizontalOptions="FillAndExpand">
+                    <Image.Margin>
                         <OnPlatform x:TypeArguments="Thickness" iOS="15,0" Android="0" />
-                    </Grid.Padding>
-                    <Image Source="segement3.png" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+                    </Image.Margin>
+                </Image>
+                <Grid Grid.Row="2" Margin="15, 0, 15, 15" RowSpacing="0" VerticalOptions="FillAndExpand" BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="titleLabel"  Grid.Row="0" Text="DESCRIPTION" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                    </Label>
+                    <Frame HasShadow="False" OutlineColor="#7c88a9" Padding="10, 10" Grid.Row="1">
+                        <Editor x:Name="incidentDescription"  TextColor="#555555" FontSize="Medium"/>
+                    </Frame>
                 </Grid>
-                <Grid Grid.Row="2" Margin="15, 0, 15, 15">
-                    <Grid RowSpacing="0" VerticalOptions="FillAndExpand" BackgroundColor="White">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="45" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Label x:Name="titleLabel"  Grid.Row="0" Text="DESCRIPTION" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        </Label>
-                        <Frame HasShadow="False" OutlineColor="#7c88a9" Padding="10, 10" Grid.Row="1">
-                            <Editor x:Name="incidentDescription"  TextColor="#555555" FontSize="Medium"/>
-                        </Frame>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <Grid RowSpacing="0" ColumnSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.BackgroundColor>
-                            <OnPlatform x:TypeArguments="Color" iOS="#adadad" Android="#d6d6d6" />
-                        </Grid.BackgroundColor>
-                        <CustomerView:CustomToolBar  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-                    </Grid>
+                <Grid Grid.Row="3" RowSpacing="0" ColumnSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" iOS="#adadad" Android="#d6d6d6" />
+                    </Grid.BackgroundColor>
+                    <CustomerView:CustomToolBar  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
                 </Grid>
             </Grid>
             <Grid x:Name="menuList" RowSpacing="1"  ColumnSpacing="0" BackgroundColor="#c3c3c3" IsVisible="False"

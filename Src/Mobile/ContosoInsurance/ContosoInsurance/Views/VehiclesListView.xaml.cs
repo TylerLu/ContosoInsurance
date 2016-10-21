@@ -51,7 +51,7 @@ namespace ContosoInsurance.Views
                             frame.GestureRecognizers.Add(tgr);
                             vehicleListCtrl.Children.Add(frame);
                         }
-                        vehicleListCtrl.Padding = new Thickness(0, 0, 0, 20);
+                        vehicleListCtrl.Padding = ((Device.OS == TargetPlatform.iOS) ? new Thickness(0, 0, 0, 20): new Thickness(0, 0, 0, 30));
                     } 
                 }
                 catch (Exception ex)
@@ -102,8 +102,8 @@ namespace ContosoInsurance.Views
             {
                 await viewModel.CheckCreateClaimAsync(this);
                 var partyView = new PartyInfoView(viewModel.claimViewModel, ClaimImageTypeModel.LicensePlate);
-                await Navigation.PushAsync(partyView, true);
                 NavigationPage.SetHasBackButton(partyView, false);
+                await Navigation.PushAsync(partyView, true);
             }
         }
 

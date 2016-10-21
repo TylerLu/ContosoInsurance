@@ -28,85 +28,106 @@
                     </RowDefinition>
                     <RowDefinition>
                         <RowDefinition.Height>
-                            <OnPlatform x:TypeArguments="GridLength" iOS="30" Android="84" />
+                            <OnPlatform x:TypeArguments="GridLength" iOS="30" Android="Auto" />
                         </RowDefinition.Height>
                     </RowDefinition>
                     <RowDefinition Height="*"/>
                     <RowDefinition>
                         <RowDefinition.Height>
-                            <OnPlatform x:TypeArguments="GridLength" iOS="44" Android="72" />
+                            <OnPlatform x:TypeArguments="GridLength" iOS="44" Android="65" />
                         </RowDefinition.Height>
                     </RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0"/>
-                <Grid Grid.Row="1">
-                    <Grid.Padding>
+                <Image Grid.Row="1" Source="segement2.png" Aspect="AspectFit" HorizontalOptions="FillAndExpand">
+                    <Image.Margin>
                         <OnPlatform x:TypeArguments="Thickness" iOS="15,0" Android="0" />
-                    </Grid.Padding>
-                    <Image Source="segement2.png" Aspect="AspectFit" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-                </Grid>
-                <Grid Grid.Row="2">
-                    <ScrollView>
-                        <StackLayout Padding="0,0" >
-                            <Grid RowSpacing="0" VerticalOptions="FillAndExpand">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="45" />
-                                    <RowDefinition Height="260" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="80" />
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <Label x:Name="titleLabel" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                                    </Label>
-                                </Grid>
-                                <Grid Grid.Row="1"  Padding="15,0">
-                                    <Image x:Name="imageSource" Source="CameraBk.png"></Image>
-                                </Grid>
-                                <Grid Grid.Row="3">
-                                    <StackLayout HeightRequest="1" BackgroundColor="#d9d9d9" VerticalOptions="Start"></StackLayout>
-                                    <StackLayout HeightRequest="50" Padding="15,0" BackgroundColor="White" VerticalOptions="CenterAndExpand">
-                                        <RelativeLayout Padding="0,0" HeightRequest="50">
-                                            <Button BorderRadius="8" BackgroundColor="#0092ff" Clicked="CameraBtn_Tapped"
-                                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
-                                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" >
-                                            </Button>
-
-                                            <Label x:Name="cameraLabel" Text="Retake" FontSize="Medium" TextColor="White" VerticalOptions="Center"
-                                      HorizontalTextAlignment="Center"  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}"
-                                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,Property=Height,Factor=1,Constant=0}" >
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="CameraBtn_Tapped" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
-
-                                            <Image x:Name="cameraImage"  Source="CameraBt.png" VerticalOptions="Center"  IsVisible="{Binding Source={x:Reference Name=cameraLabel},Path=IsVisible, Converter={StaticResource RevertConverter}}"
-                           
-                             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=.5, Constant=-11}"
-                             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.5, Constant=-9}">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="CameraBtn_Tapped" />
-                                                </Image.GestureRecognizers>
-                                            </Image>
-
-                                        </RelativeLayout>
-                                    </StackLayout>
+                    </Image.Margin>
+                </Image>
+                <ScrollView Grid.Row="2">
+                    <StackLayout Padding="0,0" >
+                        <Grid RowSpacing="0" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45" />
+                                <RowDefinition>
+                                    <RowDefinition.Height>
+                                        <OnPlatform x:TypeArguments="GridLength" iOS="260" Android="300" />
+                                    </RowDefinition.Height>
+                                </RowDefinition>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1" />
+                                <RowDefinition>
+                                    <RowDefinition.Height>
+                                        <OnPlatform x:TypeArguments="GridLength" iOS="80" Android="76" />
+                                    </RowDefinition.Height>
+                                </RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Label x:Name="titleLabel" FontSize="Medium" TextColor="#555555" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.Padding>
+                                    <OnPlatform x:TypeArguments="Thickness" iOS="15,0" Android="2,0" />
+                                </Grid.Padding>
+                                <Image x:Name="imageSource">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource" iOS="CameraBk.png" Android="CameraBk2.png" />
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.BackgroundColor>
+                                    <OnPlatform x:TypeArguments="Color" iOS="#d9d9d9" Android="#ffffff" />
+                                </Grid.BackgroundColor>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Button BorderRadius="8" Clicked="CameraBtn_Tapped">
+                                    <Button.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness" iOS="15" Android="132,3,132,10" />
+                                    </Button.Margin>
+                                    <Button.BackgroundColor>
+                                        <OnPlatform x:TypeArguments="Color" iOS="#0092ff" Android="#256bf9" />
+                                    </Button.BackgroundColor>
+                                </Button>
+                                <Label x:Name="cameraLabel" Text="Retake" FontSize="Medium" TextColor="White" VerticalOptions="Center" HorizontalTextAlignment="Center">
+                                    <Label.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness" iOS="0" Android="0,0,0,10" />
+                                    </Label.Margin>
+                                    <Label.Text>
+                                        <OnPlatform x:TypeArguments="x:String" iOS="Retake" Android="RETAKE" />
+                                    </Label.Text>
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes" iOS="None" Android="Bold" />
+                                    </Label.FontAttributes>
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="CameraBtn_Tapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Grid IsVisible="{Binding Source={x:Reference Name=cameraLabel},Path=IsVisible, Converter={StaticResource RevertConverter}}">
+                                    <Grid.BackgroundColor>
+                                        <OnPlatform x:TypeArguments="Color" iOS="Transparent" Android="#000000" />
+                                    </Grid.BackgroundColor>
+                                    <Image x:Name="cameraImage"  Source="CameraBt.png" VerticalOptions="Center" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="CameraBtn_Tapped" />
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </Grid>
-                        </StackLayout>
-                    </ScrollView>
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
+
+                <Grid Grid.Row="3" RowSpacing="0" ColumnSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.BackgroundColor>
+                        <OnPlatform x:TypeArguments="Color" iOS="#adadad" Android="#d6d6d6" />
+                    </Grid.BackgroundColor>
+                    <CustomerView:CustomToolBar  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
                 </Grid>
-                <Grid Grid.Row="3">
-                    <Grid RowSpacing="0" ColumnSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.BackgroundColor>
-                            <OnPlatform x:TypeArguments="Color" iOS="#adadad" Android="#d6d6d6" />
-                        </Grid.BackgroundColor>
-                        <CustomerView:CustomToolBar  x:Name="bottomView"  Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
-                    </Grid>
-                </Grid>
+
             </Grid>
             <Grid x:Name="menuList" RowSpacing="1"  ColumnSpacing="0" BackgroundColor="#c3c3c3" IsVisible="False"
                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
