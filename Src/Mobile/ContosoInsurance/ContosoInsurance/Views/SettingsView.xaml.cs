@@ -71,6 +71,7 @@ namespace ContosoInsurance.Views
             if (Settings.Current.MobileAppUrl != newUri)
             {
                 Settings.Current.MobileAppUrl = newUri;
+                Settings.Current.MobileLocalDbPrefix = Guid.NewGuid().ToString("N");
                 await MobileServiceHelper.msInstance.DoLogOutAsync();
                 await Navigation.PopToRootAsync(false);
             }

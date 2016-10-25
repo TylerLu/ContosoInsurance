@@ -31,9 +31,12 @@
                 </Label.HorizontalTextAlignment>
             </Label>
             <Entry x:Name="settingsURL"
-                            HeightRequest="35" FontSize="Medium"
+                            FontSize="Medium"
                             HorizontalTextAlignment="Start"
                             HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
+                    <Entry.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double"  iOS="35"  Android="42"/>
+                    </Entry.HeightRequest>
             </Entry>
 
             <BoxView Color="Transparent" HeightRequest="10"/>
@@ -49,9 +52,12 @@
                 </Label.HorizontalTextAlignment>
             </Label>
             <Entry x:Name="hockeyId"
-                            HeightRequest="35" FontSize="Medium"
+                            FontSize="Medium"
                             HorizontalTextAlignment="Start"
                             HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
+                    <Entry.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double"  iOS="35"  Android="42"/>
+                    </Entry.HeightRequest>
             </Entry>
 
             <BoxView Color="Transparent" HeightRequest="10"/>
@@ -61,7 +67,7 @@
                 </Label.IsVisible>
             </Label>
             <Entry x:Name="gcmSenderId"
-                    HeightRequest="35" FontSize="Medium"
+                    HeightRequest="42" FontSize="Medium"
                     HorizontalTextAlignment="Start"
                     HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="#555555">
                 <Entry.IsVisible>

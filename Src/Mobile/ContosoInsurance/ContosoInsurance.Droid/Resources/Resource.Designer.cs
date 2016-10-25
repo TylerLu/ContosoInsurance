@@ -2889,9 +2889,6 @@ namespace ContosoInsurance.Droid
 			// aapt resource value: 0x7f070013
 			public const int showTitle = 2131165203;
 			
-			// aapt resource value: 0x7f0700b4
-			public const int sliding_tabs = 2131165364;
-			
 			// aapt resource value: 0x7f07006c
 			public const int snackbar_action = 2131165292;
 			
@@ -2949,8 +2946,8 @@ namespace ContosoInsurance.Droid
 			// aapt resource value: 0x7f070048
 			public const int title_template = 2131165256;
 			
-			// aapt resource value: 0x7f0700b5
-			public const int toolbar = 2131165365;
+			// aapt resource value: 0x7f0700b4
+			public const int toolbar = 2131165364;
 			
 			// aapt resource value: 0x7f070032
 			public const int top = 2131165234;
@@ -3259,10 +3256,7 @@ namespace ContosoInsurance.Droid
 			public const int support_simple_spinner_dropdown_item = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public const int tabs = 2130903101;
-			
-			// aapt resource value: 0x7f03003e
-			public const int toolbar = 2130903102;
+			public const int toolbar = 2130903101;
 			
 			static Layout()
 			{
