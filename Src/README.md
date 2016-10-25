@@ -347,6 +347,31 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
     1.Enter a **latitude** and **longitude**.
     2.Click **OK**.
 
+## How To: Take an new Picture on the Android simulator##
+>**Note:** Here, we use **5" KitKat(4.4) XXHDPI Phone (Android 4.4 - API19)** simulator to demonstrate this section.
+
+1. Open ContosoInsurance App on Android simulator.
+
+2. Click **Camera** button on page.
+
+	![](Images/Deployment/Android-camerabuttonClick.png)
+
+3. Click **More** button on bottom bar.
+
+	![](Images/Deployment/Android-galleryClickMenu.png)
+
+4. Click **Capture picture** button.
+
+	![](Images/Deployment/Android-galleryClickCapturePicture.png)
+
+5. Take a new picture.
+
+6. Select the new picture just taken:
+
+	![](Images/Deployment/Android-gallerySelectPicture.png)
+
+7. Done.
+
 ## How To: Integrate Hockey App with the Xamarin App for deployment and logging ##
 
 ### Integrate Hockey App with the Xamarin App to iOS ###

@@ -59,7 +59,7 @@ namespace ContosoInsurance.iOS
                 manager.Configure(HOCKEYAPP_APPID);
                 manager.DisableUpdateManager = true;
                 manager.StartManager();
-                manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
+                //manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
             }
             catch (Exception e)
             {

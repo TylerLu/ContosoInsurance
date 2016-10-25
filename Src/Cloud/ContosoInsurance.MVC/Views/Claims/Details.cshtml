@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/detail")
 }
 @section scripts {
-    @Scripts.Render("~/bundles/detail");
+    @Scripts.Render("~/bundles/detail")
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
 }
 <div class="claim-info" data-bind="with:detail">
@@ -235,7 +235,7 @@
                     <div class="drivers-license">
                         <div class="fields">
                             <div class="row">
-                                <span>License Plate: </span>
+                                <span>Driver License: </span>
                                 <input data-bind="textInput:driversLicenseNumber,disable:$root.detail.disabled" />
                             </div>
                         </div>

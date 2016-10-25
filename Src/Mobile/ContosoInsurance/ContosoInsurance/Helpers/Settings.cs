@@ -36,9 +36,9 @@ namespace ContosoInsurance
 
         public string MobileGcmSenderId
         {
-            get { return AppSettings.GetValueOrDefault<string>(HockeyAppIdKey, DefaultGcmSenderId); }
+            get { return AppSettings.GetValueOrDefault<string>(GcmSenderKey, DefaultGcmSenderId); }
 
-            set { AppSettings.AddOrUpdateValue<string>(HockeyAppIdKey, value); }
+            set { AppSettings.AddOrUpdateValue<string>(GcmSenderKey, value); }
         }
         private const string GcmSenderKey = nameof(GcmSenderKey);
         public const string DefaultGcmSenderId = "705339177819";
