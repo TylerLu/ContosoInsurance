@@ -151,8 +151,8 @@ Download and install the following tools to run, build and/or develop this appli
 
    > ![](Images/Deployment/azure-components.png)
 
-**Update the Contoso_ClaimAutoApproverUrl App Setting in the Function App**
-​	
+**Update the Contoso_ClaimAutoApproverUrl App Setting in the Function App**	
+
 1. In the list of components in the Resource Group the ARM template created (pictured above), click the **ContosoInsuranceClaimAutoApprover Logic App**.
 
    ![](Images/Deployment/azure-claim-auto-approver.png)
@@ -338,7 +338,7 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 3. Press **F5**.
 4. Observe the iOS Simulator start on the Mac Agent and load the Contoso Insurance mobile app.
 
-> **Note:** If you do not set a location for the mobile ap it will fail with an exception.
+> **Note:** If you do not set a location for the mobile app it will fail with an exception.
 
 1.  In the Simulator menu, click **Debug**, **Location**, **Custom Location**.
 
@@ -450,7 +450,7 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 
 7. Build the Android project, and upload the Android **.apk** file to the Android Hockey App that you created above.
 
-    ![](Images/Deployment/HockeyApp-AddNewAppFile.png)
+    ![](Images/Deployment/HockeyApp-AddNewAppFileAndroid.png)
 
 8. Enter the release notes for the build, then click **Next Step**
 
