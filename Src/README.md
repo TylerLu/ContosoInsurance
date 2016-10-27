@@ -321,9 +321,7 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
   >```
   > If you change this app setting vale after you deploy the web api app and you deploy again with the ARM template then you will have to manually change it again.
 
-## How To: Run the mobile client app for local execution and debugging on the iOS simulator##
-
->**Note:** Currently, only the iOS version of the mobile app is fully implemented.  The Android version of the app is a prototype and is not fully implemented. 
+## How To: Run the iOS mobile client app for local execution and debugging on the iOS simulator##
 
 1. Use Visual Studio 2015 to open the **src/Cloud/ContosoInsurance-Mobile.sln** Visual Studio Solution file.
    1.Set up your Mac computer to act as a remote build machine.
@@ -347,26 +345,36 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
     1.Enter a **latitude** and **longitude**.
     2.Click **OK**.
 
+## How To: Run the Android mobile client app for local execution and debugging on the Android simulator##
+
+1. Use Visual Studio 2015 to open the **src/Cloud/ContosoInsurance-Mobile.sln** Visual Studio Solution file.
+   
+2. Configure the debugging target device according to the screenshot below.
+
+   ![](Images/Deployment/VS-Android-Deployment-Settings.png)
+3. Press **F5**.
+4. Observe the Android Simulator start and load the Contoso Insurance mobile app.
+
 ## How To: Take an new Picture on the Android simulator##
->**Note:** Here, we use **5" KitKat(4.4) XXHDPI Phone (Android 4.4 - API19)** simulator to demonstrate this section.
+>**Note:** Here, we use the **5" KitKat(4.4) XXHDPI Phone (Android 4.4 - API19)** simulator to demonstrate these steps.
 
-1. Open ContosoInsurance App on Android simulator.
+1. Open the ContosoInsurance App in the Android simulator.
 
-2. Click **Camera** button on page.
+2. Click the **Camera** button.
 
 	![](Images/Deployment/Android-camerabuttonClick.png)
 
-3. Click **More** button on bottom bar.
+3. Click the **More** button on the bottom bar.
 
 	![](Images/Deployment/Android-galleryClickMenu.png)
 
-4. Click **Capture picture** button.
+4. Click the **Capture picture** button.
 
 	![](Images/Deployment/Android-galleryClickCapturePicture.png)
 
 5. Take a new picture.
 
-6. Select the new picture just taken:
+6. Select the new picture you just took:
 
 	![](Images/Deployment/Android-gallerySelectPicture.png)
 
@@ -530,6 +538,44 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 2. Right click the **ContosoInsurance.Web** project and select **Set as StartUp Project**.  
 3. Press **F5**.
 4. Observe the web browser open and load the Contoso Insurance claims search page.
+
+## How To: Test Notification on Android simulator/device ##
+
+> **Note:** Make sure [Google Play Service](https://play.google.com/store/apps/details?id=com.google.android.gms&hl=en "Google Play Service") has been installed on your Android simulator/device before test notification.
+
+1. Run **ContosoInsurance.Droid** on Android simulator.
+2. Step by Step, submit a claim successfully.
+
+	![](Images/Deployment/Android-submit-a-claim.png)
+
+3. Go to Contoso Insurance claims site.
+4. Search the claim that you just submitted above and go to the claim detail page.
+5. Reject this claim.
+
+	![](Images/Deployment/approve-a-claim.png)	
+
+6. Android simulator will display the following notification on status bar.
+
+	![](Images/Deployment/android-display-notification.png)	
+
+## How To: Test Notification on iOS device ##
+
+> **Note:** You must use a physical iOS device test notifications because the iOS simulator does not support push notifications.
+
+1. Run **ContosoInsurance.iOS** on iOS device.
+2. Step by Step, submit a claim successfully.
+
+	![](Images/Deployment/ios-submit-a-claim.png)
+
+3. Go to Contoso Insurance claims site.
+4. Search the claim that you just submitted above and go to the claim detail page.
+5. Approve this claim.
+
+	![](Images/Deployment/approve-a-claim.png)	
+
+6. IOS device will display the following notification.
+
+	![](Images/Deployment/ios-display-notification.png)	
 
 ## How To: View the custom events and metrics in Application Insights to monitor and debug the application
 

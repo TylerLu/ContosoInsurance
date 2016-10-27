@@ -42,7 +42,7 @@ namespace ContosoInsurance
             set { AppSettings.AddOrUpdateValue<string>(GcmSenderKey, value); }
         }
         private const string GcmSenderKey = nameof(GcmSenderKey);
-        public const string DefaultGcmSenderId = "705339177819";
+        public const string DefaultGcmSenderId = "910324517099";
 
         public string MobileLocalDbPrefix
         {
