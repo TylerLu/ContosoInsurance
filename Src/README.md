@@ -355,31 +355,6 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 3. Press **F5**.
 4. Observe the Android Simulator start and load the Contoso Insurance mobile app.
 
-## How To: Take an new Picture on the Android simulator##
->**Note:** Here, we use the **5" KitKat(4.4) XXHDPI Phone (Android 4.4 - API19)** simulator to demonstrate these steps.
-
-1. Open the ContosoInsurance App in the Android simulator.
-
-2. Click the **Camera** button.
-
-	![](Images/Deployment/Android-camerabuttonClick.png)
-
-3. Click the **More** button on the bottom bar.
-
-	![](Images/Deployment/Android-galleryClickMenu.png)
-
-4. Click the **Capture picture** button.
-
-	![](Images/Deployment/Android-galleryClickCapturePicture.png)
-
-5. Take a new picture.
-
-6. Select the new picture you just took:
-
-	![](Images/Deployment/Android-gallerySelectPicture.png)
-
-7. Done.
-
 ## How To: Integrate Hockey App with the Xamarin App for deployment and logging ##
 
 ### Integrate Hockey App with the Xamarin App to iOS ###
@@ -539,44 +514,6 @@ The customer user accounts used to sign into the mobile app are Microsoft Accoun
 3. Press **F5**.
 4. Observe the web browser open and load the Contoso Insurance claims search page.
 
-## How To: Test Notification on Android simulator/device ##
-
-> **Note:** Make sure [Google Play Service](https://play.google.com/store/apps/details?id=com.google.android.gms&hl=en "Google Play Service") has been installed on your Android simulator/device before test notification.
-
-1. Run **ContosoInsurance.Droid** on Android simulator.
-2. Step by Step, submit a claim successfully.
-
-	![](Images/Deployment/Android-submit-a-claim.png)
-
-3. Go to Contoso Insurance claims site.
-4. Search the claim that you just submitted above and go to the claim detail page.
-5. Reject this claim.
-
-	![](Images/Deployment/approve-a-claim.png)	
-
-6. Android simulator will display the following notification on status bar.
-
-	![](Images/Deployment/android-display-notification.png)	
-
-## How To: Test Notification on iOS device ##
-
-> **Note:** You must use a physical iOS device test notifications because the iOS simulator does not support push notifications.
-
-1. Run **ContosoInsurance.iOS** on iOS device.
-2. Step by Step, submit a claim successfully.
-
-	![](Images/Deployment/ios-submit-a-claim.png)
-
-3. Go to Contoso Insurance claims site.
-4. Search the claim that you just submitted above and go to the claim detail page.
-5. Approve this claim.
-
-	![](Images/Deployment/approve-a-claim.png)	
-
-6. IOS device will display the following notification.
-
-	![](Images/Deployment/ios-display-notification.png)	
-
 ## How To: View the custom events and metrics in Application Insights to monitor and debug the application
 
 The sample logs status information and exceptions to Application Insights for every step in the process.  This starts moment they are received from the mobile app and continues until the very end when a claim is manually approved or rejected by the claims adjuster.
@@ -647,6 +584,75 @@ As you use the demo, many claims will accumulate in the databases and in the blo
 
    ![](Images/Deployment/admin-wipe-claims.png)
 
+## How To: Test Notifications on the Android simulator/device ##
+
+> **Note:** Make sure [Google Play Service](https://play.google.com/store/apps/details?id=com.google.android.gms&hl=en "Google Play Service") has been installed on your Android simulator/device before testing notifications.
+
+1. Run the **ContosoInsurance.Droid** project on the Android simulator.
+2. Step-by-Step, submit a claim successfully.
+
+	![](Images/Deployment/Android-submit-a-claim.png)
+
+3. Go to the Contoso Insurance web site.
+4. Search the claim that you just submitted above and go to the claim detail page.
+5. **Approve** or **Reject** the claim.
+
+	![](Images/Deployment/approve-a-claim.png)	
+
+6. The Android simulator will display the notification on the status bar.
+
+	![](Images/Deployment/android-display-notification.png)	
+
+## How To: Test Notifications on iOS devices ##
+
+> **Note:** You must use a physical iOS device test notifications because the iOS simulator does not support push notifications.
+
+1. Run the **ContosoInsurance.iOS** app on an iOS device.
+2. Step-by-Step, submit a claim successfully.
+
+	![](Images/Deployment/ios-submit-a-claim.png)
+
+3. Go to the Contoso Insurance web site.
+4. Search the claim that you just submitted above and go to the claim detail page.
+5. **Approve** or **Reject** the claim.
+
+	![](Images/Deployment/approve-a-claim.png)	
+
+6. The iOS device will display the notification.
+
+	![](Images/Deployment/ios-display-notification.png)	
+
+## How To: Take an new Picture on the Android simulator ##
+
+If you want to print out the demo images for license plates, insurance cards, and driver's licenses and use the simulator to take a picture of them, here's how to do it.
+
+>**Note:** Here, we use the **5" KitKat(4.4) XXHDPI Phone (Android 4.4 - API19)** simulator to demonstrate these steps.
+
+
+>**Note:** You must configure your simulator to use a web cam attached to your computer to take a picture.  See these [instructions](https://developer.android.com/studio/run/managing-avds.html) to learn how to do this.
+
+1. Open the ContosoInsurance App in the Android simulator.
+
+2. Click the **Camera** button.
+
+	![](Images/Deployment/Android-camerabuttonClick.png)
+
+3. Click the **More** button on the bottom bar.
+
+	![](Images/Deployment/Android-galleryClickMenu.png)
+
+4. Click the **Capture picture** button.
+
+	![](Images/Deployment/Android-galleryClickCapturePicture.png)
+
+5. Take a new picture.
+
+6. Select the new picture you just took.
+
+	>**Note:** In this example there was no web cam attached to the Android Simulator, that's why you see the checkerboard image.  When you have a web cam attached to your simulator you will see the image of what the web cam is looking at.
+
+	![](Images/Deployment/Android-gallerySelectPicture.png)
+ 
 ## Contributors
 | Roles                                    | Author(s)                                |
 | ---------------------------------------- | ---------------------------------------- |
