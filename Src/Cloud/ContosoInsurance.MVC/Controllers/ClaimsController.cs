@@ -59,6 +59,7 @@ namespace ContosoInsurance.MVC.Controllers
             var queryable = dbContext.Claims.Include(i => i.Vehicle.Customer)
                                         .Where(i => i.Id == id);
             var claim = await queryable.FirstOrDefaultAsync();
+            if (claim == null) return HttpNotFound();
 
 
             var vehicle = claim.Vehicle;
