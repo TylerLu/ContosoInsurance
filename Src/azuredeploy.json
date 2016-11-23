@@ -71,6 +71,7 @@
     "sqlServerName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-dbserver')]",
     "notificationHubName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
     "notificationHubNamespaceName": "[concat(variables('notificationHubName'), '-ns')]",
+    "applicationInsightsLocation": "East US",
     "applicationInsightsName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
     "functionAppName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-function')]",
     "claimAutoApproverName": "[concat(parameters('siteName'), 'ClaimAutoApprover')]",
@@ -114,7 +115,7 @@
       "kind": "web",
       "name": "[variables('applicationInsightsName')]",
       "apiVersion": "2014-04-01",
-      "location": "Central US",
+      "location": "[variables('applicationInsightsLocation')]",
       "properties": {
         "ApplicationId": "[variables('applicationInsightsName')]"
       }
@@ -161,7 +162,7 @@
           "kind": "v12.0",
           "name": "AllowAllWindowsAzureIps",
           "apiVersion": "2014-04-01-preview",
-          "location": "West US",
+          "location": "[variables('location')]",
           "properties": {
             "startIpAddress": "0.0.0.0",
             "endIpAddress": "0.0.0.0"
